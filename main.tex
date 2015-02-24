@@ -121,6 +121,8 @@
 %        frame=single,framexleftmargin=8mm, xleftmargin=8mm,
 }
 
+\newcommand{\cl}[1]{\texttt{\bf #1}}
+
 \begin{document}
 
 
@@ -549,6 +551,24 @@ msg     db "Hello World!!!", 13, 10, 0
       \end{block}
     \end{column}
   \end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Команды языка Ассемблер: mov}
+  \begin{block}{Прототип}
+    \cl{mov \{назначение\}, \{источник/значение\}}
+  \end{block}
+  \begin{block}{}
+    \begin{itemize}
+      \item Команда копирования.
+    \end{itemize}
+  \end{block}
+  \begin{exampleblock}{Примеры}
+    \cl{mov eax, 123} \texttt{\it; Поместить в регист eax число 123}
+
+    \cl{mov eax, [A]} \texttt{\it; Поместить в регист eax значение переменной A}
+
+    \cl{mov eax, msg} \texttt{\it; Поместить в регист eax адрес переменной msg}
+  \end{exampleblock}
 \end{frame}
 
 \end{document}
