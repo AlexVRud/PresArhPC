@@ -1,4 +1,4 @@
-\documentclass[10pt,pdf]{beamer}
+\documentclass[10pt,pdf,ignorenonframetext]{beamer}
 \usetheme{Madrid}
 
 \usepackage[T2A]{fontenc}
@@ -9,6 +9,10 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
 \usepackage{subfigure}
 
 \usepackage{tikz}
@@ -17,21 +21,6 @@
 \usetikzlibrary{topaths}
 \usetikzlibrary{positioning}
 \usetikzlibrary{decorations.pathmorphing}
-
-\usepackage{bytefield}
-\newcommand{\colorbitbox}[3]{%
-\rlap{\bitbox{#2}{\color{#1}\rule{\width}{\height}}}%
-\bitbox{#2}{#3}}
-\newcommand{\memsection}[4]{
-	\bytefieldsetup{bitheight=#3\baselineskip}	% define the height of the memsection
-	\bitbox[]{8}{
-		\texttt{0x\uppercase{#1}}	 % print end address
-		\\ \vspace{#3\baselineskip} \vspace{-2\baselineskip} \vspace{-#3pt} % do some spacing
-		\texttt{0x\uppercase{#2}} % print start address
-	}
-	\rlap{\bitbox{16}{\color{white}\rule{\width}{\height}}}%
-\bitbox{16}{#4} % print box with caption
-}
 
 \newcommand*{\ByteWidht}{0.9cm}
 \newcommand*{\ByteHeight}{0.6cm}
@@ -70,6 +59,22 @@
       }
     }
   }
+}
+
+
+\usepackage{bytefield}
+\newcommand{\colorbitbox}[3]{%
+\rlap{\bitbox{#2}{\color{#1}\rule{\width}{\height}}}%
+\bitbox{#2}{#3}}
+\newcommand{\memsection}[4]{
+	\bytefieldsetup{bitheight=#3\baselineskip}	% define the height of the memsection
+	\bitbox[]{8}{
+		\texttt{0x\uppercase{#1}}	 % print end address
+		\\ \vspace{#3\baselineskip} \vspace{-2\baselineskip} \vspace{-#3pt} % do some spacing
+		\texttt{0x\uppercase{#2}} % print start address
+	}
+	\rlap{\bitbox{16}{\color{white}\rule{\width}{\height}}}%
+\bitbox{16}{#4} % print box with caption
 }
 
 \begin{document}
@@ -139,7 +144,7 @@
 \node[databox=4,text=brown] (id) {7172421}; \node[above=0 of id,text=magenta]{id};
 \node[databox=1,right=-\pgflinewidth of id,text=blue] (a) {'A'}; \node[above=0 of a,text=magenta]{a};
 \node[databox=1,right=-\pgflinewidth of a,text=blue] (b) {'B'}; \node[above=0 of b,text=magenta]{b};
-\node[databox=2,right=-\pgflinewidth of b,text=blue, fill=lightgray] (none) {};
+\node[databox=2,right=-\pgflinewidth of b,text=blue, fill=lightgray] (none) {}; \node[above=0.5*\ByteHeight of none,text=green!30!black]  (lnone) {Что это?}; \draw[->,draw=green!30!black,thick] (lnone) -- (none);
 \node[databox=4,right=-\pgflinewidth of none,text=brown] (sum) {7172421};  \node[above=0 of sum,text=magenta]{sum};
           \end{tikzpicture}}
           \subfigure{\begin{tikzpicture}%[scale=0.95, every node/.style={transform shape}]
@@ -150,7 +155,7 @@
           \end{tikzpicture}}
         \end{figure}
       \end{block}
-      \begin{block}{Сложная структура, например, битовая}
+      \begin{block}{Сложная структура}
         \begin{figure}
 \begin{bytefield}{32}
     \bitheader{0,3,4,7,8,15,16,18,19,31}\\
@@ -184,25 +189,6 @@
 }
         \end{figure}
       \end{block}
-\end{frame}
-   
-\begin{frame}\frametitle{Вызов подпрограммы}
-  \begin{columns}[T]
-    \begin{column}[T]{5cm}
-      \begin{block}{}
-        \begin{figure}\begin{tikzpicture}
-\draw (0,0) rectangle (1,1);
-\node[databox] at (0,0) {asd};
-        \end{tikzpicture}\end{figure}
-      \end{block}
-      \begin{block}{}
-        \begin{figure}\begin{tikzpicture}[thick,scale=0.4, every node/.style={scale=0.4}]
-\draw [dashed] (1,12) -- (11,12);
-\node[above] at (4,11) {1}; \node[above] at (8,11) {true};
-       \end{tikzpicture}\end{figure}
-      \end{block}
-    \end{column}
-  \end{columns}
 \end{frame}
 
 \end{document}
