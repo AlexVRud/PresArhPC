@@ -684,17 +684,17 @@ my_sum:
   \node[linkedbyte,right=-\pgflinewidth-0.5*\DeltaWidht of tmp] (headofstack) {};
 \end{scope}
 %
-\only<1>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-1*0.5*\baselineskip+0.25*\baselineskip)$);}
-\only<2>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-3*0.5*\baselineskip+0.25*\baselineskip)$);}
-\only<3>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-7*0.5*\baselineskip+0.25*\baselineskip)$);}
-\only<4>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-8*0.5*\baselineskip+0.25*\baselineskip)$);}
-\only<5>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-10*0.5*\baselineskip+0.25*\baselineskip)$);}
-\only<6>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-11*0.5*\baselineskip+0.25*\baselineskip)$);}
-\only<7>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-12*0.5*\baselineskip+0.25*\baselineskip)$);}
-\only<8>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-4*0.5*\baselineskip+0.25*\baselineskip)$);}
-\only<9>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-5*0.5*\baselineskip+0.25*\baselineskip)$);}
+\only<1>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l1);}
+\only<2>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l3);}
+\only<3>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l7);}
+\only<4>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l8);}
+\only<5>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l10);}
+\only<6>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l11);}
+\only<7>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l12);}
+\only<8>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l4);}
+\only<9>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l5);}
 %
-\only<3,4,5,6,7>{\draw [->,draw=violet,thick] (rptr) to[out=-90,in=0] ++(-0.5*\ByteWidht,-0.5*\ByteHeight)
+\only<3,4,5,6,7>{\draw [->,draw=violet,thick] (rptr) to[out=-90,in=0] ++(-0.5*\ByteWidht,-0.75*\ByteHeight)
 		 -- ++(-3*\ByteWidht,0) to[out=180,in=180] (l4);
 }
 %
