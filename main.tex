@@ -612,7 +612,9 @@ my_sum:
     \end{lstlisting}
   \end{minipage}
 };
-\node[] (EIP) at (-1cm,3*\ByteHeight) {EIP};
+\only<1>{\node[databox=1] (EIP) at (0,3*\ByteHeight) {};}
+\only<2,3,4,5,6,7,8,9>{\node[databox=1,fill=green!30!white] (EIP) at (0,3*\ByteHeight) {};}
+\node[left=0cm of EIP] {EIP};
 %
 \only<1,2,3,4>{\node[databox=1,text=brown,right=of EIP] (EAX) {?};}
 \only<5>{\node[databox=1,text=brown,fill=green!30!white,right=of EIP] {32};}
@@ -628,11 +630,13 @@ my_sum:
 \node[left=0cm of EBX] {EBX};
 \node[databox=1,text=brown,right=of EBX] (ECX) {43};
 \node[left=0cm of ECX] {ECX};
-\node[right=of ECX] (ESP) {ESP};
+\only<1,5,6,9>{\node[databox=1,text=brown,right=of ECX] (ESP) {};}
+\only<2,3,4,7,8>{\node[databox=1,fill=green!30!white,text=brown,right=of ECX] (ESP) {};}
+\node[left=0cm of ESP] {ESP};
 %
 \begin{scope}[xshift=-1*\ByteWidht,yshift=1*\ByteHeight,scale=0.6, every node/.style={scale=0.6}]
   \node[partleft] (tmp) at (0,0) {...};
-  \only<1>{%
+  \only<1,8,9>{%
     \node[databox=17,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {};
     \node[databox=1,right=-\pgflinewidth of tmp] (data) {?};
   }
@@ -642,9 +646,32 @@ my_sum:
     \node[databox=4,fill=green!30!white,right=-\pgflinewidth of data] (data) {43};
     \node[databox=1,right=-\pgflinewidth of data] (data) {?};
   }
-  \only<3,4,5,6,7,8,9>{%
+  \only<3>{%
     \node[databox=5,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {};
     \node[databox=4,fill=green!30!white,right=-\pgflinewidth of tmp] (data) {return ptr};
+    \node[databox=4,right=-\pgflinewidth of data] (data) {32};
+    \node[databox=4,right=-\pgflinewidth of data] (data) {43};
+    \node[databox=1,right=-\pgflinewidth of data] (data) {?};
+  }
+  \only<4>{%
+    \node[databox=1,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {};
+    \node[databox=4,fill=green!30!white,right=-\pgflinewidth of tmp] (data) {32};
+    \node[databox=4,right=-\pgflinewidth of data] (data) {return ptr};
+    \node[databox=4,right=-\pgflinewidth of data] (data) {32};
+    \node[databox=4,right=-\pgflinewidth of data] (data) {43};
+    \node[databox=1,right=-\pgflinewidth of data] (data) {?};
+  }
+  \only<5,6>{%
+    \node[databox=1,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {};
+    \node[databox=4,right=-\pgflinewidth of tmp] (data) {32};
+    \node[databox=4,right=-\pgflinewidth of data] (data) {return ptr};
+    \node[databox=4,right=-\pgflinewidth of data] (data) {32};
+    \node[databox=4,right=-\pgflinewidth of data] (data) {43};
+    \node[databox=1,right=-\pgflinewidth of data] (data) {?};
+  }
+  \only<7>{%
+    \node[databox=5,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {};
+    \node[databox=4,right=-\pgflinewidth of tmp] (data) {return ptr};
     \node[databox=4,right=-\pgflinewidth of data] (data) {32};
     \node[databox=4,right=-\pgflinewidth of data] (data) {43};
     \node[databox=1,right=-\pgflinewidth of data] (data) {?};
