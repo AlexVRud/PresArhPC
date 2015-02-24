@@ -571,4 +571,21 @@ msg     db "Hello World!!!", 13, 10, 0
   \end{exampleblock}
 \end{frame}
 
+\begin{frame}\frametitle{Команды языка Ассемблер: add}
+  \begin{block}{Прототип}
+    \cl{add \{назначение\}, \{источник/значение\}}
+  \end{block}
+  \begin{block}{}
+    \begin{itemize}
+      \item Команда сложения двух одинаковых целых чисел (\{назначение\} и \{источник/значение\}).
+      \item Результат сложения помещается в \{назначение\}.
+    \end{itemize}
+  \end{block}
+  \begin{exampleblock}{Примеры}
+    \cl{add eax, 123} \texttt{\it; Прибавить к регистру eax число 123}
+
+    \cl{add eax, ebx} \texttt{\it; Прибавить к регистру eax регистр ebx}
+  \end{exampleblock}
+\end{frame}
+
 \end{document}
