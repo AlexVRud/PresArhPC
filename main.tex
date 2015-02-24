@@ -612,24 +612,14 @@ my_sum:
     \end{lstlisting}
   \end{minipage}
 };
-\only<1,2,3,4>{\node[databox=1,text=brown] (EAX) at (0,3*\ByteHeight) {?};}
-\only<5>{\node[databox=1,text=brown,fill=green!30!white] (EAX) at (0,3*\ByteHeight) {32};}
-\only<6>{\node[databox=1,text=brown,fill=green!30!white] (EAX) at (0,3*\ByteHeight) {75};}
-\only<7,8,9>{\node[databox=1,text=brown] (EAX) at (0,3*\ByteHeight) {75};}
+\node[] (EIP) at (-1cm,3*\ByteHeight) {EIP};
+%
+\only<1,2,3,4>{\node[databox=1,text=brown,right=of EIP] (EAX) {?};}
+\only<5>{\node[databox=1,text=brown,fill=green!30!white,right=of EIP] {32};}
+\only<6>{\node[databox=1,text=brown,fill=green!30!white,right=of EIP] {75};}
+\only<7,8,9>{\node[databox=1,text=brown,right=of EIP] (EAX) {75};}
 %
 \node[left=0cm of EAX] (leax) {EAX};
-\node[below=2.84*\ByteHeight of leax,inner sep=1pt] (EIP) {EIP};
-%
-\only<1>{\draw [->,draw=violet,thick] (EIP) |- (-8pt,-1*0.5*\baselineskip+0.25*\baselineskip);}
-\only<2>{\draw [->,draw=violet,thick] (EIP) |- (-8pt,-3*0.5*\baselineskip+0.25*\baselineskip);}
-\only<3>{\draw [->,draw=violet,thick] (EIP) |- (-8pt,-7*0.5*\baselineskip+0.25*\baselineskip);}
-\only<4>{\draw [->,draw=violet,thick] (EIP) |- (-8pt,-8*0.5*\baselineskip+0.25*\baselineskip);}
-\only<5>{\draw [->,draw=violet,thick] (EIP) |- (-8pt,-10*0.5*\baselineskip+0.25*\baselineskip);}
-\only<6>{\draw [->,draw=violet,thick] (EIP) |- (-8pt,-11*0.5*\baselineskip+0.25*\baselineskip);}
-\only<7>{\draw [->,draw=violet,thick] (EIP) |- (-8pt,-12*0.5*\baselineskip+0.25*\baselineskip);}
-\only<8>{\draw [->,draw=violet,thick] (EIP) |- (-8pt,-4*0.5*\baselineskip+0.25*\baselineskip);}
-\only<9>{\draw [->,draw=violet,thick] (EIP) |- (-8pt,-5*0.5*\baselineskip+0.25*\baselineskip);}
-%
 \only<1,2,3,4,8,9>{\node[databox=1,text=brown,right=of EAX] (EBX) {32};}
 \only<5>{\node[databox=1,text=brown,fill=green!30!white,right=of EAX] (EBX) {43};}
 \only<6>{\node[databox=1,text=brown,right=of EAX] (EBX) {43};}
@@ -662,6 +652,17 @@ my_sum:
   \node[partright,right=-\pgflinewidth of data] {...};
   \node[linkedbyte,right=-\pgflinewidth-0.5*\DeltaWidht of tmp] (headofstack) {};
 \end{scope}
+%
+\only<1>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-1*0.5*\baselineskip+0.25*\baselineskip)$);}
+\only<2>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-3*0.5*\baselineskip+0.25*\baselineskip)$);}
+\only<3>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-7*0.5*\baselineskip+0.25*\baselineskip)$);}
+\only<4>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-8*0.5*\baselineskip+0.25*\baselineskip)$);}
+\only<5>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-10*0.5*\baselineskip+0.25*\baselineskip)$);}
+\only<6>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-11*0.5*\baselineskip+0.25*\baselineskip)$);}
+\only<7>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-12*0.5*\baselineskip+0.25*\baselineskip)$);}
+\only<8>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-4*0.5*\baselineskip+0.25*\baselineskip)$);}
+\only<9>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] ($(-8pt,-5*0.5*\baselineskip+0.25*\baselineskip)$);}
+%
 \draw [->,draw=violet,thick] (ESP) to[out=-90,in=90] (headofstack);
 \begin{pgfonlayer}{background}
   \begin{scope}[scale=0.5, every node/.style={scale=0.5, text width=1.5\textwidth}]
