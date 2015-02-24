@@ -30,9 +30,12 @@
 
 \tikzset{
   databox/.style={draw,fill=white,minimum width=#1*\ByteWidht, minimum height=\ByteHeight, path picture={%
-    \foreach \x in {0,...,4}%
-      \draw (path picture bounding box.south west) ++(\x*\ByteWidht,0) -- ++(0,0.15*\ByteHeight);%
-    }},
+    \ifnum#1>1
+      \foreach \x in {1,...,#1}%
+        \draw (path picture bounding box.south west) ++(\x*\ByteWidht,0) -- ++(0,0.15*\ByteHeight);%
+    \fi
+    }
+  },
   databox/.default=4,
   partleft/.style={minimum width=\ByteWidht, text width=0.6*\ByteWidht, minimum height=\ByteHeight, align=right,
     append after command={
