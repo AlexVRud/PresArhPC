@@ -24,6 +24,7 @@
 
 \newcommand*{\ByteWidht}{0.9cm}
 \newcommand*{\ByteHeight}{0.6cm}
+\newcommand*{\DeltaWidht}{0.05cm}
 
 \tikzset{
   databox/.style={draw,fill=white,minimum width=#1*\ByteWidht, minimum height=\ByteHeight, path picture={%
@@ -58,6 +59,9 @@
        -- cycle;
       }
     }
+  },
+  linkedbyte/.style={shape=rectangle,rounded corners,draw=green!80!black,dashed,%
+     minimum width=\ByteWidht+2*\DeltaWidht, minimum height=\ByteHeight+2*\DeltaWidht
   }
 }
 
@@ -235,5 +239,69 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}\frametitle{Стек в памяти}
+  \begin{block}{Стек}
+    \begin{figure}
+      \begin{tikzpicture}
+\only<1>{
+  \node[databox=1,text=brown,anchor=south west] (s3) at (0,0) {3};
+  \node[databox=1,text=brown,anchor=south west] (s2) at (1*\ByteWidht,0) {2};
+  \node[databox=1,text=brown,anchor=south west] (s1) at (2*\ByteWidht,0) {1};
+  \draw[thick] (-1.1*\ByteWidht,-0.1*\ByteHeight) --
+               (3.1*\ByteWidht,-0.1*\ByteHeight) --
+               (3.1*\ByteWidht,1.1*\ByteHeight) --
+               (-1.1*\ByteWidht,1.1*\ByteHeight);
+}
+\only<2,3>{
+  \node[partleft] at (0,0) {...};
+  \begin{scope}[shift={(\ByteWidht,0)}]
+     \node[databox=3,fill=lightgray] at (1*\ByteWidht,0) {};
+     \foreach \x/\d in {0/{3}, 1/{2}, 2/{1}}{
+       \node[databox=1,text=brown] (tmp\x) at (3*\ByteWidht + \x*\ByteWidht,0) {\d};
+       \node[text=green!80!black, below=0.03cm of tmp\x,scale=0.5] {+\x};
+     }
+  \end{scope}
+  \node[partright] at (7*\ByteWidht,0) {...};
+}
+\only<3>{
+  \node[linkedbyte] (headofstack) at (tmp0) {};
+  \node[text=black, above=of headofstack] (ESP) {ESP};
+  \draw[->,draw=violet,thick] (ESP) -- (headofstack);
+}
+\only<4>{
+  \node[partleft] (tmp) at (0,0) {...};
+  \node[databox=3,fill=lightgray, right=-\pgflinewidth of tmp] (tmp) {};
+  \node[databox=4,text=brown,right=-\pgflinewidth of tmp] (tmpx) {1234567890};
+  \node[linkedbyte,right=-\pgflinewidth-\DeltaWidht of tmp] (headofstack) {};
+  \node[text=black, above=of headofstack] (ESP) {ESP};
+  \draw[->,draw=violet,thick] (ESP) -- (headofstack);
+  \node[databox=2,text=brown,right=-\pgflinewidth of tmpx] (tmpx) {1234};
+  \node[databox=1,text=blue,right=-\pgflinewidth of tmpx] (tmpx) {'A'};
+  \node[databox=1,text=blue,right=-\pgflinewidth of tmpx] (tmpx) {'B'};
+  \node[partright,right=-\pgflinewidth of tmpx] {...};
+}
+      \end{tikzpicture}
+    \end{figure}
+  \end{block}
+  \begin{block}{}
+    \begin{itemize}
+      \only<1>{%
+        \item Теперь рассмотрим как стек храниться в памяти.
+        \item Повернём его на бок.
+        \item Тогда элементы стека будут расположены как в массиве
+      }
+      \only<2>{%
+        \item И представление стека в памяти может быть таким.
+      }
+      \only<3>{%
+        \item Добавим ссылку на вершину (позже узнаем почему именно ESP).
+      }
+      \only<4>{%
+        \item В стеке могут храниться не только однобайтовые элементы.
+        \item Но вершина стека --- это первый хранящейся байт в нём.
+      }
+    \end{itemize}
+  \end{block}
+\end{frame}
 
 \end{document}
