@@ -21,6 +21,7 @@
 \usetikzlibrary{topaths}
 \usetikzlibrary{positioning}
 \usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.pathreplacing}
 
 \newcommand*{\ByteWidht}{0.9cm}
 \newcommand*{\ByteHeight}{0.6cm}
@@ -324,6 +325,83 @@
       \item Регистры имеют имена: EAX, AX, ESP, EIP и т.д.
       \item Регистры разбиваются на функциональные группы, и не все они могут быть доступны программисту.
       \item В рамках курса мы рассмотрим только несколько видов регистров, доступных при программировании прикладного ПО.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}\frametitle{Регистр AX}
+  \begin{block}{Регистр}
+    \begin{figure}
+      \begin{tikzpicture}
+\only<1>{
+  \node[databox=2,text=brown] (AX) at (0,0) {};
+  \node[left=0cm of AX] {AX};
+}
+\only<2>{
+  \node[databox=1] (AH) at (0,0) {B2};
+  \node[databox=1,right=-\pgflinewidth of AH] (AL) {A1};
+  \node[left=0cm of AH] {AX};
+  \node[above=0cm of AH] {AH};
+  \node[above=0cm of AL] {AL};
+}
+\only<3,4>{
+  \node[databox=2] (EA16) at (0,0) {};
+  \node[databox=1,right=-\pgflinewidth of EA16] (AH){};
+  \node[databox=1,right=-\pgflinewidth of AH] (AL) {};
+  \node[above=0cm of AH] {AH};
+  \node[above=0cm of AL] {AL};
+  \draw [decorate,decoration={brace,amplitude=5pt,mirror,raise=1pt}]
+    (1*\ByteWidht,-0.5*\ByteHeight) -- (3*\ByteWidht,-0.5*\ByteHeight) node [midway,yshift=-12pt] {AX} ;
+}
+\only<3>{
+  \node[left=0cm of EA16] {EAX};
+}
+\only<4>{
+  \node[databox=4,left=-\pgflinewidth of EA16] (RA32) {};
+  \node[left=0cm of RA32] {RAX};
+  \draw [decorate,decoration={brace,amplitude=5pt,mirror,raise=1pt}]
+    (-1*\ByteWidht,-0.5*\ByteHeight-15pt) -- (3*\ByteWidht,-0.5*\ByteHeight-15pt) node [midway,yshift=-12pt] {EAX} ;
+}
+\only<5>{
+  \node[databox=1,text=brown] (EAX) at (0,0) {1234567890};
+  \node[left=0cm of EAX] {EAX};
+}
+      \end{tikzpicture}
+    \end{figure}
+  \end{block}
+  \begin{block}{}
+    \begin{itemize}
+      \only<1>{%
+        \item AX --- 16-битный регистр общего назначения.
+      }
+      \only<2>{%
+        \item Для доступа к младшему байту регистра AX используется имя AL.
+        \item Для доступа к старшему байту регистра AX используется имя AH.
+        \item В приведённом примере:
+        \begin{itemize}
+          \item AX=0xB2A2,
+          \item AH=0xB2,
+          \item AL=0xA1
+        \end{itemize}
+        \item Внимание!!! Регистры AL, AH, AX используют те же самые два байта в памяти!!!
+      }
+      \only<3>{%
+        \item В 32-битном режиме регистр AX расширяется до регистра EAX.
+        \item Доступ к частям регистра сохраняется.
+        \item Например, для EAX=0xD4C3B2A1 получим, что:
+        \begin{itemize}
+          \item AX=0xB2A2,
+          \item AH=0xB2,
+          \item AL=0xA1
+        \end{itemize}
+      }
+      \only<4>{%
+        \item В 64-битном режиме регистр AX расширяется до регистра RAX.
+        \item Все те же свойства, как и в 32-битном режиме, для регистра сохраняются.
+      }
+      \only<5>{%
+        \item Для сокращения размера изображения, будем обозначать регистр простым блоком, т.к. его размер известен.
+      }
     \end{itemize}
   \end{block}
 \end{frame}
