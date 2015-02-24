@@ -22,6 +22,7 @@
 \usetikzlibrary{positioning}
 \usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{backgrounds}
 
 \newcommand*{\ByteWidht}{0.9cm}
 \newcommand*{\ByteHeight}{0.6cm}
@@ -63,9 +64,22 @@
   },
   linkedbyte/.style={shape=rectangle,rounded corners,draw=green!80!black,dashed,%
      minimum width=\ByteWidht+2*\DeltaWidht, minimum height=\ByteHeight+2*\DeltaWidht
-  }
+  },
+  code/.style={shape=rectangle, draw=green!50!black, anchor=north west, outer sep=0, inner sep = 0},
+  qahigh/.style={fill=lightgray, minimum height=\baselineskip, inner sep=0, inner ysep=0, anchor=north west}
 }
 
+\newcommand{\qahigh}[1]{%
+  \foreach \x in {#1} {%
+    \node[qahigh] at (0, 1 * \baselineskip + -1 * \x * \baselineskip) {
+% Example for use of graphics for highlighting
+% uncomment and set graphics file for usage
+%        \begin{flushright}
+%        \includegraphics[height=\baselineskip]{graphics/left-arrow.pdf}
+%        \end{flushright}
+    };
+  }
+}
 
 \usepackage{bytefield}
 \newcommand{\colorbitbox}[3]{%
@@ -80,6 +94,31 @@
 	}
 	\rlap{\bitbox{16}{\color{white}\rule{\width}{\height}}}%
 \bitbox{16}{#4} % print box with caption
+}
+
+\usepackage{listings}
+\lstset{
+        basicstyle=\ttfamily,
+        keywordstyle=\bf,
+        stringstyle=\bf,
+        commentstyle=\it,
+        showspaces=false,
+        showstringspaces=false,
+        showtabs=true,
+        tabsize=4,
+        breaklines=true,
+	extendedchars=true,
+	language={[x86masm]Assembler},
+	morekeywords={global, extern, section, .text, .bss},
+        escapeinside=\`\`,
+        moredelim=**[is][\it]{`}{`},
+        numbers=left,
+        numberstyle=\tiny,
+        numbersep=5pt,
+        lineskip=0pt,aboveskip=0pt,belowskip=0pt, % Уменьшаем отступы для вставки в tikz
+        framesep=0pt,rulesep=0px,framerule=0pt,   %
+%        xleftmargin=8mm,
+%        frame=single,framexleftmargin=8mm, xleftmargin=8mm,
 }
 
 \begin{document}
@@ -404,6 +443,112 @@
       }
     \end{itemize}
   \end{block}
+\end{frame}
+
+\begin{frame}\frametitle{Список регистров}
+  \footnotesize
+  \begin{columns}[T]
+    \begin{column}[T]{5.5cm}
+      \begin{block}{Общего назначения}
+        \begin{itemize}
+          \item RAX,EAX,AX,AH,AL (Аккумулятор)
+          \item RBX,EBX,BX,BH,BL
+          \item RCX,ECX,CX,CH,CL (Счётчик)
+          \item RDX,EDX,DX,DH,DL
+          \item R8-R15
+        \end{itemize}
+      \end{block}
+      \begin{block}{Сегментные}
+        \begin{itemize}
+          \item CS (Code Segment)
+          \item DS (Data Segment)
+          \item SS (Stack Segment)
+          \item ES (Extra Segment)
+          \item FS
+          \item GS
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}[T]{5.5cm}
+      \begin{block}{Ссылки}
+        \begin{itemize}
+          \item RIP,EIP,IP (Следующая команда)
+          \item RSP,ESP,SP,SPL (Стек)
+          \item RBP,EBP,BP,BPL
+          \item RSI,ESI,SI,SIL (Источник)
+          \item RDI,EDI,DI,DIL (Назначение)
+        \end{itemize}
+      \end{block}
+      \begin{block}{Регистр флагов}
+        \begin{itemize}
+          \item RFLAGS,EFLAGS,FLAGS
+        \end{itemize}
+      \end{block}
+      \begin{block}{Системные регистры}
+        \begin{itemize}
+          \item ...
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Структура программы на Ассемблере}
+  \begin{columns}[T]
+    \begin{column}[T]{6cm}
+      \begin{exampleblock}{Hello world}
+        \begin{figure}
+          \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
+%\tikzstyle{qahigh}=[fill=lightgray,text width=1.6\textwidth,%
+%           minimum height=\baselineskip, inner sep=0, inner ysep=0, anchor=north west]
+\node[code] at (0,0) {%
+  \begin{minipage}{1.6\textwidth}
+    \begin{lstlisting}[]
+global  _main
+extern  _ExitProcess@4
+extern  _printf
+
+section .text   use32
+_main:
+        push    msg
+        call    _printf
+
+        xor     eax, eax
+        push    eax
+        call    _ExitProcess@4
+section .data
+msg     db "Hello World!!!", 13, 10, 0
+    \end{lstlisting}
+  \end{minipage}
+};
+\begin{pgfonlayer}{background}
+  \begin{scope}[every node/.style={scale=0.6, text width=1.6\textwidth}]
+    \only<1>{\qahigh{1,2,3,6}}
+    \only<2>{\qahigh{5,13}}
+    \only<3>{\qahigh{7,...,12}}
+    \only<4>{\qahigh{14}}
+  \end{scope}
+\end{pgfonlayer}
+          \end{tikzpicture}
+        \end{figure}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[T]{4cm}
+      \begin{block}{}
+\only<1>{Объявление глобальных и используемых имён.
+
+\footnotesize\it {\bf global} --- сообщаем какие имена необходимо сделать видимыми в создаваемом объектном файле.
+
+{\bf extern} --- какие имена нам понадобятся из других объектных файлов. Т.е., например, функции внешних библиотек.}
+\only<2>{Объявление секций кода и данных.}
+\only<3>{Код программы.
+
+\footnotesize\it Как правило, используется выравнивание кода по трём колонкам шириной 8 символов:
+метки, команды, параметры.}
+\only<4>{Константы}
+      \end{block}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \end{document}
