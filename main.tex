@@ -28,6 +28,8 @@
 \usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{backgrounds}
+\usepackage{transparent}
+\setbeamercovered{transparent}
 
 \newcommand*{\ByteWidht}{0.9cm}
 \newcommand*{\ByteHeight}{0.6cm}
@@ -607,24 +609,24 @@ msg     db "Hello World!!!", 13, 10, 0
 %% Команды языка Ассемблер: mov
 %%
 \begin{frame}\frametitle{Команды языка Ассемблер: mov}
-  \begin{block}{Прототип}
+  \begin{block}<1->{Прототип}
     \cl{mov \{приёмник\}, \{источник\}}
   \end{block}
-  \begin{block}{}
+  \begin{block}<1->{}
     \begin{itemize}
       \item Команда \cl{mov} копирует значение из источника в приёмник.
       \item Приёмником может выступать регистр или участок памяти. Источником --- регистр, участок памяти или значение.
       \item Приёмник и источник должны быть одного размера.
     \end{itemize}
   \end{block}
-  \begin{exampleblock}{Примеры}
+  \begin{exampleblock}<2->{Примеры}\footnotesize
     \cl{mov eax, 123} \texttt{\it; Поместить в регист eax число 123}
 
     \cl{mov eax, [A]} \texttt{\it; Поместить в регист eax значение переменной A}
 
     \cl{mov eax, msg} \texttt{\it; Поместить в регист eax адрес переменной msg}
   \end{exampleblock}
-  \begin{alertblock}{Неправильные примеры}
+  \begin{alertblock}<3->{Неправильные примеры}\footnotesize
     \cl{mov al, cx}
   \end{alertblock}
 \end{frame}
@@ -634,16 +636,16 @@ msg     db "Hello World!!!", 13, 10, 0
 %% Команды языка Ассемблер: add
 %%
 \begin{frame}\frametitle{Команды языка Ассемблер: add}
-  \begin{block}{Прототип}
-    \cl{add \{назначение\}, \{источник/значение\}}
+  \begin{block}<1->{Прототип}
+    \cl{add \{приёмник\}, \{источник\}}
   \end{block}
-  \begin{block}{}
+  \begin{block}<1->{}
     \begin{itemize}
-      \item Команда сложения двух одинаковых целых чисел (\{назначение\} и \{источник/значение\}).
-      \item Результат сложения помещается в \{назначение\}.
+      \item Команда сложения двух одинаковых целых чисел (\{приёмник\} и \{источнике\}).
+      \item Результат сложения помещается в \{приёмник\}.
     \end{itemize}
   \end{block}
-  \begin{exampleblock}{Примеры}
+  \begin{exampleblock}<2->{Примеры}\footnotesize
     \cl{add eax, 123} \texttt{\it; Прибавить к регистру eax число 123}
 
     \cl{add eax, ebx} \texttt{\it; Прибавить к регистру eax регистр ebx}
@@ -789,7 +791,44 @@ my_sum:
 %% Соглашение о вызове
 %%
 \begin{frame}\frametitle{Соглашение о вызове}
-  \begin{block}{}
+  \begin{block}<1->{Определение}
+    {\bf Соглашение о вызове} (англ. {\it calling convention}) --- часть двоичного интерфейса приложений (англ. {\it application binary interface, ABI}), которая регламентирует технические особенности вызова подпрограммы, передачи параметров, возврата из подпрограммы и передачи результата вычислений в точку вызова. [Wiki]
+  \end{block}
+  \begin{block}<2->{}
+    Как правило, соглашение о вызове определяется из:
+    \begin{itemize}
+      \item Архитектуры компьютера (в том числе и разрядности режима процессора).
+      \item Операционной системы.
+      \item Языка программирования.
+    \end{itemize}
   \end{block}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Соглашение о вызове
+%%
+\begin{frame}\frametitle{Соглашение о вызове}
+  \begin{block}{Что определяет}
+    \begin{itemize}
+      \item Как передать параметры.
+      \begin{itemize}
+        \item Через регистры или стек.
+        \item В каком порядке.
+      \end{itemize}
+      \item<2-> Как вернуть результат.
+      \begin{itemize}
+        \item Через регистры или стек.
+        \item Кто выделяет память для больших результатов.
+      \end{itemize}
+      \item<3-> Какие регистры можно изменить в подпрограмме.
+      \item<4> Кто очистит стек, если он использовался для передачи параметров.
+      \item<4> Какие суффиксы и префиксы используются для имён подпрограмм.
+      \item<4> Какое выравнивание использовать для элементов в стеке/памяти.
+      \item<4> Какие типы чисел разрешены.
+      \item<4> ...
+    \end{itemize}
+  \end{block}
+\end{frame}
+
 \end{document}

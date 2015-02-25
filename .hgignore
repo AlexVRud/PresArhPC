@@ -7,4 +7,5 @@ syntax:glob
 *.snm
 *.toc
 *.vrb
+*.gz
 *~
