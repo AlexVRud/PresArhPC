@@ -739,7 +739,8 @@ my_sum:
     \node[databox=1,right=-\pgflinewidth of data1] (data) {?};
   }
   \only<7>{%
-    \node[databox=5,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {};
+    \node[databox=1,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {};
+    \node[databox=4,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {32};
     \node[databox=4,right=-\pgflinewidth of tmp] (rptr) {return ptr};
     \node[databox=4,right=-\pgflinewidth of rptr] (data2) {32};
     \node[databox=4,right=-\pgflinewidth of data2] (data1) {43};
@@ -768,6 +769,14 @@ my_sum:
        to[out=180,in=0] ($(headofstack)+(0.5*\ByteWidht,\ByteHeight)$)
        to[out=180,in=90] (headofstack);
 }
+%
+\only<2>{\draw [->,draw=blue,dotted] (EBX) to[out=-90,in=90] (data2);}
+\only<2>{\draw [->,draw=blue,dotted] (ECX) to[out=-90,in=90] (data1);}
+\only<4>{\draw [->,draw=blue,dotted] (EBX) to[out=-90,in=60] (data3);}
+\only<5>{\draw [->,draw=blue,dotted] (data2) to[out=135,in=-90] (EAX);}
+\only<5>{\draw [->,draw=blue,dotted] (data1) to[out=135,in=-90] (EBX);}
+\only<6>{\draw [->,draw=blue,dotted] (EBX) to[out=-120,in=-60] node[below,text=blue,scale=0.5]{32+43} (EAX);}
+\only<7>{\draw [->,draw=blue,dotted] (tmp) to[out=60,in=-90] (EBX);}
 %
 \begin{pgfonlayer}{background}
   \begin{scope}[scale=0.5, every node/.style={scale=0.5, text width=1.5\textwidth}]
