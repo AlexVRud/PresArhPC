@@ -244,6 +244,51 @@
 %% Основные элементы
 %%
 \begin{frame}[fragile]\frametitle{Основные элементы}
+  \begin{block}{Листинг}
+    \begin{figure}
+      \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
+        \node[fill=white] at (0,0) {%
+          \begin{minipage}{1.3\textwidth}
+\begin{verbatim}
+     1                                  global  _main
+     2                                  extern  _ExitProcess@4
+     3                                  extern  _printf
+     4
+     5                                  section .text   use32
+     6                                  _main:
+     7 00000000 A1[1D000000]                    mov     eax, [A]
+     8 00000005 50                              push    eax
+     9 00000006 8B1D[21000000]                  mov     ebx, [B]
+    10 0000000C 53                              push    ebx
+    11 0000000D 01D8                            add     eax, ebx
+    12 0000000F 50                              push    eax
+    13 00000010 68[00000000]                    push    msg
+    14 00000015 E8(00000000)                    call    _printf
+    15 0000001A B800000000                      mov     eax, 0
+    16 0000001F 31C0                            xor     eax, eax
+    17 00000021 50                              push    eax
+    18 00000022 E8(00000000)                    call    _ExitProcess@4
+    19
+    20                                  section .data
+    21 00000000 41203D2025640D0A        msg     db "A = %d", 13, 10,
+    22 00000008 42203D2025640D0A                db "B = %d", 13, 10,
+    23 00000010 41202B2042203D2025-             db "A + B = %d", 13, 10, 0
+    24 00000019 640D0A00
+    25 0000001D D4C3B2A1                A       dd 0xA1B2C3D4
+    26 00000021 AE080000                B       dd 2222
+\end{verbatim}
+          \end{minipage}
+        };
+      \end{tikzpicture}
+    \end{figure}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Основные элементы
+%%
+\begin{frame}[fragile]\frametitle{Основные элементы}
   \begin{block}{Дамп памяти}
     \begin{figure}
       \begin{tikzpicture}[scale=0.48, every node/.style={scale=0.48}]
@@ -281,51 +326,6 @@
 000001c0  00 00 21 00 00 00 02 00  00 00 03 00 40 66 65 61  |..!.........@fea|
 000001d0  74 2e 30 30 01 00 00 00  ff ff 00 00 03 00 13 00  |t.00............|
 000001e0  00 00 5f 45 78 69 74 50  72 6f 63 65 73 73 40 34  |.._ExitProcess@4|
-\end{verbatim}
-          \end{minipage}
-        };
-      \end{tikzpicture}
-    \end{figure}
-  \end{block}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% Основные элементы
-%%
-\begin{frame}[fragile]\frametitle{Основные элементы}
-  \begin{block}{Листинг}
-    \begin{figure}
-      \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
-        \node[fill=white] at (0,0) {%
-          \begin{minipage}{1.3\textwidth}
-\begin{verbatim}
-     1                                  global  _main
-     2                                  extern  _ExitProcess@4
-     3                                  extern  _printf
-     4
-     5                                  section .text   use32
-     6                                  _main:
-     7 00000000 A1[1D000000]                    mov     eax, [A]
-     8 00000005 50                              push    eax
-     9 00000006 8B1D[21000000]                  mov     ebx, [B]
-    10 0000000C 53                              push    ebx
-    11 0000000D 01D8                            add     eax, ebx
-    12 0000000F 50                              push    eax
-    13 00000010 68[00000000]                    push    msg
-    14 00000015 E8(00000000)                    call    _printf
-    15 0000001A B800000000                      mov     eax, 0
-    16 0000001F 31C0                            xor     eax, eax
-    17 00000021 50                              push    eax
-    18 00000022 E8(00000000)                    call    _ExitProcess@4
-    19
-    20                                  section .data
-    21 00000000 41203D2025640D0A        msg     db "A = %d", 13, 10,
-    22 00000008 42203D2025640D0A                db "B = %d", 13, 10,
-    23 00000010 41202B2042203D2025-             db "A + B = %d", 13, 10, 0
-    24 00000019 640D0A00
-    25 0000001D D4C3B2A1                A       dd 0xA1B2C3D4
-    26 00000021 AE080000                B       dd 2222
 \end{verbatim}
           \end{minipage}
         };
