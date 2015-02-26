@@ -247,7 +247,7 @@
   \begin{block}{Листинг}
     \begin{figure}
       \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
-        \node[fill=white] at (0,0) {%
+        \node[fill=white,anchor=north west, outer sep=0, inner sep = 3pt] at (0,0) {%
           \begin{minipage}{1.3\textwidth}
 \begin{verbatim}
      1                                  global  _main
@@ -279,6 +279,10 @@
 \end{verbatim}
           \end{minipage}
         };
+\only<2>{
+        \draw[scale=0.6,draw=red] (2pt+16*8.8pt,-2pt-24*20pt) rectangle ++(8*8.8pt+1pt,-1*16pt);
+        \draw[scale=0.6,draw=red] (2pt+51*8.8pt,-2pt-24*20pt) rectangle ++(10*8.8pt+1pt,-1*16pt);
+};
       \end{tikzpicture}
     \end{figure}
   \end{block}
