@@ -58,6 +58,9 @@
   \begin{block}<1->{Определение}
     \textbf{Архитектура компьютера} "---  это описание его организации и принципов функционирования его структурных элементов. Включает основные устройства ЭВМ и структуру связей между ними.
   \end{block}
+  \begin{block}<2->{О чём пойдёт речь}
+    В рамках дисциплины мы должны понять как работает компьютер и программное обеспечение на нём.
+  \end{block}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -65,68 +68,113 @@
 %% Вопрос
 %%
 \begin{frame}{Вопрос}
-  \begin{columns}[T]
-    \begin{column}[T]{5cm}  
+  \begin{columns}[c]
+    \begin{column}[]{0.5\textwidth}  
       \begin{alertblock}<1->{Что это?}
         \begin{figure}
           \includegraphics[width=\textwidth]{images/DifferenceEngine.jpg}
         \end{figure}
       \end{alertblock}
     \end{column}
-    \begin{column}[T]{8cm}
-      \begin{exampleblock}<2->{Разностная машина Чарльза Бэббиджа}
+  \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Вопрос
+%%
+\begin{frame}{Вопрос}
+  \begin{columns}[c]
+    \begin{column}[]{0.35\textwidth}  
+      \begin{alertblock}<1->{Что это?}
+        \begin{figure}
+          \includegraphics[width=\textwidth]{images/DifferenceEngine.jpg}
+        \end{figure}
+      \end{alertblock}
+    \end{column}
+    \begin{column}[]{0.55\textwidth}
+      \begin{exampleblock}<1->{Разностная машина Чарльза Бэббиджа}
         \begin{columns}[]
           \column{2cm}
             \includegraphics[width=\textwidth]{images/CharlesBabbage.jpg}
           \column{5.7cm}
               \setlength{\leftmargini}{5pt}
             \begin{itemize}
-              \item До: Суммирующая машина Паскаля (1642 г.)
+              \item До: Суммирующая машина Паскаля (1642 г.).
               \item Применение: Вычисление логарифмических таблиц.
               \item Первая статья: 1822 г.
-              \item Реализация: Георг Шутц, 1854 г.
+              \item Реализация работающей копии: 1989-1991 гг.
             \end{itemize}
         \end{columns}
         \begin{itemize}
-          \item Прообраз для: Аналитической машины
+          \item Прообраз для: Аналитической машины.
+          \item На её основе в 1854 г. Георг Шутц строит более простую <<машину вычислений>>.
+          \item Р.С.~Гутер, Ю.Л.~Полунов <<От абака до компьютера>>
         \end{itemize}
       \end{exampleblock}
     \end{column}
   \end{columns}
 \end{frame}
 
-\begin{frame}{Quiz}
-    \begin{block}{Frage}
-        With generics the compiler has more information about the 
-        types of the objects, so explicit casts don't have to be used 
-        and the compiler can produce type safe code.
 
-        What implications have the generics for the runtime 
-        performance of the  program which uses them?
-    \end{block}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% 
+%%
+\begin{frame}{Аналитическая машина Чарльза Бэббиджа}
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Реализация}
+        \begin{center}
+          \includegraphics[height=.33\textheight]{images/AnalyticalEngineMill.jpg}\ 
+          \includegraphics[height=.33\textheight]{images/AnalyticalEngineModel.jpg}\ 
+          \includegraphics[height=.33\textheight]{images/AnalyticalEnginePunchedCards.jpg}
+        \end{center}
+      \end{exampleblock}
+      \begin{block}{Состав}
+        \begin{itemize}
+          \item {<<Склад>>}.
+          \item {<<Мельница>>}.
+          \item Устройство управления.
+          \item Устройства ввода и вывода данных.
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<1->{Интересные факты}
+        \begin{itemize}
+          \item {<<Склад>>} в 1000 чисел по 50 десятичных знаков.
+          \item Система предварительного (сквозного) переноса при сложении.
+          \item Ввод команд для мельницы и склада через  свои перфокарты (отдельные потоки для данных и команд).
+          \item Условный переход в обе стороны.
+          \item Первая программа: ???
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
 
-    \begin{overprint}
-      \onslide<1>
-      \begin{itemize}
-      \item With the generics the compiler can optimize the code for 
-        used types. This and the omission of the casts are the 
-        reasons why the code compiled with the generics is 
-        \textbf{quicker} than the one compiled without.
-      \item The usage of generics has \textbf{no implications} for 
-        the runtime performance of the compiled programs.
-      \item The improved flexibility and type safety means that the 
-        compiler has to generate concrete implementation from 
-        the generic template for each used type. This means 
-        that applications start \textbf{a bit slower}.
-      \end{itemize}
-      \onslide<2>
-      The Java Virtual Machine and the copiled byte code are Generics 
-      agnostic. The comiled byte code does not differ from byte code 
-      compiled from sources which don't use the generics.
-      So using the generics has \textbf{no impact} on the runtime 
-      performance of compiled Java code.
-    \end{overprint}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% 
+%%
+\begin{frame}{}
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{}
+        \begin{center}
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<1->{}
+        \begin{itemize}
+          \item
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
 
-  \end{frame}
-  \end{document}
+\end{document}
 
