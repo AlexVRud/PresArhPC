@@ -27,8 +27,10 @@
 \usepackage{xcolor}
 
 \usepackage{tikz}
+\usetikzlibrary{arrows}
 \usetikzlibrary{babel}
 \usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
 
 \tikzset{
   MyChar/.style={
@@ -37,8 +39,6 @@
     minimum width=4.8mm,
     very thick, draw=black!50,
     top color=white,bottom color=black!20,
-    font=\ttfamily,
-    text height=1.5ex,text depth=.25ex,
   },
 }
 
@@ -148,6 +148,38 @@
           \item Ввод команд для мельницы и склада через  свои перфокарты (отдельные потоки для данных и команд).
           \item Условный переход в обе стороны.
           \item Первая программа: ???
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% 
+%%
+\begin{frame}{Архитектура фон Неймана}
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Схема}
+        \begin{center}
+          \begin{tikzpicture}
+\node[MyChar, minimum width=3cm, minimum height=1.5cm, text width=2.7cm, align=center] (ALU) at (0,0) {Арифметико-\\логическое\\устройство};
+\node[MyChar, minimum width=3cm, minimum height=1.5cm, text width=2.7	cm, align=center] (UU) at (-3.5cm,0) {Управляющее\\устройство};
+\node[MyChar, minimum width=6.5cm] (MEM) at (-1.75cm,1.5cm) {Запоминающее устройство};
+\node[MyChar, minimum width=6.5cm] (INOUT) at (-1.75cm,-1.5cm) {Устройства ввода/вывода};
+\draw[->,double,draw=black!80] (UU) to (UU |- MEM.south);
+\draw[->,double,draw=black!80] (UU) to (UU |- INOUT.north);
+\draw[<->,double,draw=black!80] (ALU) to (ALU |- MEM.south);
+\draw[<->,double,draw=black!80] (ALU) to (ALU |- INOUT.north);
+          \end{tikzpicture}
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<1->{}
+        \begin{itemize}
+          \item
         \end{itemize}
       \end{block}
     \end{column}
