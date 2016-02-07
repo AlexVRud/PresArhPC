@@ -27,7 +27,7 @@
 \usepackage{xcolor}
 
 \usepackage{tikz}
-\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
 \usetikzlibrary{babel}
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
@@ -159,29 +159,37 @@
 %% 
 %%
 \begin{frame}{Архитектура фон Неймана}
-  \begin{columns}[T]
+  \begin{columns}[c]
     \begin{column}[]{0.45\textwidth}  
       \begin{exampleblock}<1->{Схема}
         \begin{center}
           \begin{tikzpicture}
 \node[MyChar, minimum width=3cm, minimum height=1.5cm, text width=2.7cm, align=center] (ALU) at (0,0) {Арифметико-\\логическое\\устройство};
 \node[MyChar, minimum width=3cm, minimum height=1.5cm, text width=2.7	cm, align=center] (UU) at (-3.5cm,0) {Управляющее\\устройство};
-\node[MyChar, minimum width=6.5cm] (MEM) at (-1.75cm,1.5cm) {Запоминающее устройство};
-\node[MyChar, minimum width=6.5cm] (INOUT) at (-1.75cm,-1.5cm) {Устройства ввода/вывода};
-\draw[->,double,draw=black!80] (UU) to (UU |- MEM.south);
-\draw[->,double,draw=black!80] (UU) to (UU |- INOUT.north);
-\draw[<->,double,draw=black!80] (ALU) to (ALU |- MEM.south);
-\draw[<->,double,draw=black!80] (ALU) to (ALU |- INOUT.north);
+\node[MyChar, minimum width=6.5cm] (MEM) at (-1.75cm,1.7cm) {Запоминающее устройство};
+\node[MyChar, minimum width=6.5cm] (INOUT) at (-1.75cm,-1.7cm) {Устройства ввода/вывода};
+\draw[->,very thick, draw=black!50] (UU) to (UU |- MEM.south);
+\draw[->,very thick, draw=black!50] (UU) to (UU |- INOUT.north);
+\draw[<->,very thick, draw=black!50] (ALU) to (ALU |- MEM.south);
+\draw[<->,very thick, draw=black!50] (ALU) to (ALU |- INOUT.north);
           \end{tikzpicture}
         \end{center}
       \end{exampleblock}
     \end{column}
     \begin{column}[]{0.45\textwidth}  
-      \begin{block}<1->{}
+      \begin{block}<2->{Принципы}
         \begin{itemize}
-          \item
+          \item Однородности памяти.
+          \item Адресности.
+          \item Программного управления.
+          \item Двоичного кодирования.
         \end{itemize}
       \end{block}
+      \begin{exampleblock}<3->{EDSAC, Кембридж, 1949 г.}
+        \begin{center}
+          \includegraphics[height=.33\textheight]{images/EDSAC.jpg}
+        \end{center}
+      \end{exampleblock}
     \end{column}
   \end{columns}
 \end{frame}
