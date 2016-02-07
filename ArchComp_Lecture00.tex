@@ -69,29 +69,19 @@
 %%
 \begin{frame}{Вопрос}
   \begin{columns}[c]
+\only<1>{
     \begin{column}[]{0.5\textwidth}  
-      \begin{alertblock}<1->{Что это?}
-        \begin{figure}
-          \includegraphics[width=\textwidth]{images/DifferenceEngine.jpg}
-        \end{figure}
-      \end{alertblock}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% Вопрос
-%%
-\begin{frame}{Вопрос}
-  \begin{columns}[c]
+}
+\only<2>{
     \begin{column}[]{0.35\textwidth}  
+}
       \begin{alertblock}<1->{Что это?}
         \begin{figure}
           \includegraphics[width=\textwidth]{images/DifferenceEngine.jpg}
         \end{figure}
       \end{alertblock}
     \end{column}
+\only<2>{
     \begin{column}[]{0.55\textwidth}
       \begin{exampleblock}<1->{Разностная машина Чарльза Бэббиджа}
         \begin{columns}[]
@@ -113,6 +103,7 @@
         \end{itemize}
       \end{exampleblock}
     \end{column}
+}
   \end{columns}
 \end{frame}
 
