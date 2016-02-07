@@ -147,7 +147,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%% 
+%% Архитектура фон Нейман
 %%
 \begin{frame}{Архитектура фон Неймана}
   \begin{columns}[c]
@@ -159,8 +159,8 @@
 \node[MyChar, minimum width=3cm, minimum height=1.5cm, text width=2.7	cm, align=center] (UU) at (-3.5cm,0) {Управляющее\\устройство};
 \node[MyChar, minimum width=6.5cm] (MEM) at (-1.75cm,1.7cm) {Запоминающее устройство};
 \node[MyChar, minimum width=6.5cm] (INOUT) at (-1.75cm,-1.7cm) {Устройства ввода/вывода};
-\draw[->,very thick, draw=black!50] (UU) to (UU |- MEM.south);
-\draw[->,very thick, draw=black!50] (UU) to (UU |- INOUT.north);
+\draw[<->,very thick, draw=black!50] (UU) to (ALU);
+\draw[<->,very thick, draw=black!50] (UU) to (UU |- MEM.south);
 \draw[<->,very thick, draw=black!50] (ALU) to (ALU |- MEM.south);
 \draw[<->,very thick, draw=black!50] (ALU) to (ALU |- INOUT.north);
           \end{tikzpicture}
@@ -176,9 +176,69 @@
           \item Двоичного кодирования.
         \end{itemize}
       \end{block}
-      \begin{exampleblock}<3->{EDSAC, Кембридж, 1949 г.}
+      \begin{exampleblock}<3->{EDSAC, Кембриджский университет, 1949 г.}
         \begin{center}
           \includegraphics[height=.33\textheight]{images/EDSAC.jpg}
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Узкое место архитектуры фон Неймана
+%%
+\begin{frame}{Узкое место архитектуры фон Неймана}
+  \begin{columns}[c]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Обращение к памяти}
+        \begin{center}
+          Тут было НЛО и украло рисунок.
+%% TODO: Схема обращения ЦПУ к памяти вв которой в разных местак храняться команды и данные
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{alertblock}<1->{Проблема}
+        Совместное использование шины для памяти программ и памяти данных.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Гарвардская архитектура
+%%
+\begin{frame}{Гарвардская архитектура	}
+  \begin{columns}[c]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Схема}
+        \begin{center}
+          \begin{tikzpicture}
+\node[MyChar, minimum width=6.7cm, minimum height=1.7cm] (CPU) at (-1.75,0) {};
+\node[MyChar, minimum width=3cm, minimum height=1.5cm, text width=2.7cm, align=center] (ALU) at (0,0) {Арифметико-\\логическое\\устройство};
+\node[MyChar, minimum width=3cm, minimum height=1.5cm, text width=2.7	cm, align=center] (UU) at (-3.5cm,0) {Управляющее\\устройство};
+\node[MyChar, minimum width=3.25cm] (MEMP) at (-3.375cm,1.7cm) {ЗУ программ};
+\node[MyChar, minimum width=3.25cm] (MEMD) at (-0.125cm,1.7cm) {ЗУ данных};
+\node[MyChar, minimum width=6.5cm] (INOUT) at (-1.75cm,-1.7cm) {Устройства ввода/вывода};
+\draw[<->,very thick, draw=black!50] (ALU |- CPU.south) to (ALU |- INOUT.north);
+\draw[<->,very thick, draw=black!50] (ALU |- CPU.north) to (ALU |- MEMD.south);
+\draw[<->,very thick, draw=black!50] (UU |- CPU.north) to (UU |- MEMP.south);
+          \end{tikzpicture}
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<1->{Основное отличие}
+        \begin{itemize}
+          \item Процессор может читать инструкции и выполнять доступ к памяти данных одновременно.
+        \end{itemize}
+      \end{block}
+      \begin{exampleblock}<2->{Mark I, Гарвардский университет и IBM, 1944 г.}
+        \begin{center}
+          \includegraphics[height=.33\textheight]{images/HarvardMarkI.jpg}
         \end{center}
       \end{exampleblock}
     \end{column}
