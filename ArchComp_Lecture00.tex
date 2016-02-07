@@ -1,6 +1,17 @@
 \documentclass[pdf,9pt,aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\secname\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
 \usepackage{DejaVuSans}
 \usepackage{DejaVuSerif}
 \usepackage{DejaVuSansMono}
@@ -110,7 +121,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%% 
+%% Аналитическая машина Чарльза Бэббиджа
 %%
 \begin{frame}{Аналитическая машина Чарльза Бэббиджа}
   \begin{columns}[T]
@@ -144,6 +155,8 @@
     \end{column}
   \end{columns}
 \end{frame}
+
+\section[Введение в архитектуру ЭВМ]{Введение в архитектуру ЭВМ}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
