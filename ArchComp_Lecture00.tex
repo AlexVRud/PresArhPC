@@ -38,9 +38,13 @@
 \usepackage{xcolor}
 
 \usepackage{tikz}
+\usetikzlibrary{arrows}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{babel}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{fit}
 \usetikzlibrary{shapes}
+\usetikzlibrary{shapes.geometric}
 \usetikzlibrary{positioning}
 
 \tikzset{
@@ -51,6 +55,13 @@
     very thick, draw=black!50,
     top color=white,bottom color=black!20,
   },
+  startstop/.style={rectangle, rounded corners=0.4cm, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30},
+  io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30},
+  process/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30},
+  decision/.style={diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30},
+  arrow/.style={thick,->,>=stealth},
+  file/.style={rectangle, draw=black, fill=white, minimum width=2cm, minimum height=1cm},
+  program/.style={rectangle, draw=black, fill=blue!20!white, rounded corners},
 }
 
 \usepackage{minted}
@@ -325,6 +336,106 @@
       \item ConEmu --- эмулятор терминала для ОС Windows.
     \end{itemize}      
   \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Процесс компиляции
+%%
+\section{Процесс компиляции}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Процесс компиляции
+%%
+\begin{frame}{Процесс компиляции}
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Компиляция программы на ЯП Си}
+        \begin{center}
+\begin{tikzpicture}[node distance=2.3cm]
+  \node [file, fill=green!20!white] (main_c) at (0,0) {main.c};
+  \node [program, right of=main_c] (gcc1) {gcc.exe};
+  \node [file, fill=red!20!white, right of=gcc1] (mainexe) {main.exe};
+  \draw [-o] (main_c) -- (gcc1);
+  \draw [->] (gcc1) -- (mainexe);
+\end{tikzpicture}
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<1->{Упрощённый вариант}
+        \begin{itemize}
+          \item Есть файл \texttt{main.c} --- программа на языке программирования Си.
+          \item Есть компилятор языка программирования Си: \texttt{gcc.exe}.
+          \item Подав на вход компилятора \texttt{gcc.exe} файл \texttt{main.c} получим программу \texttt{main.exe}
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Процесс компиляции
+%%
+\begin{frame}{Процесс компиляции}
+  \begin{exampleblock}<1->{Компиляция программы на ЯП Си: два этапа}
+    \begin{center}
+\begin{tikzpicture}[node distance=2.5cm]
+  \node [file, fill=green!20!white] (main_c) at (0,0) {main.c};
+  \node [program, right of=main_c] (gcc1) {gcc.exe};
+  \node [file, fill=yellow!20!white, right of=gcc1] (main_obj) {main.o};
+  \node [file, fill=yellow!20!white, below=1cm of main_obj, xshift=2.5cm] (other_obj) {other.o};
+  \node [program, right of=main_obj] (ld) {ld.exe};
+  \node [file, fill=red!20!white, right of=ld] (mainexe) {main.exe};
+  \node [file, fill=red!20!white, below=1cm of mainexe, xshift=2.5cm] (other_dll) {other.dll};
+  \draw [-o] (main_c) -- (gcc1);
+  \draw [->] (gcc1) -- (main_obj);
+  \draw [-o] (main_obj) -- (ld);
+  \draw [-o] (other_obj) -- (ld);
+  \draw [->] (ld) -- (mainexe);
+  \draw [->, dashed] (mainexe) -| (other_dll);
+  \draw [->, dashed] (other_obj) -- (other_dll);
+  \node [dashed, draw=blue, fit=(main_c) (main_obj), yshift=-0.02cm] (compiling) {};
+  \node [rectangle, rounded corners=0.2cm, draw=blue, fill=white,above=0.1cm of compiling] () {Компиляция};
+  \node [dashed, draw=red, fit=(main_obj) (other_obj) (mainexe), yshift=0.02cm] (linking) {};
+  \node [rectangle, rounded corners=0.2cm, draw=red, fill=white,above=0.1cm of linking] () {Компоновка};
+\end{tikzpicture}
+    \end{center}
+  \end{exampleblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Процесс компиляции
+%%
+\begin{frame}{Процесс компиляции}
+  \begin{exampleblock}<1->{Компиляция программы на ЯП Ассемблер: два этапа}
+    \begin{center}
+\begin{tikzpicture}[node distance=2.5cm]
+  \node [file, fill=green!20!white] (main_c) at (0,0) {main.asm};
+  \node [program, right of=main_c] (gcc1) {nasm.exe};
+  \node [file, fill=yellow!20!white, right of=gcc1] (main_obj) {main.obj};
+  \node [file, fill=yellow!20!white, below=1cm of main_obj, xshift=2.5cm] (other_obj) {other.o};
+  \node [program, right of=main_obj] (ld) {ld.exe};
+  \node [file, fill=red!20!white, right of=ld] (mainexe) {main.exe};
+  \node [file, fill=red!20!white, below=1cm of mainexe, xshift=2.5cm] (other_dll) {other.dll};
+  \draw [-o] (main_c) -- (gcc1);
+  \draw [->] (gcc1) -- (main_obj);
+  \draw [-o] (main_obj) -- (ld);
+  \draw [-o] (other_obj) -- (ld);
+  \draw [->] (ld) -- (mainexe);
+  \draw [->, dashed] (mainexe) -| (other_dll);
+  \draw [->, dashed] (other_obj) -- (other_dll);
+  \node [dashed, draw=blue, fit=(main_c) (main_obj), yshift=-0.02cm] (compiling) {};
+  \node [rectangle, rounded corners=0.2cm, draw=blue, fill=white,above=0.1cm of compiling] () {Компиляция};
+  \node [dashed, draw=red, fit=(main_obj) (other_obj) (mainexe), yshift=0.02cm] (linking) {};
+  \node [rectangle, rounded corners=0.2cm, draw=red, fill=white,above=0.1cm of linking] () {Компоновка};
+\end{tikzpicture}
+    \end{center}
+  \end{exampleblock}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
