@@ -225,8 +225,26 @@
     \begin{column}[]{0.45\textwidth}  
       \begin{exampleblock}<1->{Обращение к памяти}
         \begin{center}
-          Тут было НЛО и украло рисунок.
-%% TODO: Схема обращения ЦПУ к памяти вв которой в разных местак храняться команды и данные
+          \begin{tikzpicture}
+\node[MyChar, minimum width=3cm, minimum height=1.5cm, text width=2.7cm, align=center] (ALU) at (0,0) {Арифметико-\\логическое\\устройство};
+\node[MyChar, minimum width=3cm, minimum height=1.5cm, text width=2.7	cm, align=center] (UU) at (-3.5cm,0) {Управляющее\\устройство};
+\node[MyChar, minimum width=6.5cm] (MEM) at (-1.75cm,2.65cm) {Запоминающее устройство};
+\node[MyChar, top color=red!20!white,bottom color=red!40!white, minimum width=1cm] (BUS) at (-1.75cm,1.55cm) {};
+\node[MyChar, minimum width=6.5cm] (INOUT) at (-1.75cm,-1.7cm) {Устройства ввода/вывода};
+\draw[<->,very thick, draw=black!50] (UU) to (ALU);
+\draw[<->,very thick, draw=black!50] (UU) to (BUS);
+\draw[<->,very thick, draw=black!50] (ALU) to (BUS);
+\draw[<->,very thick, draw=black!50] (MEM) to (BUS);
+\draw[<->,very thick, draw=black!50] (ALU) to (ALU |- INOUT.north);
+\coordinate[yshift=0.15cm] (PM) at (-1.75cm,1.55cm);
+\coordinate[yshift=-0.15cm, xshift=-0.15cm] (PU) at (-1.75cm,1.55cm);
+\coordinate[yshift=-0.15cm, xshift=0.15cm] (PA) at (-1.75cm,1.55cm);
+\fill[black!50] (PM) circle[radius=2pt];
+\fill[black!50] (PU) circle[radius=2pt];
+\fill[black!50] (PA) circle[radius=2pt];
+\draw[very thick, draw=black!50] (PM) to (PU);
+
+          \end{tikzpicture}
         \end{center}
       \end{exampleblock}
     \end{column}
