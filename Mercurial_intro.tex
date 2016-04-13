@@ -166,43 +166,51 @@
   \begin{exampleblock}{Развитие проекта}
     \begin{center}
 \begin{tikzpicture}[node distance=3.5cm]
-\node[recept, align=center, fill=green!50] (p1t) {Меню};
-\node[recept, fill=green!20, below=-1pt of p1t] (p1milk) {Молоко};
+\fill[white,draw=gray, dashed] (-1.75cm,0.75cm) -- (12cm,0.75cm) -- (12cm,-4.75cm)
+   -- (5.5cm,-4.75cm) -- (5.5cm, -1.25cm) -- (-1.75cm, -1.25cm) -- cycle;
+\node[below right, gray] at (-1.75cm,0.75cm) {На работе};
 
-\node[recept, rounded corners, fill=white, below=1cm of p1milk] (p1copy) {\small Копирование};
+\fill[white,draw=gray, dashed] (-1.75cm,-1.35cm) -- (5.4cm,-1.35cm) -- (5.4cm,-4.75cm) -- (-1.75cm,-4.75cm) -- cycle;
+\node[above right, gray] at (-1.75cm,-4.75cm) {Дома};
 
-\node[recept, align=center, fill=green!50, below=1cm of p1copy] (p21t) {Меню};
-\node[recept, fill=green!20, below=-1pt of p21t] (p21milk) {Молоко};
+\node<1->[recept, align=center, fill=green!50] (p1t) {Меню};
+\node<1->[recept, fill=green!20, below=-1pt of p1t] (p1milk) {Молоко};
 
-\node[recept, rounded corners, fill=blue!20, right of=p1t] (p1to2soup) {+Суп};
+\node<2->[recept, rounded corners, fill=white, below=1cm of p1milk] (p1copy) {\small Копирование};
 
-\node[recept, rounded corners, fill=red!20, right of=p21t] (p2to3omelette) {+Омлет};
-\node[rectangle split, align=left, rectangle split parts=2, rectangle split part fill={green!20, yellow!20}, draw, text width =2cm, rounded corners, below=2pt of p2to3omelette] (p3to4) {-Молоко \nodepart{two} +Чай};
+\node<2->[recept, align=center, fill=green!50, below=1cm of p1copy] (p21t) {Меню};
+\node<2->[recept, fill=green!20, below=-1pt of p21t] (p21milk) {Молоко};
 
-\node[recept, rounded corners, fill=white, right=5cm of p1copy] (p3merge) {\small Слияние};
+\node<3->[recept, rounded corners, fill=red!20, right of=p21t] (p2to3omelette) {+Омлет};
+\node<3->[rectangle split, align=left, rectangle split parts=2, rectangle split part fill={green!20, yellow!20}, draw, text width =2cm, rounded corners, below=2pt of p2to3omelette] (p3to4) {-Молоко \nodepart{two} +Чай};
 
-\node[recept, align=center, fill=green!50, right of=p3merge, yshift=2cm] (p4t) {Меню};
-\node[recept, fill=yellow!20, below=-1pt of p4t] (p4tee) {Чай};
-\node[recept, fill=blue!20, below=-1pt of p4tee] (p4soup) {Суп};
-\node[recept, fill=red!20, below=-1pt of p4soup] (p4omelette) {Омлет};
+\node<4->[recept, rounded corners, fill=blue!20, right=4cm of p1t] (p1to2soup) {+Суп};
 
-\node[recept, align=center, fill=green!50, below=1.4cm of p4soup] (p24t) {Меню};
-\node[recept, fill=yellow!20, below=-1pt of p24t] (p24tee) {Чай};
-\node[recept, fill=red!20, below=-1pt of p24tee] (p24omelette) {Омлет};
-\node[recept, fill=blue!20, below=-1pt of p24omelette] (p24soup) {Суп};
+\node<5->[recept, rounded corners, fill=white, right=5cm of p1copy] (p3merge) {\small Слияние};
 
-\draw[-o] (p1milk) -- (p1copy);
-\draw[->] (p1copy) -- (p21t);
+\node<6->[recept, align=center, fill=green!50, right of=p3merge, yshift=2cm] (p4t) {Меню};
+\node<6->[recept, fill=yellow!20, below=-1pt of p4t] (p4tee) {Чай};
+\node<6->[recept, fill=blue!20, below=-1pt of p4tee] (p4soup) {Суп};
+\node<6->[recept, fill=red!20, below=-1pt of p4soup] (p4omelette) {Омлет};
 
-\draw[-o] (p1t) -- (p1to2soup);
-\draw[-o] (p21t) -- (p2to3omelette);
-\draw[->] (p2to3omelette) to[out=190,in=180] (p3to4);
+\node<6->[recept, align=center, fill=green!50, below=1.4cm of p4soup] (p24t) {Меню};
+\node<6->[recept, fill=yellow!20, below=-1pt of p24t] (p24tee) {Чай};
+\node<6->[recept, fill=red!20, below=-1pt of p24tee] (p24omelette) {Омлет};
+\node<6->[recept, fill=blue!20, below=-1pt of p24omelette] (p24soup) {Суп};
 
-\draw[-o] (p1to2soup) to[out=0,in=170] (p3merge);
-\draw[-o] (p3to4) to[out=0,in=-170] (p3merge);
+\draw<2->[-o] (p1milk) -- (p1copy);
+\draw<2->[->] (p1copy) -- (p21t);
 
-\draw[->] (p3merge) to[out=10,in=180] node[above left]{?} (p4t);
-\draw[->] (p3merge) to[out=-10,in=180] node[above]{?} (p24t);
+\draw<3->[-o] (p21t) -- (p2to3omelette);
+\draw<3->[->] (p2to3omelette) to[out=190,in=180] (p3to4);
+
+\draw<4->[-o] (p1t) -- (p1to2soup);
+
+\draw<5->[-o] (p1to2soup) to[out=-90,in=90] (p3merge);
+\draw<5->[-o] (p3to4) to[out=0,in=-90] (p3merge);
+
+\draw<6->[->] (p3merge) to[out=10,in=180] node[above left]{?} (p4t);
+\draw<6->[->] (p3merge) to[out=-10,in=180] node[above]{?} (p24t);
 
 \end{tikzpicture}
     \end{center}
