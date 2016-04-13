@@ -1,0 +1,309 @@
+\documentclass[pdf,9pt,aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\secname\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\usepackage{DejaVuSans}
+\usepackage{DejaVuSerif}
+\usepackage{DejaVuSansMono}
+\usepackage[T2A]{fontenc}
+
+\usepackage[russian]{babel}
+
+\usepackage{hyperref}
+\hypersetup{unicode=true}
+
+\usetheme{Madrid}
+\usefonttheme[stillsansserifsmall]{serif}
+%\usefonttheme[onlylarge]{structurebold}
+\usefonttheme[onlylarge]{structureitalicserif}
+
+\title[Распределённые системы котроля версий: Mercurial]{Распределённые системы котроля версий}
+\subtitle{Mercurial}
+\author[А.В. Рудалёв]{Александр Васильевич Рудалёв}
+\institute[ИМИКТ САФУ]{ИМИКТ САФУ}
+\date[г. Архангельск, 2016 г.]{г. Архангельск, 2016 г.}
+
+\usepackage{wrapfig}
+\usepackage{color}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{babel}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{fit}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.multipart}
+\usetikzlibrary{topaths}
+
+\tikzset{
+  MyChar/.style={
+    rectangle, rounded corners=1mm,
+    minimum height=6mm,
+    minimum width=4.8mm,
+    very thick, draw=black!50,
+    top color=white,bottom color=black!20,
+  },
+  startstop/.style={rectangle, rounded corners=0.4cm, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30},
+  io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30},
+  process/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30},
+  decision/.style={diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30},
+  arrow/.style={thick,->,>=stealth},
+  file/.style={rectangle, draw=black, fill=white, minimum width=2cm, minimum height=1cm},
+  program/.style={rectangle, draw=black, fill=blue!20!white, rounded corners},
+  recept/.style={
+    draw,
+    align=left,
+    text width=2cm,
+  },
+}
+
+\usepackage{minted}
+\usemintedstyle{default} 
+\newcommand{\cpil}[1]{\mintinline{python3}{#1}}
+
+\begin{document}
+
+\frame{\titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Постановка проблемы
+%%
+\begin{frame}{Постановка проблемы}
+  \begin{exampleblock}{Развитие проекта}
+    \begin{center}
+\begin{tikzpicture}[node distance=3.5cm]
+\fill[white,draw=gray, dashed] (-1.75cm,1cm) -- (12cm,1cm) -- (12cm,-1.75cm) -- (-1.75cm,-1.75cm) -- cycle;
+\node[below right, gray] at (-1.75cm,1cm) {Данные};
+\fill[white,draw=gray, dashed] (-1.75cm,-2cm) -- (12cm,-2cm) -- (12cm,-4cm) -- (-1.75cm,-4cm) -- cycle;
+\node[above right, gray] at (-1.75cm,-4cm) {Действия};
+
+\node<1->[recept, align=center, fill=green!50] (p1t) {Меню};
+\node<1->[recept, fill=green!20, below=-1pt of p1t] (p1milk) {Молоко};
+
+\node<3->[recept, align=center, fill=green!50, right of=p1t] (p2t) {Меню};
+\node<3->[recept, fill=green!20, below=-1pt of p2t] (p2milk) {Молоко};
+\node<3->[recept, fill=blue!20, below=-1pt of p2milk] (p2soup) {Суп};
+
+\node<5->[recept, align=center, fill=green!50, right of=p2t] (p3t) {Меню};
+\node<5->[recept, fill=green!20, below=-1pt of p3t] (p3milk) {Молоко};
+\node<5->[recept, fill=blue!20, below=-1pt of p3milk] (p3soup) {Суп};
+\node<5->[recept, fill=red!20, below=-1pt of p3soup] (p3omelette) {Омлет};
+
+\node<7->[recept, align=center, fill=green!50, right of=p3t] (p4t) {Меню};
+\node<7->[recept, fill=yellow!20, below=-1pt of p4t] (p4tee) {Чай};
+\node<7->[recept, fill=blue!20, below=-1pt of p4tee] (p4soup) {Суп};
+\node<7->[recept, fill=red!20, below=-1pt of p4soup] (p4omelette) {Омлет};
+
+\node<2->[recept, rounded corners, fill=blue!20, below] (p1to2soup) at (1.75cm, -2.5cm) {+Суп};
+\node<4->[recept, rounded corners, fill=red!20, below] (p2to3omelette) at (5.25cm, -2.5cm)  {+Омлет};
+\node<6->[rectangle split, align=left, rectangle split parts=2, rectangle split part fill={green!20, yellow!20}, draw, text width =2cm, rounded corners, below] (p3to4) at (8.75cm, -2.5cm)  {-Молоко \nodepart{two} +Чай};
+
+\draw<2->[-o] (p1milk) to[out=-90,in=180] (p1to2soup);
+\draw<3->[->] (p1to2soup) to[out=0,in=-90] ($(p2soup.south)+(-0.2cm,0)$);
+\draw<4->[-o] ($(p2soup.south)+(0.2cm,0)$) to[out=-90,in=180] (p2to3omelette);
+\draw<5->[->] (p2to3omelette) to[out=0,in=-90] ($(p3omelette.south)+(-0.2cm,0)$);
+\draw<6->[-o] ($(p3omelette.south)+(0.2cm,0)$) to[out=-90,in=180] (p3to4);
+\draw<7->[->] (p3to4) to[out=0,in=-90] ($(p4omelette.south)$);
+
+\draw[->, draw, thick] (-2.25cm,-1.875cm) -- (12.5cm,-1.875cm) node[below left] {\textit{время} $t$};
+
+\end{tikzpicture}
+    \end{center}
+  \end{exampleblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Постановка проблемы
+%%
+\begin{frame}{Постановка проблемы}
+  \begin{exampleblock}{Развитие проекта}
+    \begin{center}
+\begin{tikzpicture}[node distance=3.5cm]
+\node[recept, align=center, fill=green!50] (p1t) {Меню};
+\node[recept, fill=green!20, below=-1pt of p1t] (p1milk) {Молоко};
+
+\node[recept, rounded corners, fill=blue!20, right of=p1t] (p1to2soup) {+Суп};
+\node[recept, rounded corners, fill=red!20, below=2pt of p1to2soup] (p2to3omelette) {+Омлет};
+\node[rectangle split, align=left, rectangle split parts=2, rectangle split part fill={green!20, yellow!20}, draw, text width =2cm, rounded corners, below=2pt of p2to3omelette] (p3to4) {-Молоко \nodepart{two} +Чай};
+
+\node[recept, align=center, fill=green!50, right of=p1to2soup] (p4t) {Меню};
+\node[recept, fill=yellow!20, below=-1pt of p4t] (p4tee) {Чай};
+\node[recept, fill=blue!20, below=-1pt of p4tee] (p4soup) {Суп};
+\node[recept, fill=red!20, below=-1pt of p4soup] (p4omelette) {Омлет};
+
+\draw[-o] (p1t) to[out=0,in=180] (p1to2soup);
+\draw[->] (p1to2soup) to[out=0,in=0] (p2to3omelette);
+\draw[->] (p2to3omelette) to[out=180,in=180] (p3to4);
+\draw[->] (p3to4) to[out=0,in=180] (p4t);
+\end{tikzpicture}
+    \end{center}
+  \end{exampleblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Постановка проблемы
+%%
+\begin{frame}{Постановка проблемы}
+  \begin{exampleblock}{Развитие проекта}
+    \begin{center}
+\begin{tikzpicture}[node distance=3.5cm]
+\node[recept, align=center, fill=green!50] (p1t) {Меню};
+\node[recept, fill=green!20, below=-1pt of p1t] (p1milk) {Молоко};
+
+\node[recept, rounded corners, fill=white, below=1cm of p1milk] (p1copy) {\small Копирование};
+
+\node[recept, align=center, fill=green!50, below=1cm of p1copy] (p21t) {Меню};
+\node[recept, fill=green!20, below=-1pt of p21t] (p21milk) {Молоко};
+
+\node[recept, rounded corners, fill=blue!20, right of=p1t] (p1to2soup) {+Суп};
+
+\node[recept, rounded corners, fill=red!20, right of=p21t] (p2to3omelette) {+Омлет};
+\node[rectangle split, align=left, rectangle split parts=2, rectangle split part fill={green!20, yellow!20}, draw, text width =2cm, rounded corners, below=2pt of p2to3omelette] (p3to4) {-Молоко \nodepart{two} +Чай};
+
+\node[recept, rounded corners, fill=white, right=5cm of p1copy] (p3merge) {\small Слияние};
+
+\node[recept, align=center, fill=green!50, right of=p3merge, yshift=2cm] (p4t) {Меню};
+\node[recept, fill=yellow!20, below=-1pt of p4t] (p4tee) {Чай};
+\node[recept, fill=blue!20, below=-1pt of p4tee] (p4soup) {Суп};
+\node[recept, fill=red!20, below=-1pt of p4soup] (p4omelette) {Омлет};
+
+\node[recept, align=center, fill=green!50, below=1.4cm of p4soup] (p24t) {Меню};
+\node[recept, fill=yellow!20, below=-1pt of p24t] (p24tee) {Чай};
+\node[recept, fill=red!20, below=-1pt of p24tee] (p24omelette) {Омлет};
+\node[recept, fill=blue!20, below=-1pt of p24omelette] (p24soup) {Суп};
+
+\draw[-o] (p1milk) -- (p1copy);
+\draw[->] (p1copy) -- (p21t);
+
+\draw[-o] (p1t) -- (p1to2soup);
+\draw[-o] (p21t) -- (p2to3omelette);
+\draw[->] (p2to3omelette) to[out=190,in=180] (p3to4);
+
+\draw[-o] (p1to2soup) to[out=0,in=170] (p3merge);
+\draw[-o] (p3to4) to[out=0,in=-170] (p3merge);
+
+\draw[->] (p3merge) to[out=10,in=180] node[above left]{?} (p4t);
+\draw[->] (p3merge) to[out=-10,in=180] node[above]{?} (p24t);
+
+\end{tikzpicture}
+    \end{center}
+  \end{exampleblock}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Определения
+%%
+\begin{frame}\frametitle{Введение в предмет <<Архитектура компьютера>>}
+  \begin{block}<1->{Определение}
+    \textbf{Архитектура компьютера} "---  это описание его организации и принципов функционирования его структурных элементов. Включает основные устройства ЭВМ и структуру связей между ними.
+  \end{block}
+  \begin{block}<2->{О чём пойдёт речь}
+    В рамках дисциплины мы должны понять как работает компьютер и программное обеспечение на нём.
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Содержание дисциплины
+%%
+\begin{frame}\frametitle{Содержание дисциплины}
+  \begin{block}<1->{}
+    \begin{itemize}
+      \item Основы архитектуры ЭВМ (базовые части и их связи).
+      \item Язык программирования Ассемблер (язык процессора).
+      \item Компиляция, загрузка и выполнение программы.
+      \item Инструменты программиста.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Введение в архитектуру ЭВМ
+%%
+\section{Введение в архитектуру ЭВМ}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Процесс компиляции
+%%
+\begin{frame}{Процесс компиляции}
+  \begin{exampleblock}<1->{Компиляция программы на ЯП Си: два этапа}
+    \begin{center}
+\begin{tikzpicture}[node distance=2.5cm]
+  \node [file, fill=green!20!white] (main_c) at (0,0) {main.c};
+  \node [program, right of=main_c] (gcc1) {gcc.exe};
+  \node [file, fill=yellow!20!white, right of=gcc1] (main_obj) {main.o};
+  \node [file, fill=yellow!20!white, below=1cm of main_obj, xshift=2.5cm] (other_obj) {other.o};
+  \node [program, right of=main_obj] (ld) {ld.exe};
+  \node [file, fill=red!20!white, right of=ld] (mainexe) {main.exe};
+  \node [file, fill=red!20!white, below=1cm of mainexe, xshift=2.5cm] (other_dll) {other.dll};
+  \draw [-o] (main_c) -- (gcc1);
+  \draw [->] (gcc1) -- (main_obj);
+  \draw [-o] (main_obj) -- (ld);
+  \draw [-o] (other_obj) -- (ld);
+  \draw [->] (ld) -- (mainexe);
+  \draw [->, dashed] (mainexe) -| (other_dll);
+  \draw [->, dashed] (other_obj) -- (other_dll);
+  \node [dashed, draw=blue, fit=(main_c) (main_obj), yshift=-0.02cm] (compiling) {};
+  \node [rectangle, rounded corners=0.2cm, draw=blue, fill=white,above=0.1cm of compiling] () {Компиляция};
+  \node [dashed, draw=red, fit=(main_obj) (other_obj) (mainexe), yshift=0.02cm] (linking) {};
+  \node [rectangle, rounded corners=0.2cm, draw=red, fill=white,above=0.1cm of linking] () {Компоновка};
+\end{tikzpicture}
+    \end{center}
+  \end{exampleblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% 
+%%
+\begin{frame}{}
+  \vfill
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}Вопросы?
+  \end{beamercolorbox}
+  \vfill
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Сделанов в}
+        \begin{center}
+           \Huge\LaTeXe
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<1->{Использовано}
+        \begin{itemize}
+          \item пакеты: beamer, tikz
+          \item строк кода: >150 
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vfill
+\end{frame}
+
+\end{document}
