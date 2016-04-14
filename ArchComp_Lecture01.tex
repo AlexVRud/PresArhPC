@@ -1110,6 +1110,7 @@ msg:    db "Hello World!!!", 13, 10, 0
         push    ecx     ; <--- y
         push    ebx     ; <--- x
         call    my_sum  ; <--- my_sum(x,y)
+        add     esp, 8  ; очистка стека
         ; тут некая команда
 ...
 my_sum:
@@ -1118,11 +1119,11 @@ my_sum:
         mov     ebx, [esp+12]
         add     eax, ebx
         pop     ebx
-        ret     8       ; Возвращаемся и удаляем параметры из стека
+        ret             ; Возвращаемся и удаляем параметры из стека
     \end{lstlisting}
   \end{minipage}
 };
-\foreach \yy in {1,...,12} {
+\foreach \yy in {1,...,13} {
   \coordinate (l\yy) at (-8pt,-0.70*\yy*\baselineskip+0.5*0.70*\baselineskip);
 }
 \only<1>{\node[databox=1] (EIP) at (0,3*\ByteHeight) {};}
@@ -1192,9 +1193,10 @@ my_sum:
   }
   \only<8>{%
     \node[databox=5,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {};
-    \node[databox=4,fill=lightgray,right=-\pgflinewidth of tmp] (rptr) {return ptr};
-    \node[databox=8,fill=lightgray,right=-\pgflinewidth of rptr] (tmp) {};
-    \node[databox=1,right=-\pgflinewidth of tmp] (data) {?};
+    \node[databox=4,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {return ptr};
+    \node[databox=4,right=-\pgflinewidth of tmp] (data2) {32};
+    \node[databox=4,right=-\pgflinewidth of data2] (data1) {43};
+    \node[databox=1,right=-\pgflinewidth of data1] (data) {?};
   }
   \node[partright,right=-\pgflinewidth of data] {...};
   \node[linkedbyte,right=-\pgflinewidth-0.5*\DeltaWidht of tmp] (headofstack) {};
@@ -1202,11 +1204,11 @@ my_sum:
 %
 \only<1>{\draw [<-,draw=violet,thick](l1)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
 \only<2>{\draw [<-,draw=violet,thick](l3)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
-\only<3>{\draw [<-,draw=violet,thick](l7)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
-\only<4>{\draw [<-,draw=violet,thick](l8)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
-\only<5>{\draw [<-,draw=violet,thick](l10)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
-\only<6>{\draw [<-,draw=violet,thick](l11)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
-\only<7>{\draw [<-,draw=violet,thick](l12)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<3>{\draw [<-,draw=violet,thick](l8)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<4>{\draw [<-,draw=violet,thick](l9)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<5>{\draw [<-,draw=violet,thick](l11)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<6>{\draw [<-,draw=violet,thick](l12)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<7>{\draw [<-,draw=violet,thick](l13)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
 \only<8>{\draw [<-,draw=violet,thick](l4)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
 \only<9>{\draw [<-,draw=violet,thick](l5)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
 %
@@ -1217,8 +1219,8 @@ my_sum:
 		 -- ++(-0.70*5.5*\ByteWidht,0) to[out=180,in=180] (l4);
 }
 %
-\only<1,8,9>{\draw [->,draw=violet,thick] (ESP) to[out=-90,in=90] (headofstack);}
-\only<2,3,4,5,6,7>{\draw [->,draw=violet,thick] (ESP) to[out=-90,in=0] ++(-0.5*\ByteWidht,-\ByteHeight)
+\only<1,9>{\draw [->,draw=violet,thick] (ESP) to[out=-90,in=90] (headofstack);}
+\only<2,3,4,5,6,7,8>{\draw [->,draw=violet,thick] (ESP) to[out=-90,in=0] ++(-0.5*\ByteWidht,-\ByteHeight)
        to[out=180,in=0] ($(headofstack)+(0.5*\ByteWidht,\ByteHeight)$)
        to[out=180,in=90] (headofstack);
 }
@@ -1235,11 +1237,11 @@ my_sum:
   \begin{scope}[scale=0.70, every node/.style={scale=0.70, text width=0.9\textwidth}]
     \only<2>{\qahigh{1,2}}
     \only<3>{\qahigh{3}}
-    \only<4>{\qahigh{7}}
-    \only<5>{\qahigh{8,9}}
-    \only<6>{\qahigh{10}}
-    \only<7>{\qahigh{11}}
-    \only<8>{\qahigh{12}}
+    \only<4>{\qahigh{8}}
+    \only<5>{\qahigh{9,10}}
+    \only<6>{\qahigh{11}}
+    \only<7>{\qahigh{12}}
+    \only<8>{\qahigh{13}}
     \only<9>{\qahigh{4}}
   \end{scope}
 \end{pgfonlayer}
