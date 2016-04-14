@@ -56,6 +56,7 @@
 \usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{backgrounds}
+\usetikzlibrary{fit}
 \usepackage{transparent}
 \setbeamercovered{transparent}
 
@@ -104,7 +105,9 @@
      minimum width=\ByteWidht+2*\DeltaWidht, minimum height=\ByteHeight+2*\DeltaWidht
   },
   code/.style={shape=rectangle, draw=green!50!black, anchor=north west, outer sep=0, inner sep = 0},
-  qahigh/.style={fill=lightgray, minimum height=\baselineskip, inner sep=0, inner ysep=0, anchor=north west}
+  qahigh/.style={fill=lightgray, minimum height=\baselineskip, inner sep=0, inner ysep=0, anchor=north west},
+  state/.style={rectangle, draw=gray, thick},
+  command/.style={rectangle, draw=gray, thick, fill=blue!20!white, rounded corners},
 }
 
 \newcommand{\qahigh}[1]{%
@@ -782,7 +785,52 @@ msg     db "Hello World!!!", 13, 10, 0
   \end{alertblock}
 \end{frame}
 
-%% TODO: Разбор примеров. Показать значения регистров EAX,AX,AH,AL после "mov eax,123" и аналогичных
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Пример mov eax,123
+%%
+\begin{frame}{Пример использования команды mov}
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Пример}
+        \begin{center}
+\begin{tikzpicture}
+  \node[databox=4,text=brown] (EAX1) at (0,0) {?};
+  \node[left=0cm of EAX1] (LabelEAX1) {EAX};
+  \node[state, fit=(EAX1) (LabelEAX1)] (State1) {};
+  \node[databox=4,text=brown, below=2.5cm of EAX1] (EAX2) at (0,0) {\only<1,2>{123}\only<3->{1024}};
+  \node[left=0cm of EAX2] (LabelEAX2) {EAX};
+  \node[state, fit=(EAX2) (LabelEAX2)] (State2) {};
+  \node[command] (cmd) at($(State1)!0.5!(State2)$)  {\cl{mov eax, \only<1,2>{123}\only<3->{1024}}};
+  \draw[-o] (State1) -- (cmd);
+  \draw[->] (cmd) -- (State2);
+\end{tikzpicture}
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<1->{Вопрос}
+        Чему стали равны \cl{AX}, \cl{AH}, \cl{AL}?
+        \begin{center}
+\begin{tikzpicture}
+  \node[databox=2] (EA16) at (0,0) {};
+  \node[databox=1,text=brown,right=-\pgflinewidth of EA16] (AH){\only<2>{0}\only<4>{4}};
+  \node[databox=1,text=brown,right=-\pgflinewidth of AH] (AL) {\only<2>{123}\only<4>{0}};
+  \node<2,4>[text=brown, xshift=0.5*\ByteWidht] at (0,0) {0};
+  \node<2,4>[text=brown, xshift=-0.5*\ByteWidht] at (0,0) {0};
+  \node[above=0cm of AH] {AH};
+  \node[above=0cm of AL] {AL};
+  \draw [decorate,decoration={brace,amplitude=5pt,mirror,raise=1pt}]
+    (1*\ByteWidht,-0.5*\ByteHeight) -- (3*\ByteWidht,-0.5*\ByteHeight) node [midway,yshift=-12pt] {AX} ;
+  \node[left=0cm of EA16] {EAX};
+\end{tikzpicture}
+        \end{center}
+\only<2>{\footnotesize $$123=0\cdot 256^3+0\cdot 256^2+0\cdot 256^1+123\cdot 256^0$$}
+\only<4>{\footnotesize $$123=0\cdot 256^3+0\cdot 256^2+4\cdot 256^1+0\cdot 256^0$$}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
