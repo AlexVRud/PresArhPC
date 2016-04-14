@@ -105,7 +105,7 @@
      minimum width=\ByteWidht+2*\DeltaWidht, minimum height=\ByteHeight+2*\DeltaWidht
   },
   code/.style={shape=rectangle, draw=green!50!black, anchor=north west, outer sep=0, inner sep = 0},
-  qahigh/.style={fill=lightgray, minimum height=\baselineskip, inner sep=0, inner ysep=0, anchor=north west},
+  qahigh/.style={fill=blue!40, minimum height=\baselineskip, inner sep=0, inner ysep=0, anchor=north west},
   state/.style={rectangle, draw=gray, thick},
   command/.style={rectangle, draw=gray, thick, fill=blue!20!white, rounded corners},
 }
@@ -704,12 +704,12 @@
 %%
 \begin{frame}[fragile]\frametitle{Структура программы на Ассемблере}
   \begin{columns}[T]
-    \begin{column}[T]{6cm}
+    \begin{column}[T]{0.45\textwidth}
       \begin{exampleblock}{Hello world}
         \begin{figure}
-          \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
+          \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
 \node[code] at (0,0) {%
-  \begin{minipage}{1.6\textwidth}
+  \begin{minipage}{1.1\textwidth}
     \begin{lstlisting}[]
 global  _main
 extern  _ExitProcess@4
@@ -729,7 +729,7 @@ msg     db "Hello World!!!", 13, 10, 0
   \end{minipage}
 };
 \begin{pgfonlayer}{background}
-  \begin{scope}[every node/.style={scale=0.6, text width=1.6\textwidth}]
+  \begin{scope}[every node/.style={scale=0.8, text width=1.1\textwidth}]
     \only<1>{\qahigh{1,2,3,6}}
     \only<2>{\qahigh{5,13}}
     \only<3>{\qahigh{7,...,12}}
@@ -740,20 +740,23 @@ msg     db "Hello World!!!", 13, 10, 0
         \end{figure}
       \end{exampleblock}
     \end{column}
-    \begin{column}[T]{4cm}
+    \begin{column}[T]{0.45\textwidth}
       \begin{block}{}
-\only<1>{Объявление глобальных и используемых имён.
-
-\footnotesize\it {\bf global} --- сообщаем какие имена необходимо сделать видимыми в создаваемом объектном файле.
-
-{\bf extern} --- какие имена нам понадобятся из других объектных файлов. Т.е., например, функции внешних библиотек.}
+\only<1>{Объявление глобальных и используемых имён.}
 \only<2>{Объявление секций кода и данных.}
-\only<3>{Код программы.
-
-\footnotesize\it Как правило, используется выравнивание кода по трём колонкам шириной 8 символов:
-метки, команды, параметры.}
+\only<3>{Код программы.}
 \only<4>{Константы}
       \end{block}
+      \only<1>{\begin{block}{}
+\footnotesize\it
+{\bf global} --- сообщаем какие имена необходимо сделать видимыми в создаваемом объектном файле.
+
+{\bf extern} --- какие имена нам понадобятся из других объектных файлов. Т.е., например, функции внешних библиотек.
+      \end{block}}
+      \only<3>{\begin{block}<3>{}
+\footnotesize\it Как правило, используется выравнивание кода по трём колонкам шириной 8 символов:
+метки, команды, параметры.
+      \end{block}}
     \end{column}
   \end{columns}
 \end{frame}
@@ -762,7 +765,7 @@ msg     db "Hello World!!!", 13, 10, 0
 %%
 %% Команды языка Ассемблер: mov
 %%
-\begin{frame}\frametitle{Команды языка Ассемблер: mov}
+\begin{frame}[fragile]\frametitle{Команды языка Ассемблер: mov}
   \begin{block}<1->{Прототип}
     \cl{mov \{приёмник\}, \{источник\}}
   \end{block}
@@ -771,18 +774,33 @@ msg     db "Hello World!!!", 13, 10, 0
       \item Команда \cl{mov} копирует значение из источника в приёмник.
       \item Приёмником может выступать регистр или участок памяти. Источником --- регистр, участок памяти или значение.
       \item Приёмник и источник должны быть одного размера.
+      \item Один из операндов должен быть регистром.
     \end{itemize}
   \end{block}
-  \begin{exampleblock}<2->{Примеры}\footnotesize
-    \cl{mov eax, 123} \texttt{\it; Поместить в регист eax число 123}
-
-    \cl{mov eax, [A]} \texttt{\it; Поместить в регист eax значение переменной A}
-
-    \cl{mov eax, msg} \texttt{\it; Поместить в регист eax адрес переменной msg}
-  \end{exampleblock}
-  \begin{alertblock}<3->{Неправильные примеры}\footnotesize
-    \cl{mov al, cx}
-  \end{alertblock}
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<2->{Примеры}\footnotesize
+\begin{lstlisting}[numbers=none]
+; Поместить в регист eax число 123
+        mov     eax, 123
+; Поместить в регист eax значение переменной A
+        mov     eax, [A]
+; Поместить в регист eax адрес переменной msg
+        mov     eax, msg
+\end{lstlisting}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{alertblock}<3->{Неправильные примеры}\footnotesize
+\begin{lstlisting}[numbers=none]
+; Пример №1
+        mov     eax, bh
+; Пример №2
+        mov     [B], [A]
+\end{lstlisting}
+      \end{alertblock}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -817,7 +835,7 @@ msg     db "Hello World!!!", 13, 10, 0
   \node[databox=1,text=brown,right=-\pgflinewidth of EA16] (AH){\only<2>{0}\only<4>{4}\only<6>{2}\only<8>{\footnotesize 0xC3}\only<10>{\footnotesize 0xFF}};
   \node[databox=1,text=brown,right=-\pgflinewidth of AH] (AL) {\only<2>{123}\only<4>{0}\only<6>{150}\only<8>{\footnotesize 0xD4}\only<10>{\footnotesize 0xFF}};
   \node[text=brown, xshift=0.5*\ByteWidht] at (0,0) {\only<2>{0}\only<4>{0}\only<6>{210}\only<8>{\footnotesize 0xB2}\only<10>{\footnotesize 0xFF}};
-  \node[text=brown, xshift=-0.5*\ByteWidht] at (0,0) {\only<2>{0}\only<4>{0}\only<6>{73}\only<8>{\footnotesize 0xA1}\only<10>{\footnotesize 0xFF}};
+  \node[text=brown, xshift=-0.5*\ByteWidht] at (0,0) {\only<2>{0}\only<4>{0}\only<6>{73}\only<8>{\footnotesize 0xA1}\only<10>{\footnotesize 0xFF}	};
   \node[above=0cm of AH] {AH};
   \node[above=0cm of AL] {AL};
   \draw [decorate,decoration={brace,amplitude=5pt,mirror,raise=1pt}]
