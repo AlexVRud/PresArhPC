@@ -343,67 +343,27 @@
 %%
 %% Определения
 %%
-\begin{frame}\frametitle{Введение в предмет <<Архитектура компьютера>>}
+\begin{frame}\frametitle{Система управления версиями}
   \begin{block}<1->{Определение}
-    \textbf{Архитектура компьютера} "---  это описание его организации и принципов функционирования его структурных элементов. Включает основные устройства ЭВМ и структуру связей между ними.
+    \textbf{Система контроля версий} "---  это система, регистрирующая изменения в одном или нескольких файлах с тем, чтобы в дальнейшем была возможность вернуться к определённым старым версиям этих файлов [https://git-scm.com/book/ru/v1/]. 
   \end{block}
-  \begin{block}<2->{О чём пойдёт речь}
-    В рамках дисциплины мы должны понять как работает компьютер и программное обеспечение на нём.
+  \begin{block}<1->{}
+    \textbf{Система управления версиями} "---   программное обеспечение для облегчения работы с изменяющейся информацией. Система управления версиями позволяет хранить несколько версий одного и того же документа, при необходимости возвращаться к более ранним версиям, определять, кто и когда сделал то или иное изменение, и многое другое [wiki]. 
   \end{block}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%% Содержание дисциплины
+%% Определения
 %%
-\begin{frame}\frametitle{Содержание дисциплины}
-  \begin{block}<1->{}
+\begin{frame}\frametitle{Система управления версиями}
+  \begin{block}<1->{Функции}
     \begin{itemize}
-      \item Основы архитектуры ЭВМ (базовые части и их связи).
-      \item Язык программирования Ассемблер (язык процессора).
-      \item Компиляция, загрузка и выполнение программы.
-      \item Инструменты программиста.
+      \item ???
     \end{itemize}
   \end{block}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% Введение в архитектуру ЭВМ
-%%
-\section{Введение в архитектуру ЭВМ}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% Процесс компиляции
-%%
-\begin{frame}{Процесс компиляции}
-  \begin{exampleblock}<1->{Компиляция программы на ЯП Си: два этапа}
-    \begin{center}
-\begin{tikzpicture}[node distance=2.5cm]
-  \node [file, fill=green!20!white] (main_c) at (0,0) {main.c};
-  \node [program, right of=main_c] (gcc1) {gcc.exe};
-  \node [file, fill=yellow!20!white, right of=gcc1] (main_obj) {main.o};
-  \node [file, fill=yellow!20!white, below=1cm of main_obj, xshift=2.5cm] (other_obj) {other.o};
-  \node [program, right of=main_obj] (ld) {ld.exe};
-  \node [file, fill=red!20!white, right of=ld] (mainexe) {main.exe};
-  \node [file, fill=red!20!white, below=1cm of mainexe, xshift=2.5cm] (other_dll) {other.dll};
-  \draw [-o] (main_c) -- (gcc1);
-  \draw [->] (gcc1) -- (main_obj);
-  \draw [-o] (main_obj) -- (ld);
-  \draw [-o] (other_obj) -- (ld);
-  \draw [->] (ld) -- (mainexe);
-  \draw [->, dashed] (mainexe) -| (other_dll);
-  \draw [->, dashed] (other_obj) -- (other_dll);
-  \node [dashed, draw=blue, fit=(main_c) (main_obj), yshift=-0.02cm] (compiling) {};
-  \node [rectangle, rounded corners=0.2cm, draw=blue, fill=white,above=0.1cm of compiling] () {Компиляция};
-  \node [dashed, draw=red, fit=(main_obj) (other_obj) (mainexe), yshift=0.02cm] (linking) {};
-  \node [rectangle, rounded corners=0.2cm, draw=red, fill=white,above=0.1cm of linking] () {Компоновка};
-\end{tikzpicture}
-    \end{center}
-  \end{exampleblock}
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -427,7 +387,7 @@
       \begin{block}<1->{Использовано}
         \begin{itemize}
           \item пакеты: beamer, tikz
-          \item строк кода: >150 
+          \item строк кода: >350 
         \end{itemize}
       \end{block}
     \end{column}
