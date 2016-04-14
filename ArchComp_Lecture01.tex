@@ -10,18 +10,27 @@
 \usepackage{hyperref}
 \hypersetup{unicode=true}
 
-\usetheme{Madrid}
 \title[Введение в Ассемблер]{Архитектура компьютера}
 \subtitle{Введение в Ассемблер}
 \author[А.В. Рудалёв]{Александр Рудалёв}
 \institute[ИМИКТ САФУ]{ИМИКТ САФУ}
 \date[г. Архангельск, 2016 г.]{г. Архангельск, 2016 г.}
 
-
 \usetheme{Madrid}
 \usefonttheme[stillsansserifsmall]{serif}
 %\usefonttheme[onlylarge]{structurebold}
 \usefonttheme[onlylarge]{structureitalicserif}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\secname\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
 
 %\usepackage{pgfpages}
 %\setbeameroption{show notes}
@@ -155,6 +164,12 @@
 \begin{document}
 
 \frame{\titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Основные элементы
+%%
+\section{Основные элементы}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -382,6 +397,12 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
+%% Стек
+%%
+\section{Стек}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
 %% Структура данных <<стек>>
 %%
 \begin{frame}\frametitle{Структура данных <<стек>>}
@@ -512,6 +533,12 @@
     \end{itemize}
   \end{block}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Регистры процессора
+%%
+\section{Регистры процессора}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -664,6 +691,12 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
+%% Введение в Ассемблер
+%%
+\section{Введение в Ассемблер}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
 %% Структура программы на Ассемблере
 %%
 \begin{frame}[fragile]\frametitle{Структура программы на Ассемблере}
@@ -775,6 +808,12 @@ msg     db "Hello World!!!", 13, 10, 0
 %% TODO: Разбор примеров. Показать значения регистров EAX,AX,AH,AL до и после
 
 %% TODO: Команды push/pop
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Подпрограммы
+%%
+\section{Подпрограммы}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -1017,6 +1056,36 @@ my_sum:
     \end{tikzpicture}
   \end{figure}
   \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% 
+%%
+\begin{frame}{}
+  \vfill
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}Вопросы?
+  \end{beamercolorbox}
+  \vfill
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Сделанов в}
+        \begin{center}
+           \Huge\LaTeXe
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<1->{Использовано}
+        \begin{itemize}
+          \item пакеты: beamer, tikz
+          \item строк кода: >1000
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vfill
 \end{frame}
 
 \end{document}
