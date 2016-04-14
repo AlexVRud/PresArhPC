@@ -798,10 +798,10 @@ msg     db "Hello World!!!", 13, 10, 0
   \node[databox=4,text=brown] (EAX1) at (0,0) {?};
   \node[left=0cm of EAX1] (LabelEAX1) {EAX};
   \node[state, fit=(EAX1) (LabelEAX1)] (State1) {};
-  \node[databox=4,text=brown, below=2.5cm of EAX1] (EAX2) at (0,0) {\only<1,2>{123}\only<3->{1024}};
+  \node[databox=4,text=brown, below=2.5cm of EAX1] (EAX2) at (0,0) {\only<1,2>{123}\only<3,4>{1024}\only<5,6>{1234567890}\only<7,8>{0xA1B2C3D4}\only<9,10>{-1}};
   \node[left=0cm of EAX2] (LabelEAX2) {EAX};
   \node[state, fit=(EAX2) (LabelEAX2)] (State2) {};
-  \node[command] (cmd) at($(State1)!0.5!(State2)$)  {\cl{mov eax, \only<1,2>{123}\only<3->{1024}}};
+  \node[command] (cmd) at($(State1)!0.5!(State2)$)  {\cl{mov eax, \only<1,2>{123}\only<3,4>{1024}\only<5,6>{1234567890}\only<7,8>{0xA1B2C3D4}\only<9,10>{-1}}};
   \draw[-o] (State1) -- (cmd);
   \draw[->] (cmd) -- (State2);
 \end{tikzpicture}
@@ -814,10 +814,10 @@ msg     db "Hello World!!!", 13, 10, 0
         \begin{center}
 \begin{tikzpicture}
   \node[databox=2] (EA16) at (0,0) {};
-  \node[databox=1,text=brown,right=-\pgflinewidth of EA16] (AH){\only<2>{0}\only<4>{4}};
-  \node[databox=1,text=brown,right=-\pgflinewidth of AH] (AL) {\only<2>{123}\only<4>{0}};
-  \node<2,4>[text=brown, xshift=0.5*\ByteWidht] at (0,0) {0};
-  \node<2,4>[text=brown, xshift=-0.5*\ByteWidht] at (0,0) {0};
+  \node[databox=1,text=brown,right=-\pgflinewidth of EA16] (AH){\only<2>{0}\only<4>{4}\only<6>{2}\only<8>{\footnotesize 0xC3}\only<10>{\footnotesize 0xFF}};
+  \node[databox=1,text=brown,right=-\pgflinewidth of AH] (AL) {\only<2>{123}\only<4>{0}\only<6>{150}\only<8>{\footnotesize 0xD4}\only<10>{\footnotesize 0xFF}};
+  \node[text=brown, xshift=0.5*\ByteWidht] at (0,0) {\only<2>{0}\only<4>{0}\only<6>{210}\only<8>{\footnotesize 0xB2}\only<10>{\footnotesize 0xFF}};
+  \node[text=brown, xshift=-0.5*\ByteWidht] at (0,0) {\only<2>{0}\only<4>{0}\only<6>{73}\only<8>{\footnotesize 0xA1}\only<10>{\footnotesize 0xFF}};
   \node[above=0cm of AH] {AH};
   \node[above=0cm of AL] {AL};
   \draw [decorate,decoration={brace,amplitude=5pt,mirror,raise=1pt}]
@@ -826,7 +826,11 @@ msg     db "Hello World!!!", 13, 10, 0
 \end{tikzpicture}
         \end{center}
 \only<2>{\footnotesize $$123=0\cdot 256^3+0\cdot 256^2+0\cdot 256^1+123\cdot 256^0$$}
-\only<4>{\footnotesize $$123=0\cdot 256^3+0\cdot 256^2+4\cdot 256^1+0\cdot 256^0$$}
+\only<4>{\footnotesize $$1024=0\cdot 256^3+0\cdot 256^2+4\cdot 256^1+0\cdot 256^0$$}
+\only<6>{\footnotesize $$1234567890=73\cdot 256^3+210\cdot 256^2+$$
+$$+2\cdot 256^1+150\cdot 256^0$$}
+\only<8>{\footnotesize $$A1B2C3D4_{16}=A1_{16}\cdot 100_{16}^3+B2_{16}\cdot 100_{16}^2+$$
+ $$+C3_{16}\cdot 100_{16}^1+D4_{16}\cdot 100_{16}^0$$}
       \end{block}
     \end{column}
   \end{columns}
