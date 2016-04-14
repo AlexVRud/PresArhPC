@@ -1054,7 +1054,45 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
   \end{block}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Hello world
+%%
 %% TODO: Hello world
+%%
+\begin{frame}[fragile]\frametitle{Hello world}
+  \begin{columns}[T]
+    \begin{column}[T]{0.55\textwidth}
+      \begin{exampleblock}{Hello world}
+        \begin{figure}
+          \begin{tikzpicture}
+\node[code] at (0,0) {%
+  \begin{minipage}{.9\textwidth}
+    \begin{lstlisting}[]
+global  _main
+extern  _ExitProcess@4
+extern  _printf
+
+section .text   use32
+_main:
+        push    msg
+        call    _printf
+        add     esp, 4
+
+        xor     eax, eax
+        push    eax
+        call    _ExitProcess@4
+section .data
+msg:    db "Hello World!!!", 13, 10, 0
+    \end{lstlisting}
+  \end{minipage}
+};
+          \end{tikzpicture}
+        \end{figure}
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
 
 %% TODO: Описание примера вызова подпрограммы
 
