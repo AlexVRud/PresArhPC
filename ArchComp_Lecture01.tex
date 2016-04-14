@@ -1,4 +1,4 @@
-\documentclass[10pt,pdf,ignorenonframetext,aspectratio=169]{beamer}
+\documentclass[9pt,pdf,ignorenonframetext,aspectratio=169]{beamer}
 
 \usepackage{DejaVuSans}
 \usepackage{DejaVuSerif}
@@ -11,11 +11,11 @@
 \hypersetup{unicode=true}
 
 \usetheme{Madrid}
-\title[]{Архитектура компьютера}
+\title[Введение в Ассемблер]{Архитектура компьютера}
 \subtitle{Введение в Ассемблер}
-\author[]{Александр Рудалёв}
-\institute[]{ИМИКТ САФУ}
-\date[]{Архангельск, 2016}
+\author[А.В. Рудалёв]{Александр Рудалёв}
+\institute[ИМИКТ САФУ]{ИМИКТ САФУ}
+\date[г. Архангельск, 2016 г.]{г. Архангельск, 2016 г.}
 
 
 \usetheme{Madrid}
@@ -74,7 +74,7 @@
        -- ++(0.125*\ByteWidht,-0.25*\ByteHeight)
        -- ++(-0.25*\ByteWidht,-0.50*\ByteHeight)
        -- cycle;
-      }
+      }	
     }
   },
   partright/.style={minimum width=\ByteWidht, text width=0.6*\ByteWidht, minimum height=\ByteHeight, align=left,
@@ -267,9 +267,9 @@
 \begin{frame}[fragile]\frametitle{Основные элементы}
   \begin{block}{Листинг}
     \begin{figure}
-      \begin{tikzpicture}[scale=0.5, every node/.style={scale=0.5}]
+      \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
         \node[fill=white,anchor=north west, outer sep=0, inner sep = 3pt] at (0,0) {%
-          \begin{minipage}{1.3\textwidth}
+          \begin{minipage}{1\textwidth}
 \begin{verbatim}
      1                                  global  _main
      2                                  extern  _ExitProcess@4
@@ -301,8 +301,8 @@
           \end{minipage}
         };
 \only<2>{
-        \draw[scale=0.6,draw=red] (3pt+16*10pt,-2pt-24*20pt) rectangle ++(8*10pt+4pt,-2pt-1*16pt);
-        \draw[scale=0.6,draw=red] (4pt+51*10pt,-2pt-24*20pt) rectangle ++(10*10pt+4pt,-2pt-1*16pt);
+        \draw[scale=0.6,draw=red,thick] (3pt+16*9pt,-7pt-24*18pt) rectangle ++(8*9pt+5pt,-3pt-1*16pt);
+        \draw[scale=0.6,draw=red,thick] (4pt+51*9pt,-7pt-24*18pt) rectangle ++(10*9pt+5pt,-3pt-1*16pt);
 };
       \end{tikzpicture}
     \end{figure}
@@ -316,9 +316,9 @@
 \begin{frame}[fragile]\frametitle{Основные элементы}
   \begin{block}{Дамп памяти}
     \begin{figure}
-      \begin{tikzpicture}[scale=0.42, every node/.style={scale=0.42}]
+      \begin{tikzpicture}[scale=0.5, every node/.style={scale=0.5}]
         \node[fill=white] at (0,0) {%
-          \begin{minipage}{1.08\textwidth}
+          \begin{minipage}{0.98\textwidth}
 \begin{verbatim}
 00000000  4c 01 02 00 62 bc ee 54  e2 00 00 00 0e 00 00 00  |L...b..T........|
 00000010  00 00 00 00 2e 74 65 78  74 00 00 00 00 00 00 00  |.....text.......|
