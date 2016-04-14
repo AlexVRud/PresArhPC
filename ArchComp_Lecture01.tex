@@ -1104,8 +1104,8 @@ msg:    db "Hello World!!!", 13, 10, 0
   \begin{block}{}
   \begin{figure}
     \begin{tikzpicture}
-\node[code,scale=0.5] (code) at (0,0) {%
-  \begin{minipage}{1.1\textwidth}
+\node[code,scale=0.70] (code) at (0,0) {%
+  \begin{minipage}{0.9\textwidth}
     \begin{lstlisting}[]
         push    ecx     ; <--- y
         push    ebx     ; <--- x
@@ -1123,7 +1123,7 @@ my_sum:
   \end{minipage}
 };
 \foreach \yy in {1,...,12} {
-  \coordinate (l\yy) at (-8pt,-0.5*\yy*\baselineskip+0.25*\baselineskip);
+  \coordinate (l\yy) at (-8pt,-0.70*\yy*\baselineskip+0.5*0.70*\baselineskip);
 }
 \only<1>{\node[databox=1] (EIP) at (0,3*\ByteHeight) {};}
 \only<2,3,4,5,6,7,8,9>{\node[databox=1,fill=green!30!white] (EIP) at (0,3*\ByteHeight) {};}
@@ -1147,7 +1147,7 @@ my_sum:
 \only<2,3,4,7,8>{\node[databox=1,fill=green!30!white,text=brown,right=of ECX] (ESP) {};}
 \node[left=0cm of ESP] {ESP};
 %
-\begin{scope}[xshift=-1*\ByteWidht,yshift=1*\ByteHeight,scale=0.6, every node/.style={scale=0.6}]
+\begin{scope}[xshift=-1*\ByteWidht,yshift=1*\ByteHeight,scale=0.70, every node/.style={scale=0.70}]
   \node[partleft] (tmp) at (0,0) {...};
   \only<1,9>{%
     \node[databox=17,fill=lightgray,right=-\pgflinewidth of tmp] (tmp) {};
@@ -1200,21 +1200,21 @@ my_sum:
   \node[linkedbyte,right=-\pgflinewidth-0.5*\DeltaWidht of tmp] (headofstack) {};
 \end{scope}
 %
-\only<1>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l1);}
-\only<2>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l3);}
-\only<3>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l7);}
-\only<4>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l8);}
-\only<5>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l10);}
-\only<6>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l11);}
-\only<7>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l12);}
-\only<8>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l4);}
-\only<9>{\draw [->,draw=violet,thick] (EIP) to[out=-90,in=180] (l5);}
+\only<1>{\draw [<-,draw=violet,thick](l1)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<2>{\draw [<-,draw=violet,thick](l3)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<3>{\draw [<-,draw=violet,thick](l7)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<4>{\draw [<-,draw=violet,thick](l8)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<5>{\draw [<-,draw=violet,thick](l10)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<6>{\draw [<-,draw=violet,thick](l11)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<7>{\draw [<-,draw=violet,thick](l12)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<8>{\draw [<-,draw=violet,thick](l4)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
+\only<9>{\draw [<-,draw=violet,thick](l5)to[out=180,in=-90] ++(-0.4cm,0.4cm) -- ($(l1)+(-0.4cm,0.7cm)$) to[out=90,in=-90] (EIP);}
 %
 \only<3,4,5,6,7>{\draw [->,draw=violet,thick] (rptr) to[out=-90,in=0] ++(-0.5*\ByteWidht,-0.75*\ByteHeight)
-		 -- ++(-3*\ByteWidht,0) to[out=180,in=180] (l4);
+		 -- ++(-0.70*5.5*\ByteWidht,0) to[out=180,in=180] (l4);
 }
 \only<8>{\draw [->,draw=violet,dotted] (rptr) to[out=-90,in=0] ++(-0.5*\ByteWidht,-0.75*\ByteHeight)
-		 -- ++(-3*\ByteWidht,0) to[out=180,in=180] (l4);
+		 -- ++(-0.70*5.5*\ByteWidht,0) to[out=180,in=180] (l4);
 }
 %
 \only<1,8,9>{\draw [->,draw=violet,thick] (ESP) to[out=-90,in=90] (headofstack);}
@@ -1226,13 +1226,13 @@ my_sum:
 \only<2>{\draw [->,draw=blue,dotted] (EBX) to[out=-90,in=90] (data2);}
 \only<2>{\draw [->,draw=blue,dotted] (ECX) to[out=-90,in=90] (data1);}
 \only<4>{\draw [->,draw=blue,dotted] (EBX) to[out=-90,in=60] (data3);}
-\only<5>{\draw [->,draw=blue,dotted] (data2) to[out=135,in=-90] (EAX);}
-\only<5>{\draw [->,draw=blue,dotted] (data1) to[out=135,in=-90] (EBX);}
+\only<5>{\draw [->,draw=blue,dotted] (data2) to[out=135,in=-45] (EAX);}
+\only<5>{\draw [->,draw=blue,dotted] (data1) to[out=135,in=-45] (EBX);}
 \only<6>{\draw [->,draw=blue,dotted] (EBX) to[out=-120,in=-60] node[below,text=blue,scale=0.5]{32+43} (EAX);}
 \only<7>{\draw [->,draw=blue,dotted] (tmp) to[out=60,in=-90] (EBX);}
 %
 \begin{pgfonlayer}{background}
-  \begin{scope}[scale=0.5, every node/.style={scale=0.5, text width=1.1\textwidth}]
+  \begin{scope}[scale=0.70, every node/.style={scale=0.70, text width=0.9\textwidth}]
     \only<2>{\qahigh{1,2}}
     \only<3>{\qahigh{3}}
     \only<4>{\qahigh{7}}
