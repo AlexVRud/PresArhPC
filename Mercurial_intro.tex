@@ -50,16 +50,16 @@
 \usetikzlibrary{shapes.multipart}
 \usetikzlibrary{topaths}
 
-\colorlet{Recept}{Brown!90!white}
-\colorlet{Milk}{green!20}
-\colorlet{Soup}{blue!20}
-\colorlet{Omelette}{red!20}
-\colorlet{Tee}{yellow!20}
-\colorlet{Merge}{violet!20}
+\colorlet{ColorRecept}{Brown!90!white}
+\colorlet{ColorMilk}{green!20}
+\colorlet{ColorSoup}{blue!20}
+\colorlet{ColorOmelette}{red!20}
+\colorlet{ColorTee}{yellow!20}
+\colorlet{ColorMerge}{violet!20}
 
 \tikzset{
   recept/.style={
-    draw=Recept,
+    draw=ColorRecept,
     align=left,
     text width=2cm,
   },
@@ -67,18 +67,33 @@
     recept,
     align=center,
     white,
-    fill=Recept,
-    draw=Recept,
+    fill=ColorRecept,
+    draw=ColorRecept,
   },
   recept_b/.style={
     thick,
-    draw=Recept,
+    draw=ColorRecept,
     inner sep=0pt,
   },
   commit/.style={
-    draw=Recept,
+    draw=ColorRecept,
     circle,
     minimum width=0.3cm,
+  },
+  item_milk/.style={
+    fill=ColorMilk,
+  },
+  item_soup/.style={
+    fill=ColorSoup,
+  },
+  item_omelette/.style={
+    fill=ColorOmelette,
+  },
+  item_tee/.style={
+    fill=ColorTee,
+  },
+  item_merge/.style={
+    fill=ColorMerge,
   },
 }
 
@@ -104,29 +119,29 @@
 \node[above right, gray] at (-1.75cm,-4cm) {Действия};
 
 \node<1->[recept_t] (p1t) at (0.0, 0.2cm) {\textbf{Меню}};
-\node<1->[recept, fill=Milk, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
+\node<1->[recept, item_milk, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
 \node<1->[recept_b, fit=(p1t) (p1milk)] {};
 
 \node<3->[recept_t, right of=p1t] (p2t) {\textbf{Меню}};
-\node<3->[recept, fill=Milk, below=-\pgflinewidth of p2t] (p2milk) {Молоко};
-\node<3->[recept, fill=Soup, below=-\pgflinewidth of p2milk] (p2soup) {Суп};
+\node<3->[recept, item_milk, below=-\pgflinewidth of p2t] (p2milk) {Молоко};
+\node<3->[recept, item_soup, below=-\pgflinewidth of p2milk] (p2soup) {Суп};
 \node<3->[recept_b, fit=(p2t) (p2soup)] {};
 
 \node<5->[recept_t, right of=p2t] (p3t) {\textbf{Меню}};
-\node<5->[recept, fill=Milk, below=-\pgflinewidth of p3t] (p3milk) {Молоко};
-\node<5->[recept, fill=Soup, below=-\pgflinewidth of p3milk] (p3soup) {Суп};
-\node<5->[recept, fill=Omelette, below=-\pgflinewidth of p3soup] (p3omelette) {Омлет};
+\node<5->[recept, item_milk, below=-\pgflinewidth of p3t] (p3milk) {Молоко};
+\node<5->[recept, item_soup, below=-\pgflinewidth of p3milk] (p3soup) {Суп};
+\node<5->[recept, item_omelette, below=-\pgflinewidth of p3soup] (p3omelette) {Омлет};
 \node<5->[recept_b, fit=(p3t) (p3omelette)] {};
 
 \node<7->[recept_t, right of=p3t] (p4t) {\textbf{Меню}};
-\node<7->[recept, fill=Tee, below=-\pgflinewidth of p4t] (p4tee) {Чай};
-\node<7->[recept, fill=Soup, below=-\pgflinewidth of p4tee] (p4soup) {Суп};
-\node<7->[recept, fill=Omelette, below=-\pgflinewidth of p4soup] (p4omelette) {Омлет};
+\node<7->[recept, item_tee, below=-\pgflinewidth of p4t] (p4tee) {Чай};
+\node<7->[recept, item_soup, below=-\pgflinewidth of p4tee] (p4soup) {Суп};
+\node<7->[recept, item_omelette, below=-\pgflinewidth of p4soup] (p4omelette) {Омлет};
 \node<7->[recept_b, fit=(p4t) (p4omelette)] {};
 
-\node<2->[recept, rounded corners, fill=Soup, below] (p1to2soup) at (1.75cm, -2.5cm) {$+$ Суп};
-\node<4->[recept, rounded corners, fill=Omelette, below] (p2to3omelette) at (5.25cm, -2.5cm)  {$+$ Омлет};
-\node<6->[recept, rectangle split, rectangle split parts=2, rectangle split part fill={Milk, Tee}, rounded corners, below] (p3to4) at (8.75cm, -2.5cm)  {$-$ Молоко \nodepart{two} $+$ Чай};
+\node<2->[recept, rounded corners, item_soup, below] (p1to2soup) at (1.75cm, -2.5cm) {$+$ Суп};
+\node<4->[recept, rounded corners, item_omelette, below] (p2to3omelette) at (5.25cm, -2.5cm)  {$+$ Омлет};
+\node<6->[recept, rectangle split, rectangle split parts=2, rectangle split part fill={ColorMilk, ColorTee}, rounded corners, below] (p3to4) at (8.75cm, -2.5cm)  {$-$ Молоко \nodepart{two} $+$ Чай};
 
 \draw<2->[-o] (p1milk) to[out=-90,in=180] (p1to2soup);
 \draw<3->[->] (p1to2soup) to[out=0,in=-90] ($(p2soup.south)+(-0.2cm,0)$);
@@ -153,17 +168,17 @@
         \begin{center}
 \begin{tikzpicture}[node distance=3.5cm]
 \node[recept_t] (p1t) {\textbf{Меню}};
-\node[recept, fill=Milk, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
+\node[recept, item_milk, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
 \node[recept_b, fit=(p1t) (p1milk)] {};
 
-\node[recept, rounded corners, fill=Soup, right of=p1t, yshift=0.5cm] (p1to2soup) {$+$ Суп};
-\node[recept, rounded corners, fill=Omelette, above=0.3cm of p1to2soup] (p2to3omelette) {$+$ Омлет};
-\node[recept, rectangle split, rectangle split parts=2, rectangle split part fill={Milk, Tee}, rounded corners, above=0.3cm of p2to3omelette] (p3to4) {$-$ Молоко \nodepart{two} $+$ Чай};
+\node[recept, rounded corners, item_soup, right of=p1t, yshift=0.5cm] (p1to2soup) {$+$ Суп};
+\node[recept, rounded corners, item_omelette, above=0.3cm of p1to2soup] (p2to3omelette) {$+$ Омлет};
+\node[recept, rectangle split, rectangle split parts=2, rectangle split part fill={ColorMilk, ColorTee}, rounded corners, above=0.3cm of p2to3omelette] (p3to4) {$-$ Молоко \nodepart{two} $+$ Чай};
 
 \node[recept_t, right of=p3to4, yshift=0.5cm] (p4t) {\textbf{Меню}};
-\node[recept, fill=Tee, below=-\pgflinewidth of p4t] (p4tee) {Чай};
-\node[recept, fill=Soup, below=-\pgflinewidth of p4tee] (p4soup) {Суп};
-\node[recept, fill=Omelette, below=-\pgflinewidth of p4soup] (p4omelette) {Омлет};
+\node[recept, item_tee, below=-\pgflinewidth of p4t] (p4tee) {Чай};
+\node[recept, item_soup, below=-\pgflinewidth of p4tee] (p4soup) {Суп};
+\node[recept, item_omelette, below=-\pgflinewidth of p4soup] (p4omelette) {Омлет};
 \node[recept_b, fit=(p4t) (p4omelette)] {};
 
 \draw[-o] (p1t) to[out=0,in=180] (p1to2soup);
@@ -179,11 +194,11 @@
         \begin{center}
 \begin{tikzpicture}[node distance=1cm]
 \node[commit, fill=white] (c0) {};
-\node[commit, fill=Soup, above of=c0] (c1) {};
-\node[commit, fill=Omelette, above of=c1] (c2) {};
+\node[commit, item_soup, above of=c0] (c1) {};
+\node[commit, item_omelette, above of=c1] (c2) {};
 \coordinate[above of=c2] (pc2);
-\fill[fill=Milk] ($(pc2)+(0.15cm,0)$) arc (0:180:0.15cm) -- cycle;
-\fill[fill=Tee] ($(pc2)+(0.15cm,0)$) arc (0:-180:0.15cm) -- cycle;
+\fill[item_milk] ($(pc2)+(0.15cm,0)$) arc (0:180:0.15cm) -- cycle;
+\fill[item_tee] ($(pc2)+(0.15cm,0)$) arc (0:-180:0.15cm) -- cycle;
 \node[commit] (c3) at (pc2) {};
 \draw[->] (c0) -- (c1);
 \draw[->] (c1) -- (c2);
@@ -211,42 +226,42 @@
 \node[above right, gray] at (-1.75cm,-4.75cm) {Дома};
 
 \node<1->[recept_t] (p1t) {\textbf{Меню}};
-\node<1->[recept, fill=Milk, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
+\node<1->[recept, item_milk, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
 \node<1->[recept_b, fit=(p1t) (p1milk)] {};
 
 \node<2->[recept, rounded corners, fill=white, below=1cm of p1milk] (p1copy) {\small Копирование};
 
 \node<2->[recept_t, below=1cm of p1copy] (p21t) {\textbf{Меню}};
-\node<2->[recept, fill=Milk, below=-\pgflinewidth of p21t] (p21milk) {Молоко};
+\node<2->[recept, item_milk, below=-\pgflinewidth of p21t] (p21milk) {Молоко};
 \node<2->[recept_b, fit=(p21t) (p21milk)] {};
 
-\node<3->[recept, rounded corners, fill=Omelette, right of=p21t] (p2to3omelette) {$+$ Омлет};
-\node<3->[recept, rectangle split, rectangle split parts=2, rectangle split part fill={Milk, Tee}, rounded corners, above=2pt of p2to3omelette] (p3to4) {$-$ Молоко \nodepart{two} $+$ Чай};
+\node<3->[recept, rounded corners, item_omelette, right of=p21t] (p2to3omelette) {$+$ Омлет};
+\node<3->[recept, rectangle split, rectangle split parts=2, rectangle split part fill={ColorMilk, ColorTee}, rounded corners, above=2pt of p2to3omelette] (p3to4) {$-$ Молоко \nodepart{two} $+$ Чай};
 
-\node<4->[recept, rounded corners, fill=Soup, right of=p1t] (p1to2soup) {$+$ Суп};
+\node<4->[recept, rounded corners, item_soup, right of=p1t] (p1to2soup) {$+$ Суп};
 
 \node<5->[recept_t, right of=p1to2soup] (p2t) {\textbf{Меню}};
-\node<5->[recept, fill=Milk, below=-\pgflinewidth of p2t] (p2milk) {Молоко};
-\node<5->[recept, fill=Soup, below=-\pgflinewidth of p2milk] (p2soup) {Суп};
+\node<5->[recept, item_milk, below=-\pgflinewidth of p2t] (p2milk) {Молоко};
+\node<5->[recept, item_soup, below=-\pgflinewidth of p2milk] (p2soup) {Суп};
 \node<5->[recept_b, fit=(p2t) (p2soup)] {};
 
 \node<5->[recept_t, right of=p2to3omelette] (p22t) {\textbf{Меню}};
-\node<5->[recept, fill=Tee, below=-\pgflinewidth of p22t] (p22tee) {Чай};
-\node<5->[recept, fill=Omelette, below=-\pgflinewidth of p22tee] (p22omelette) {Омлет};
+\node<5->[recept, item_tee, below=-\pgflinewidth of p22t] (p22tee) {Чай};
+\node<5->[recept, item_omelette, below=-\pgflinewidth of p22tee] (p22omelette) {Омлет};
 \node<5->[recept_b, fit=(p22t) (p22omelette)] {};
 
-\node<6->[recept, rounded corners, fill=Merge] (p3merge) at ($(p2soup.south)!0.5!(p22t.north)$) {\small Слияние};
+\node<6->[recept, rounded corners, item_merge] (p3merge) at ($(p2soup.south)!0.5!(p22t.north)$) {\small Слияние};
 
 \node<7->[recept_t, right of=p2t] (p4t) {\textbf{Меню}};
-\node<7->[recept, fill=Tee, below=-\pgflinewidth of p4t] (p4tee) {Чай};
-\node<7->[recept, fill=Soup, below=-\pgflinewidth of p4tee] (p4soup) {Суп};
-\node<7->[recept, fill=Omelette, below=-\pgflinewidth of p4soup] (p4omelette) {Омлет};
+\node<7->[recept, item_tee, below=-\pgflinewidth of p4t] (p4tee) {Чай};
+\node<7->[recept, item_soup, below=-\pgflinewidth of p4tee] (p4soup) {Суп};
+\node<7->[recept, item_omelette, below=-\pgflinewidth of p4soup] (p4omelette) {Омлет};
 \node<7->[recept_b, fit=(p4t) (p4omelette)] {};
 
 \node<7->[recept_t, below=1.1cm of p4omelette] (p24t) {\textbf{Меню}};
-\node<7->[recept, fill=Tee, below=-\pgflinewidth of p24t] (p24tee) {Чай};
-\node<7->[recept, fill=Omelette, below=-\pgflinewidth of p24tee] (p24omelette) {Омлет};
-\node<7->[recept, fill=Soup, below=-\pgflinewidth of p24omelette] (p24soup) {Суп};
+\node<7->[recept, item_tee, below=-\pgflinewidth of p24t] (p24tee) {Чай};
+\node<7->[recept, item_omelette, below=-\pgflinewidth of p24tee] (p24omelette) {Омлет};
+\node<7->[recept, item_soup, below=-\pgflinewidth of p24omelette] (p24soup) {Суп};
 \node<7->[recept_b, fit=(p24t) (p24soup)] {};
 
 \draw<2->[-o] (p1milk) -- (p1copy);
@@ -281,19 +296,19 @@
         \begin{center}
 \begin{tikzpicture}[node distance=3.5cm]
 \node[recept_t] (p1t) {\textbf{Меню}};
-\node[recept, fill=Milk, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
+\node[recept, item_milk, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
 \node[recept_b, fit=(p1t) (p1milk)] {};
 
-\node[recept, rounded corners, fill=Soup, right=-0.5cm of p1t, yshift=1cm] (p1to2soup) {$+$ Суп};
-\node[recept, rounded corners, fill=Merge, above=2.8cm of p1t] (merge) {Слияние};
+\node[recept, rounded corners, item_soup, right=-0.5cm of p1t, yshift=1cm] (p1to2soup) {$+$ Суп};
+\node[recept, rounded corners, item_merge, above=2.8cm of p1t] (merge) {Слияние};
 
-\node[recept, rounded corners, fill=Omelette, left=-0.5cm of p1t, yshift=1cm] (p2to3omelette) {$+$ Омлет};
-\node[recept, rectangle split, rectangle split parts=2, rectangle split part fill={Milk, Tee}, rounded corners, above=0.3cm of p2to3omelette] (p3to4) {$-$ Молоко \nodepart{two} $+$ Чай};
+\node[recept, rounded corners, item_omelette, left=-0.5cm of p1t, yshift=1cm] (p2to3omelette) {$+$ Омлет};
+\node[recept, rectangle split, rectangle split parts=2, rectangle split part fill={ColorMilk, ColorTee}, rounded corners, above=0.3cm of p2to3omelette] (p3to4) {$-$ Молоко \nodepart{two} $+$ Чай};
 
 \node[recept_t, right of=merge, yshift=1.0cm] (p4t) {\textbf{Меню}};
-\node[recept, fill=Tee, below=-\pgflinewidth of p4t] (p4tee) {Чай};
-\node[recept, fill=Soup, below=-\pgflinewidth of p4tee] (p4soup) {Суп};
-\node[recept, fill=Omelette, below=-\pgflinewidth of p4soup] (p4omelette) {Омлет};
+\node[recept, item_tee, below=-\pgflinewidth of p4t] (p4tee) {Чай};
+\node[recept, item_soup, below=-\pgflinewidth of p4tee] (p4soup) {Суп};
+\node[recept, item_omelette, below=-\pgflinewidth of p4soup] (p4omelette) {Омлет};
 \node[recept_b, fit=(p4t) (p4omelette)] {};
 
 \draw[-o] (p1t) to[out=0,in=-90] (p1to2soup);
@@ -311,13 +326,13 @@
         \begin{center}
 \begin{tikzpicture}[node distance=1cm]
 \node[commit, fill=white] (c0) {};
-\node[commit, fill=Soup, above of=c0, xshift=1cm] (c1) {};
-\node[commit, fill=Omelette, above of=c0, xshift=-1cm] (c2) {};
+\node[commit, item_soup, above of=c0, xshift=1cm] (c1) {};
+\node[commit, item_omelette, above of=c0, xshift=-1cm] (c2) {};
 \coordinate[above of=c2] (pc2);
-\fill[fill=Milk] ($(pc2)+(0.15cm,0)$) arc (0:180:0.15cm) -- cycle;
-\fill[fill=Tee] ($(pc2)+(0.15cm,0)$) arc (0:-180:0.15cm) -- cycle;
+\fill[item_milk] ($(pc2)+(0.15cm,0)$) arc (0:180:0.15cm) -- cycle;
+\fill[item_tee] ($(pc2)+(0.15cm,0)$) arc (0:-180:0.15cm) -- cycle;
 \node[commit] (c3) at (pc2) {};
-\node[commit, fill=Merge, above of=c3, xshift=1cm] (c4) {};
+\node[commit, item_merge, above of=c3, xshift=1cm] (c4) {};
 \draw[->] (c0) -- (c1);
 \draw[->] (c0) -- (c2);
 \draw[->] (c2) -- (c3);
