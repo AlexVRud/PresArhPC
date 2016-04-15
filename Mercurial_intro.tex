@@ -1,4 +1,4 @@
-\documentclass[pdf,9pt,aspectratio=169]{beamer}
+\documentclass[pdf,9pt,aspectratio=169,xcolor={dvipsnames}]{beamer}
 \usepackage[utf8]{inputenc}
 
 \AtBeginSection[]{
@@ -34,8 +34,6 @@
 \date[г. Архангельск, 2016 г.]{г. Архангельск, 2016 г.}
 
 \usepackage{wrapfig}
-\usepackage{color}
-\usepackage{xcolor}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows}
@@ -51,6 +49,8 @@
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{shapes.multipart}
 \usetikzlibrary{topaths}
+
+\colorlet{Recept}{Brown!90!white}
 
 \tikzset{
   MyChar/.style={
@@ -68,7 +68,7 @@
   file/.style={rectangle, draw=black, fill=white, minimum width=2cm, minimum height=1cm},
   program/.style={rectangle, draw=black, fill=blue!20!white, rounded corners},
   recept/.style={
-    draw=green!50!blue!75!black,
+    draw=Recept,
     align=left,
     text width=2cm,
   },
@@ -76,16 +76,16 @@
     recept,
     align=center,
     white,
-    fill=green!50!blue!75!black,
-    draw=green!50!blue!75!black,
+    fill=Recept,
+    draw=Recept,
   },
   recept_b/.style={
     thick,
-    draw=green!50!blue!75!black,
+    draw=Recept,
     inner sep=0pt,
   },
   commit/.style={
-    draw=green!50!blue!75!black,
+    draw=Recept,
     circle,
     minimum width=0.3cm,
   },
@@ -162,14 +162,14 @@
         \begin{center}
 \begin{tikzpicture}[node distance=3.5cm]
 \node[recept_t] (p1t) {\textbf{Меню}};
-\node[recept, draw=green!50!blue!75!black, fill=green!20, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
+\node[recept, fill=green!20, below=-\pgflinewidth of p1t] (p1milk) {Молоко};
 \node[recept_b, fit=(p1t) (p1milk)] {};
 
 \node[recept, rounded corners, fill=blue!20, right of=p1t, yshift=0.5cm] (p1to2soup) {$+$ Суп};
 \node[recept, rounded corners, fill=red!20, above=0.3cm of p1to2soup] (p2to3omelette) {$+$ Омлет};
 \node[recept, rectangle split, align=left, rectangle split parts=2, rectangle split part fill={green!20, yellow!20}, draw, text width =2cm, rounded corners, above=0.3cm of p2to3omelette] (p3to4) {$-$ Молоко \nodepart{two} $+$ Чай};
 
-\node[recept, align=center, white, draw=green!50!blue!75!black, fill=green!50!blue!75!black, right of=p3to4, yshift=0.5cm] (p4t) {\textbf{Меню}};
+\node[recept_t, right of=p3to4, yshift=0.5cm] (p4t) {\textbf{Меню}};
 \node[recept, fill=yellow!20, below=-\pgflinewidth of p4t] (p4tee) {Чай};
 \node[recept, fill=blue!20, below=-\pgflinewidth of p4tee] (p4soup) {Суп};
 \node[recept, fill=red!20, below=-\pgflinewidth of p4soup] (p4omelette) {Омлет};
