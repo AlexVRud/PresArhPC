@@ -856,6 +856,71 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
+%% Представление целых знаковых чисел в памяти
+%%
+\begin{frame}{Представление целых знаковых чисел в памяти}
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Как запомнить}
+        \begin{center}
+\begin{tikzpicture}
+  \node[databox=1,text=brown,draw=gray,fill=lightgray,dashed] (Ap24) {\footnotesize N};
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap24] (Ap23) {\footnotesize 0x00}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap23] (Ap22) {\footnotesize 0x00}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap22] (Ap21) {\footnotesize 0x00}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap21] (Ap20) {\footnotesize 0x02}; 
+  \node[left=0cm of Ap24] {$2$};
+
+  \node[databox=1,text=brown,draw=gray,fill=lightgray,dashed,below=0.1cm of Ap24] (Ap14) {\footnotesize N};
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap14] (Ap13) {\footnotesize 0x00}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap13] (Ap12) {\footnotesize 0x00}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap12] (Ap11) {\footnotesize 0x00}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap11] (Ap10) {\footnotesize 0x01}; 
+  \node[left=0cm of Ap14] {$1$};
+
+  \node[databox=1,text=brown,draw=gray,fill=lightgray,dashed,below=0.1cm of Ap14] (Ap04) {\footnotesize N};
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap04] (Ap03) {\footnotesize 0x00}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap03] (Ap02) {\footnotesize 0x00}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap02] (Ap01) {\footnotesize 0x00}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Ap01] (Ap00) {\footnotesize 0x00}; 
+  \node[left=0cm of Ap04] {$0$};
+
+  \node[databox=1,text=brown,draw=gray,fill=lightgray,dashed,below=0.1cm of Ap04] (Am14) {\footnotesize N-1};
+  \node[databox=1,text=brown,right=-\pgflinewidth of Am14] (Am13) {\footnotesize 0xFF}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Am13] (Am12) {\footnotesize 0xFF}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Am12] (Am11) {\footnotesize 0xFF}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Am11] (Am10) {\footnotesize 0xFF}; 
+  \node[left=0cm of Am14] {$-1$};
+
+  \node[databox=1,text=brown,draw=gray,fill=lightgray,dashed,below=0.1cm of Am14] (Am24) {\footnotesize N-1};
+  \node[databox=1,text=brown,right=-\pgflinewidth of Am24] (Am23) {\footnotesize 0xFF}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Am23] (Am22) {\footnotesize 0xFF}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Am22] (Am21) {\footnotesize 0xFF}; 
+  \node[databox=1,text=brown,right=-\pgflinewidth of Am21] (Am20) {\footnotesize 0xFE}; 
+  \node[left=0cm of Am24] {$-2$};
+  
+  \node[above=0.2cm of Ap22] {...};
+  \node[below=0.2cm of Am22] {...};
+\end{tikzpicture}
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<1->{К прочтению}
+        \begin{itemize}
+          \item А.В. Столяров, Программирование на языке ассемблера NASM для ОС Unix
+          \begin{itemize}
+            \item \url{http://www.stolyarov.info/books/asm_unix}
+            \item Глава 1.3. Машинное представление целых чисел.
+          \end{itemize}
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
 %% Команды языка Ассемблер: add
 %%
 \begin{frame}\frametitle{Команды языка Ассемблер: add}
