@@ -1180,11 +1180,11 @@ msg:    db "Hello World!!!", 13, 10, 0
     \begin{lstlisting}[]
         push    ecx     ; <--- y
         push    ebx     ; <--- x
-        call    my_sum  ; <--- my_sum(x,y)
+        call    _my_sum ; <--- my_sum(x,y)
         add     esp, 8  ; очистка стека
         ; тут некая команда
 ...
-my_sum:
+_my_sum:
         push    ebx     ; Используемые регистры помещаем в стек
         mov     eax, [esp+8]
         mov     ebx, [esp+12]
@@ -1320,6 +1320,8 @@ my_sum:
   \end{figure}
   \end{block}
 \end{frame}
+
+%% TODO: Слайд сократи код предыдущего примера
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
