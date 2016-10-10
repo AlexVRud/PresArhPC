@@ -57,6 +57,8 @@
 \usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{fit}
+\usetikzlibrary{shapes.geometric}
+
 \usepackage{transparent}
 \setbeamercovered{transparent}
 
@@ -107,7 +109,7 @@
   code/.style={shape=rectangle, draw=green!50!black, anchor=north west, outer sep=0, inner sep = 0},
   qahigh/.style={fill=blue!40, minimum height=\baselineskip, inner sep=0, inner ysep=0, anchor=north west},
   state/.style={rectangle, draw=gray, thick},
-  command/.style={rectangle, draw=gray, thick, fill=blue!20!white, rounded corners},
+  command/.style={ellipse, draw=gray, thick, fill=blue!20!white},
 }
 
 \newcommand{\qahigh}[1]{%
@@ -820,7 +822,7 @@ msg:    db "Hello World!!!", 13, 10, 0
   \node[left=0cm of EAX2] (LabelEAX2) {EAX};
   \node[state, fit=(EAX2) (LabelEAX2)] (State2) {};
   \node[command] (cmd) at($(State1)!0.5!(State2)$)  {\cl{mov eax, \only<1,2>{123}\only<3,4>{1024}\only<5,6>{1234567890}\only<7,8>{0xA1B2C3D4}\only<9,10>{-1}}};
-  \draw[-o] (State1) -- (cmd);
+  \draw[->] (State1) -- (cmd);
   \draw[->] (cmd) -- (State2);
 \end{tikzpicture}
         \end{center}
@@ -963,7 +965,7 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
   \node<1,2>[state, fit=(EAX1) (LabelEAX1)] (State1) {};
   \node<3->[state, fit=(EAX1) (LabelEAX1) (ECX1)] (State1) {};
 
-  \node[databox=4,text=brown, below=2.5cm of EAX1] (EAX2) {\only<1,3,5>{?}\only<2>{379}\only<4>{2256}\only<6>{-2135429428}};
+  \node[databox=4,text=brown, below=2.5cm of EAX1] (EAX2) {\only<1,3,5>{?}\only<2>{379}\only<4>{2256}\only<6>{567014608}};
   \node[left=0cm of EAX2] (LabelEAX2) {EAX};
   \node<3->[databox=4,text=brown, below=0.4cm of EAX2] (ECX2) {\only<3,5>{?}\only<4,6>{2000}};
   \node<3->[left=0cm of ECX2] (LabelECX2) {\only<3,4>{ECX}\only<5,6>{n}};
@@ -971,7 +973,7 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
   \node<3->[state, fit=(EAX2) (LabelEAX2) (ECX2)] (State2) {};
 
   \node[command] (cmd) at($(State1.south)!0.5!(State2.north)$) {\cl{add eax, \only<1,2>{123}\only<3,4>{ecx}\only<5,6>{n}}};
-  \draw[-o] (State1) -- (cmd);
+  \draw[->] (State1) -- (cmd);
   \draw[->] (cmd) -- (State2);
 \end{tikzpicture}
         \end{center}
@@ -1351,6 +1353,6 @@ _my_sum:
     \end{column}
   \end{columns}
   \vfill
-\end{frame}
+\end{frame}	
 
 \end{document}
