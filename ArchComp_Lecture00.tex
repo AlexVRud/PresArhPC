@@ -36,6 +36,7 @@
 \usepackage{wrapfig}
 \usepackage{color}
 \usepackage{xcolor}
+\usepackage{GoogleColorPalette}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows}
@@ -46,6 +47,7 @@
 \usetikzlibrary{shapes}
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{positioning}
+\usetikzlibrary{shadows.blur}
 
 \tikzset{
   MyChar/.style={
@@ -60,8 +62,31 @@
   process/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30},
   decision/.style={diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30},
   arrow/.style={thick,->,>=stealth},
-  file/.style={rectangle, draw=black, fill=white, minimum width=2cm, minimum height=1cm},
-  program/.style={rectangle, draw=black, fill=blue!20!white, rounded corners},
+  file/.style={
+    rectangle,
+    draw=black,
+    fill=white,
+    minimum width=2cm,
+    minimum height=1cm,
+  },
+  program/.style={
+    ellipse,
+    draw=black,
+    top color=Blue50,
+    bottom color=Blue200,
+  },
+  greencolor/.style={
+    top color=Green50,
+    bottom color=Green200,
+  },
+  redcolor/.style={
+    top color=Red50,
+    bottom color=Red200,
+  },
+  yellowcolor/.style={
+    top color=Yellow50,
+    bottom color=Yellow200,
+  },
 }
 
 %\usepackage{minted}
@@ -354,9 +379,9 @@
       \begin{exampleblock}<1->{Компиляция программы на ЯП Си}
         \begin{center}
 \begin{tikzpicture}[node distance=2.3cm]
-  \node [file, fill=green!20!white] (main_c) at (0,0) {main.c};
+  \node [file, greencolor] (main_c) at (0,0) {main.c};
   \node [program, right of=main_c] (gcc1) {gcc.exe};
-  \node [file, fill=red!20!white, right of=gcc1] (mainexe) {main.exe};
+  \node [file, redcolor, right of=gcc1] (mainexe) {main.exe};
   \draw [-o] (main_c) -- (gcc1);
   \draw [->] (gcc1) -- (mainexe);
 \end{tikzpicture}
@@ -384,13 +409,13 @@
   \begin{exampleblock}<1->{Компиляция программы на ЯП Си: два этапа}
     \begin{center}
 \begin{tikzpicture}[node distance=2.5cm]
-  \node [file, fill=green!20!white] (main_c) at (0,0) {main.c};
+  \node [file, greencolor] (main_c) at (0,0) {main.c};
   \node [program, right of=main_c] (gcc1) {gcc.exe};
-  \node [file, fill=yellow!20!white, right of=gcc1] (main_obj) {main.o};
-  \node [file, fill=yellow!20!white, below=1cm of main_obj, xshift=2.5cm] (other_obj) {other.o};
+  \node [file, yellowcolor, right of=gcc1] (main_obj) {main.o};
+  \node [file, yellowcolor, below=1cm of main_obj, xshift=2.5cm] (other_obj) {other.o};
   \node [program, right of=main_obj] (ld) {ld.exe};
-  \node [file, fill=red!20!white, right of=ld] (mainexe) {main.exe};
-  \node [file, fill=red!20!white, below=1cm of mainexe, xshift=2.5cm] (other_dll) {other.dll};
+  \node [file, redcolor, right of=ld] (mainexe) {main.exe};
+  \node [file, redcolor, below=1cm of mainexe, xshift=2.5cm] (other_dll) {other.dll};
   \draw [-o] (main_c) -- (gcc1);
   \draw [->] (gcc1) -- (main_obj);
   \draw [-o] (main_obj) -- (ld);
@@ -415,13 +440,13 @@
   \begin{exampleblock}<1->{Компиляция программы на ЯП Ассемблер: два этапа}
     \begin{center}
 \begin{tikzpicture}[node distance=2.5cm]
-  \node [file, fill=green!20!white] (main_c) at (0,0) {main.asm};
+  \node [file, greencolor] (main_c) at (0,0) {main.asm};
   \node [program, right of=main_c] (gcc1) {nasm.exe};
-  \node [file, fill=yellow!20!white, right of=gcc1] (main_obj) {main.obj};
-  \node [file, fill=yellow!20!white, below=1cm of main_obj, xshift=2.5cm] (other_obj) {other.o};
+  \node [file, yellowcolor, right of=gcc1] (main_obj) {main.obj};
+  \node [file, yellowcolor, below=1cm of main_obj, xshift=2.5cm] (other_obj) {other.o};
   \node [program, right of=main_obj] (ld) {ld.exe};
-  \node [file, fill=red!20!white, right of=ld] (mainexe) {main.exe};
-  \node [file, fill=red!20!white, below=1cm of mainexe, xshift=2.5cm] (other_dll) {other.dll};
+  \node [file, redcolor, right of=ld] (mainexe) {main.exe};
+  \node [file, redcolor, below=1cm of mainexe, xshift=2.5cm] (other_dll) {other.dll};
   \draw [-o] (main_c) -- (gcc1);
   \draw [->] (gcc1) -- (main_obj);
   \draw [-o] (main_obj) -- (ld);
