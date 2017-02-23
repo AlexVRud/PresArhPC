@@ -707,69 +707,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%% Структура программы на Ассемблере
-%%
-\begin{frame}[fragile]\frametitle{Структура программы на Ассемблере}
-  \begin{columns}[T]
-    \begin{column}[T]{0.45\textwidth}
-      \begin{exampleblock}{Hello world}
-        \begin{figure}
-          \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
-\node[code] at (0,0) {%
-  \begin{minipage}{1.1\textwidth}
-    \begin{lstlisting}[]
-global  _main
-extern  _ExitProcess@4
-extern  _printf
-
-section .text   use32
-_main:
-        push    msg
-        call    _printf
-
-        xor     eax, eax
-        push    eax
-        call    _ExitProcess@4
-section .data
-msg:    db "Hello World!!!", 13, 10, 0
-    \end{lstlisting}
-  \end{minipage}
-};
-\begin{pgfonlayer}{background}
-  \begin{scope}[every node/.style={scale=0.8, text width=1.1\textwidth}]
-    \only<1>{\qahigh{1,2,3,6}}
-    \only<2>{\qahigh{5,13}}
-    \only<3>{\qahigh{7,...,12}}
-    \only<4>{\qahigh{14}}
-  \end{scope}
-\end{pgfonlayer}
-          \end{tikzpicture}
-        \end{figure}
-      \end{exampleblock}
-    \end{column}
-    \begin{column}[T]{0.45\textwidth}
-      \begin{block}{}
-\only<1>{Объявление глобальных и используемых имён.}
-\only<2>{Объявление секций кода и данных.}
-\only<3>{Код программы.}
-\only<4>{Константы}
-      \end{block}
-      \only<1>{\begin{block}{}
-\footnotesize\it
-{\bf global} --- сообщаем какие имена необходимо сделать видимыми в создаваемом объектном файле.
-
-{\bf extern} --- какие имена нам понадобятся из других объектных файлов. Т.е., например, функции внешних библиотек.
-      \end{block}}
-      \only<3>{\begin{block}<3>{}
-\footnotesize\it Как правило, используется выравнивание кода по трём колонкам шириной 8 символов:
-метки, команды, параметры.
-      \end{block}}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
 %% Команды языка Ассемблер: mov
 %%
 \begin{frame}[fragile]\frametitle{Команды языка Ассемблер: mov}
@@ -966,19 +903,19 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
   \node[databox=4,text=brown] (EAX1) at (0,0) {256};
   \node[left=0cm of EAX1] (LabelEAX1) {EAX};
   \node<3->[databox=4,text=brown, below=0.4cm of EAX1] (ECX1) {2000};
-  \node<3->[left=0cm of ECX1] (LabelECX1) {\only<3,4>{ECX}\only<5,6>{n}};
+  \node<3->[left=0cm of ECX1] (LabelECX1) {\only<3,4>{ECX}\only<5-8>{n}};
   \node<1,2>[state, fit=(EAX1) (LabelEAX1)] (State1) {};
   \node<3->[state, fit=(EAX1) (LabelEAX1) (ECX1)] (State1) {};
 
   \node<1-2>[databox=4,text=brown, below=2.5cm of EAX1] (EAX2) {\only<1>{?}\only<2>{379}};
-  \node<3->[databox=4,text=brown, below=2.5cm of ECX1] (EAX2) {\only<3,5>{?}\only<4>{2256}\only<6>{567014608}};
+  \node<3->[databox=4,text=brown, below=2.5cm of ECX1] (EAX2) {\only<3,5,7>{?}\only<4>{2256}\only<6>{567014608}\only<8>{2256}};
   \node[left=0cm of EAX2] (LabelEAX2) {EAX};
-  \node<3->[databox=4,text=brown, below=0.4cm of EAX2] (ECX2) {\only<3,5>{?}\only<4,6>{2000}};
-  \node<3->[left=0cm of ECX2] (LabelECX2) {\only<3,4>{ECX}\only<5,6>{n}};
+  \node<3->[databox=4,text=brown, below=0.4cm of EAX2] (ECX2) {\only<3,5,7>{?}\only<4,6,8>{2000}};
+  \node<3->[left=0cm of ECX2] (LabelECX2) {\only<3,4>{ECX}\only<5-8>{n}};
   \node<1,2>[state, fit=(EAX2) (LabelEAX2)] (State2) {};
   \node<3->[state, fit=(EAX2) (LabelEAX2) (ECX2)] (State2) {};
 
-  \node[command] (cmd) at($(State1.south)!0.5!(State2.north)$) {\cl{add eax, \only<1,2>{123}\only<3,4>{ecx}\only<5,6>{n}}};
+  \node[command] (cmd) at($(State1.south)!0.5!(State2.north)$) {\cl{add eax, \only<1,2>{123}\only<3,4>{ecx}\only<5,6>{n}\only<7,8>{[n]}}};
   \draw[->,myArrow] (State1) -- (cmd);
   \draw[->,myArrow] (cmd) -- (State2);
 \end{tikzpicture}
@@ -1023,6 +960,69 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
       \item 
     \end{itemize}
   \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Структура программы на Ассемблере
+%%
+\begin{frame}[fragile]\frametitle{Структура программы на Ассемблере}
+  \begin{columns}[T]
+    \begin{column}[T]{0.45\textwidth}
+      \begin{exampleblock}{Hello world}
+        \begin{figure}
+          \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
+\node[code] at (0,0) {%
+  \begin{minipage}{1.1\textwidth}
+    \begin{lstlisting}[]
+global  _main
+extern  _ExitProcess@4
+extern  _printf
+
+section .text   use32
+_main:
+        push    msg
+        call    _printf
+
+        xor     eax, eax
+        push    eax
+        call    _ExitProcess@4
+section .data
+msg:    db "Hello World!!!", 13, 10, 0
+    \end{lstlisting}
+  \end{minipage}
+};
+\begin{pgfonlayer}{background}
+  \begin{scope}[every node/.style={scale=0.8, text width=1.1\textwidth}]
+    \only<1>{\qahigh{1,2,3,6}}
+    \only<2>{\qahigh{5,13}}
+    \only<3>{\qahigh{7,...,12}}
+    \only<4>{\qahigh{14}}
+  \end{scope}
+\end{pgfonlayer}
+          \end{tikzpicture}
+        \end{figure}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[T]{0.45\textwidth}
+      \begin{block}{}
+\only<1>{Объявление глобальных и используемых имён.}
+\only<2>{Объявление секций кода и данных.}
+\only<3>{Код программы.}
+\only<4>{Константы}
+      \end{block}
+      \only<1>{\begin{block}{}
+\footnotesize\it
+{\bf global} --- сообщаем какие имена необходимо сделать видимыми в создаваемом объектном файле.
+
+{\bf extern} --- какие имена нам понадобятся из других объектных файлов. Т.е., например, функции внешних библиотек.
+      \end{block}}
+      \only<3>{\begin{block}<3>{}
+\footnotesize\it Как правило, используется выравнивание кода по трём колонкам шириной 8 символов:
+метки, команды, параметры.
+      \end{block}}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
