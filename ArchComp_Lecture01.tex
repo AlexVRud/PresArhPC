@@ -104,6 +104,7 @@
     }
   },
   linkedbyte/.style={shape=rectangle,rounded corners,draw=green!80!black,dashed,%
+     thick,
      minimum width=\ByteWidht+2*\DeltaWidht, minimum height=\ByteHeight+2*\DeltaWidht
   },
   code/.style={shape=rectangle, draw=green!50!black, anchor=north west, outer sep=0, inner sep = 0},
@@ -942,10 +943,53 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
   \end{block}
   \begin{block}<1->{}
     \begin{itemize}
-      \item 
+      \item Поместить источник в стек.
+      \item Источник --- регистр или данные в памяти.
     \end{itemize}
   \end{block}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Пример mov eax,123
+%%
+\begin{frame}{Пример использования команды push}
+  \begin{exampleblock}<1->{Пример}
+    \begin{center}
+\begin{tikzpicture}
+  \node[databox=4] (ESP1) at (0,0) {};
+  \node[left=0cm of ESP1] (LabelESP1) {ESP};
+  \node[databox=4,text=brown, right=2*\ByteWidht of ESP1] (EAX1) {1234};
+  \node[left=0cm of EAX1] (LabelEAX1) {EAX};
+  \node[databox=6, fill=gray, below=0.4cm of ESP1, xshift=\ByteWidht] (ST11) {};
+  \node[databox=4,text=brown, right=-\pgflinewidth of ST11] (ST12) {0};
+  \node[linkedbyte,left=-\DeltaWidht-\ByteWidht-\pgflinewidth of ST12] (headofstack1) {};
+  \node[left=0cm of ST11] (LabelST1) {Stack:};
+  \node[state, fit=(LabelESP1) (EAX1) (LabelST1) (ST11)] (State1) {};
+  \draw[->,draw=violet,thick] (ESP1.center) -- (headofstack1.north west);
+
+
+  \node[databox=4,text=brown, below=3.0cm of ESP1] (ESP2) {};
+  \node[left=0cm of ESP2] (LabelESP2) {ESP};
+  \node[databox=4,text=brown, right=2*\ByteWidht of ESP2] (EAX2) {1234};
+  \node[left=0cm of EAX2] (LabelEAX2) {EAX};
+  \node[databox=2, fill=gray, below=0.4cm of ESP2, xshift=-\ByteWidht] (ST21) {};
+  \node[databox=4,text=brown, right=-\pgflinewidth of ST21] (ST22) {1234};
+  \node[databox=4,text=brown, right=-\pgflinewidth of ST22] (ST23) {0};
+  \node[linkedbyte,left=-\DeltaWidht-\ByteWidht-\pgflinewidth of ST22] (headofstack2) {};
+  \node[left=0cm of ST21] (LabelST2) {Stack:};
+  \node[state, fit=(LabelESP2) (EAX2) (LabelST2) (ST21)] (State2) {};
+  \draw[->,draw=violet,thick] (ESP2.center) -- (headofstack2.north);
+
+  \node[command] (cmd) at($(State1.south)!0.5!(State2.north)$) {\cl{push \only<1>{eax}}};
+  \draw[->,myArrow] (State1) -- (cmd);
+  \draw[->,myArrow] (cmd) -- (State2);
+\end{tikzpicture}
+    \end{center}
+  \end{exampleblock}
+\end{frame}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
