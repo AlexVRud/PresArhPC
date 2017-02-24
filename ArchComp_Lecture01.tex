@@ -951,7 +951,7 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%% Пример mov eax,123
+%% Пример push eax
 %%
 \begin{frame}{Пример использования команды push}
   \begin{exampleblock}<1->{Пример}
@@ -989,8 +989,6 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
   \end{exampleblock}
 \end{frame}
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %% Команды языка Ассемблер: pop
@@ -1001,9 +999,53 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
   \end{block}
   \begin{block}<1->{}
     \begin{itemize}
-      \item 
+      \item Взять элеиент из стека и поместить его в приёмник. 
     \end{itemize}
   \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Пример pop eax
+%%
+\begin{frame}{Пример использования команды push}
+  \begin{exampleblock}<1->{Пример}
+    \begin{center}
+\begin{tikzpicture}
+  \node[databox=4] (ESP1) at (0,0) {};
+  \node[left=0cm of ESP1] (LabelESP1) {ESP};
+  \node[databox=4,fill=gray, right=2*\ByteWidht of ESP1] (EAX1) {};
+  \node[left=0cm of EAX1] (LabelEAX1) {EAX};
+  \node[databox=2, fill=gray, below=0.4cm of ESP1, xshift=-\ByteWidht] (ST11) {};
+  \node[databox=4,text=brown, right=-\pgflinewidth of ST11] (ST12) {1234};
+  \node[databox=4,text=brown, right=-\pgflinewidth of ST12] (ST13) {0};
+  \node[linkedbyte,left=-\DeltaWidht-\ByteWidht-\pgflinewidth of ST12] (headofstack1) {};
+  \node[left=0cm of ST11] (LabelST1) {Stack:};
+  \node[state, fit=(LabelESP1) (EAX1) (LabelST1) (ST11)] (State1) {};
+  \draw[->,draw=violet,thick] (ESP1.center) -- (headofstack1.north);
+
+
+  \node[databox=4,text=brown, below=3.0cm of ESP1] (ESP2) {};
+  \node[left=0cm of ESP2] (LabelESP2) {ESP};
+  \node[databox=4,text=brown, right=2*\ByteWidht of ESP2] (EAX2) {1234};
+  \node[left=0cm of EAX2] (LabelEAX2) {EAX};
+  \node[databox=2, fill=gray, below=0.4cm of ESP2, xshift=-\ByteWidht] (ST21) {};
+  \node[databox=1, fill=gray, text=white, right=-\pgflinewidth of ST21] (ST22) {210};
+  \node[databox=1, fill=gray, text=white, right=-\pgflinewidth of ST22] (ST23) {4};
+  \node[databox=1, fill=gray, text=white, right=-\pgflinewidth of ST23] (ST24) {0};
+  \node[databox=1, fill=gray, text=white, right=-\pgflinewidth of ST24] (ST25) {0};
+  \node[databox=4, text=brown, right=-\pgflinewidth of ST25] (ST26) {0};
+  \node[linkedbyte,left=-\DeltaWidht-\ByteWidht-\pgflinewidth of ST26] (headofstack2) {};
+  \node[left=0cm of ST21] (LabelST2) {Stack:};
+  \node[state, fit=(LabelESP2) (EAX2) (LabelST2) (ST21)] (State2) {};
+  \draw[->,draw=violet,thick] (ESP2.center) -- (headofstack2.north west);
+
+  \node[command] (cmd) at($(State1.south)!0.5!(State2.north)$) {\cl{push \only<1>{eax}}};
+  \draw[->,myArrow] (State1) -- (cmd);
+  \draw[->,myArrow] (cmd) -- (State2);
+\end{tikzpicture}
+    \end{center}
+  \end{exampleblock}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
