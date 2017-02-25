@@ -1,0 +1,102 @@
+\documentclass[pdf,9pt,aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+
+\usepackage{DejaVuSans}
+\usepackage{DejaVuSerif}
+\usepackage{DejaVuSansMono}
+\usepackage[T2A]{fontenc}
+
+\usepackage[russian]{babel}
+
+\usepackage{hyperref}
+\hypersetup{unicode=true}
+
+\usetheme{Madrid}
+\usefonttheme[stillsansserifsmall]{serif}
+%\usefonttheme[onlylarge]{structurebold}
+\usefonttheme[onlylarge]{structureitalicserif}
+
+\title[Архитектура компьютера: Целочисленная арифметика]{Архитектура компьютера}
+\subtitle{Целочисленная арифметика}
+\author[А.В. Рудалёв]{Александр Васильевич Рудалёв}
+\institute[ВШИТАС САФУ]{ВШИТАС САФУ}
+\date[г. Архангельск, 2017 г.]{г. Архангельск, 2017 г.}
+
+\usepackage{wrapfig}
+
+\usepackage{NarfuLectures}
+
+\usepackage{minted}
+\usemintedstyle{default} 
+\newcommand{\miln}[1]{\mintinline{nasm}{#1}}
+\newcommand{\milt}[1]{\mintinline{text}{#1}}
+\newcommand{\cl}[1]{\texttt{\bf #1}}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Операции умножения и деления}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%
+%%
+\begin{frame}[fragile]\frametitle{Умножение знаковых целых}
+  \begin{columns}[T]
+    \begin{column}[]{0.2\textwidth}  
+      \begin{exampleblock}<1->{Ok${}_{10}$}
+        \begin{center}
+          \begin{tikzpicture}
+            \node[] (d1) at (0,0) {\texttt{19234}};
+            \node[below left=0cm and 0cm of d1.south east] (d2) {\texttt{39564}};
+            \node[below left=0cm and 0cm of d2.south east] (dr) {\texttt{760973976}};
+            \node[anchor=east] at (d1.south west) {$\times$};
+            \draw[] (dr.north east) -- (dr.north west);
+          \end{tikzpicture}
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.2\textwidth}  
+      \begin{exampleblock}<1->{Ok${}_{16}$}
+        \begin{center}
+          \begin{tikzpicture}
+            \node[] (d1) at (0,0) {\texttt{0x00004B22}};
+            \node[below left=0cm and 0cm of d1.south east] (d2) {\texttt{0x00009A8C}};
+            \node[below left=0cm and 0cm of d2.south east] (dr) {\texttt{  0x2D5B8A98}};
+            \node[anchor=east] at (d1.south west) {$\times$};
+            \draw[] (dr.north east) -- (dr.north west);
+          \end{tikzpicture}
+        \end{center}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}[]{0.2\textwidth}  
+      \begin{alertblock}<2->{Error${}_{10}$}
+        \begin{center}
+          \begin{tikzpicture}
+            \node[] (d1) at (0,0) {\texttt{59234}};
+            \node[below left=0cm and 0cm of d1.south east] (d2) {\texttt{39564}};
+            \node[below left=0cm and 0cm of d2.south east] (dr) {\texttt{-1951433320}};
+            \node[anchor=east] at (d1.south west) {$\times$};
+            \draw[] (dr.north east) -- (dr.north west);
+          \end{tikzpicture}
+        \end{center}
+      \end{alertblock}
+    \end{column}
+    \begin{column}[]{0.2\textwidth}  
+      \begin{alertblock}<2->{Error${}_{16}$}
+        \begin{center}
+          \begin{tikzpicture}
+            \node[] (d1) at (0,0) {\texttt{0x0000E762}};
+            \node[below left=0cm and 0cm of d1.south east] (d2) {\texttt{0x00009A8C}};
+            \node[below left=0cm and 0cm of d2.south east] (dr) {\texttt{  0x8BAF7D98}};
+            \node[anchor=east] at (d1.south west) {$\times$};
+            \draw[] (dr.north east) -- (dr.north west);
+          \end{tikzpicture}
+        \end{center}
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\end{document}

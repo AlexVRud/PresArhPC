@@ -1,0 +1,135 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{NarfuLectures}[2017/02/25 NARFU Lectures]
+
+\RequirePackage{GoogleColorPalette}
+\RequirePackage{tikz}
+
+\ProcessOptions\relax
+
+%
+% TikZ
+%
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{babel}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shadows.blur}
+
+\tikzset{
+%
+% Colors (fill)
+%
+  greencolor/.style={
+    top color=Green50,
+    bottom color=Green200,
+  },
+  redcolor/.style={
+    top color=Red50,
+    bottom color=Red200,
+  },
+  bluecolor/.style={
+    top color=Blue50,
+    bottom color=Blue200,
+  },
+  yellowcolor/.style={
+    top color=Yellow50,
+    bottom color=Yellow200,
+  },
+  orangecolor/.style={
+    top color=Orange50,
+    bottom color=Orange200,
+  },
+%
+% Style for char
+%
+  MyChar/.style={
+    rectangle,
+    rounded corners=1mm,
+    minimum height=6mm,
+    minimum width=4.8mm,
+    very thick,
+    draw=Gray600,
+    top color=white,
+    bottom color=Gray200,
+  },
+%
+% Flowchart
+%
+  startstop/.style={
+    rectangle,
+    rounded corners=0.4cm,
+    minimum width=3cm,
+    minimum height=1cm,
+    text centered,
+    draw=black,
+    redcolor,
+  },
+  io/.style={
+    trapezium,
+    trapezium left angle=70,
+    trapezium right angle=110,
+    minimum width=3cm,
+    minimum height=1cm,
+    text centered,
+    draw=black,
+    bluecolor,
+  },
+  process/.style={
+    rectangle,
+    minimum width=3cm,
+    minimum height=1cm,
+    text centered,
+    draw=black,
+    orangecolor,
+  },
+  decision/.style={
+    diamond,
+    minimum width=3cm,
+    minimum height=1cm,
+    text centered,
+    draw=black,
+    greencolor,
+  },
+  arrow/.style={
+    thick,
+    >=stealth,
+  },
+%
+% Process
+%
+  file/.style={
+    rectangle,
+    draw=black,
+    fill=white,
+    minimum width=2cm,
+    minimum height=1cm,
+  },
+  program/.style={
+    ellipse,
+    draw=black,
+    bluecolor,
+  },
+}
+
+%
+% Beamer
+%
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\secname\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\endinput
+
