@@ -999,7 +999,7 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
   \end{block}
   \begin{block}<1->{}
     \begin{itemize}
-      \item Взять элеиент из стека и поместить его в приёмник. 
+      \item Взять элемент из стека и поместить его в приёмник. 
     \end{itemize}
   \end{block}
 \end{frame}
@@ -1008,7 +1008,7 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
 %%
 %% Пример pop eax
 %%
-\begin{frame}{Пример использования команды push}
+\begin{frame}{Пример использования команды pop}
   \begin{exampleblock}<1->{Пример}
     \begin{center}
 \begin{tikzpicture}
@@ -1040,7 +1040,7 @@ $$+2\cdot 256^1+150\cdot 256^0$$}
   \node[state, fit=(LabelESP2) (EAX2) (LabelST2) (ST21)] (State2) {};
   \draw[->,draw=violet,thick] (ESP2.center) -- (headofstack2.north west);
 
-  \node[command] (cmd) at($(State1.south)!0.5!(State2.north)$) {\cl{push \only<1>{eax}}};
+  \node[command] (cmd) at($(State1.south)!0.5!(State2.north)$) {\cl{pop eax}};
   \draw[->,myArrow] (State1) -- (cmd);
   \draw[->,myArrow] (cmd) -- (State2);
 \end{tikzpicture}
