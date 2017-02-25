@@ -1,12 +1,15 @@
 syntax:glob
 *.aux
+*.fdb_latexmk
+*.fls
+*.gz
 *.log
 *.nav
 *.out
 *.pdf
 *.snm
+*.swp
 *.toc
 *.vrb
-*.gz
 *~
 _minted*
