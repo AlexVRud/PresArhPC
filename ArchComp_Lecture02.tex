@@ -144,7 +144,7 @@
       \end{tikzpicture}
     \end{center}
   \end{exampleblock}
-  \begin{exampleblock}{}
+  \begin{exampleblock}<2->{}
     \begin{minted}{nasm}
         mov     eax, 0x0001E240
         mov     ecx, 0x000C0A14
@@ -156,15 +156,15 @@
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{Применение: длинная арифметика}
-  \begin{block}{Определение [wiki]}
+  \begin{block}<1->{Определение [wiki]}
 \textbf{Длинная арифметика} --- выполняемые с помощью вычислительной машины арифметические операции (сложение, вычитание, умножение, деление, возведение в степень, элементарные функции) над числами, разрядность которых превышает длину машинного слова данной вычислительной машины.
   \end{block}
 
-  \begin{block}{Применение}
+  \begin{block}<2->{Применение}
 Одна из областей применения длинной арифметики: криптография, где используются 512-разрядный, 1024-разрядные и более длинные целые числа.
   \end{block}
 
-  \begin{block}{Почитать}
+  \begin{block}<3->{Почитать}
     \begin{enumerate}
       \item Алгоритм шифрования RSA на пальцах // Technology Box URL: \url{http://teh-box.ru/informationsecurity/algoritm-shifrovaniya-rsa-na-palcax.html} (дата обращения: 02.03.2017).
     \end{enumerate}
