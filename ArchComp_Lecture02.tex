@@ -42,59 +42,51 @@
 %%
 %%
 %%
-\begin{frame}[fragile]\frametitle{Умножение знаковых целых}
+\begin{frame}[fragile]\frametitle{Переполнение}
   \begin{columns}[T]
-    \begin{column}[]{0.2\textwidth}  
-      \begin{exampleblock}<1->{Ok${}_{10}$}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{exampleblock}<1->{Ok}
         \begin{center}
           \begin{tikzpicture}
-            \node[] (d1) at (0,0) {\texttt{19234}};
-            \node[below left=0cm and 0cm of d1.south east] (d2) {\texttt{39564}};
-            \node[below left=0cm and 0cm of d2.south east] (dr) {\texttt{760973976}};
-            \node[anchor=east] at (d1.south west) {$\times$};
-            \draw[] (dr.north east) -- (dr.north west);
+            \node[] (h1) at (0,0) {\texttt{0x00004B22\textsubscript{16}}};
+            \node[below left=0cm and 0cm of h1.south east] (h2) {\texttt{0x00009A8C\textsubscript{16}}};
+            \node[below left=0cm and 0cm of h2.south east] (hr) {\texttt{  0x2D5B8A98\textsubscript{16}}};
+            \node[right=0cm of h1, text=Blue700] (d1) {\texttt{(19234\textsubscript{10})}};
+            \node[right=0cm of h2, text=Blue700] (d2) {\texttt{(39564\textsubscript{10})}};
+            \node[right=0cm of hr, text=Green700] (dr) {\texttt{(760973976\textsubscript{10})}};
+            \node[anchor=east] at (h1.south west) {$\times$};
+            \draw[] (hr.north east) -- (hr.north west);
           \end{tikzpicture}
         \end{center}
       \end{exampleblock}
     \end{column}
-    \begin{column}[]{0.2\textwidth}  
-      \begin{exampleblock}<1->{Ok${}_{16}$}
+    \begin{column}[]{0.45\textwidth}  
+      \begin{alertblock}<2->{Error}
         \begin{center}
           \begin{tikzpicture}
-            \node[] (d1) at (0,0) {\texttt{0x00004B22}};
-            \node[below left=0cm and 0cm of d1.south east] (d2) {\texttt{0x00009A8C}};
-            \node[below left=0cm and 0cm of d2.south east] (dr) {\texttt{  0x2D5B8A98}};
-            \node[anchor=east] at (d1.south west) {$\times$};
-            \draw[] (dr.north east) -- (dr.north west);
-          \end{tikzpicture}
-        \end{center}
-      \end{exampleblock}
-    \end{column}
-    \begin{column}[]{0.2\textwidth}  
-      \begin{alertblock}<2->{Error${}_{10}$}
-        \begin{center}
-          \begin{tikzpicture}
-            \node[] (d1) at (0,0) {\texttt{59234}};
-            \node[below left=0cm and 0cm of d1.south east] (d2) {\texttt{39564}};
-            \node[below left=0cm and 0cm of d2.south east] (dr) {\texttt{-1951433320}};
-            \node[anchor=east] at (d1.south west) {$\times$};
-            \draw[] (dr.north east) -- (dr.north west);
+            \node[] (h1) at (0,0) {\texttt{0x0000E762\textsubscript{16}}};
+            \node[below left=0cm and 0cm of h1.south east] (h2) {\texttt{0x00009A8C\textsubscript{16}}};
+            \node[below left=0cm and 0cm of h2.south east] (hr) {\texttt{  0x8BAF7D98\textsubscript{16}}};
+            \node[right=0cm of h1, text=Blue700] (d1) {\texttt{(59234\textsubscript{10})}};
+            \node[right=0cm of h2, text=Blue700] (d2) {\texttt{(39564\textsubscript{10})}};
+            \node[right=0cm of hr, text=Red700] (dr) {\texttt{(-1951433320\textsubscript{10})}};
+            \node[anchor=east] at (h1.south west) {$\times$};
+            \draw[] (hr.north east) -- (hr.north west);
           \end{tikzpicture}
         \end{center}
       \end{alertblock}
     \end{column}
-    \begin{column}[]{0.2\textwidth}  
-      \begin{alertblock}<2->{Error${}_{16}$}
-        \begin{center}
-          \begin{tikzpicture}
-            \node[] (d1) at (0,0) {\texttt{0x0000E762}};
-            \node[below left=0cm and 0cm of d1.south east] (d2) {\texttt{0x00009A8C}};
-            \node[below left=0cm and 0cm of d2.south east] (dr) {\texttt{  0x8BAF7D98}};
-            \node[anchor=east] at (d1.south west) {$\times$};
-            \draw[] (dr.north east) -- (dr.north west);
-          \end{tikzpicture}
-        \end{center}
-      \end{alertblock}
+  \end{columns}
+\hspace{1cm}
+  \begin{columns}[T]
+    \begin{column}[]{0.45\textwidth}  
+      \begin{block}<3->{Вопросы}
+        \begin{itemize}
+          \item Как узнать о переполнении?
+          \item Как исправить?
+          \item Как воспользоваться?
+       \end{itemize}
+     \end{block}
     \end{column}
   \end{columns}
 \end{frame}
