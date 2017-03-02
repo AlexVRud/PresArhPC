@@ -92,9 +92,67 @@
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{Регистр флагов}
+  \begin{block}{\texttt{FLAGS}}
+    \begin{center}
+      \begin{tikzpicture}
+        \node[bit, BitColorError] (b0) at (0,0)                     {\texttt{CF}};
+        \node[bit, BitColorHide, left=-\pgflinewidth of b0]  (b1)  {\texttt{1}};
+        \node[bit, left=-\pgflinewidth of b1]  (b2)  {\texttt{PF}};
+        \node[bit, BitColorHide, left=-\pgflinewidth of b2]  (b3)  {\texttt{0}};
+        \node[bit, left=-\pgflinewidth of b3]  (b4)  {\texttt{AF}};
+        \node[bit, BitColorHide, left=-\pgflinewidth of b4]  (b5)  {\texttt{0}};
+        \node[bit, left=-\pgflinewidth of b5]  (b6)  {\texttt{ZF}};
+        \node[bit, left=-\pgflinewidth of b6]  (b7)  {\texttt{SF}};
+        \node[bit, left=0.5mm of b7]  (b8)  {\texttt{TF}};
+        \node[bit, left=-\pgflinewidth of b8]  (b9)  {\texttt{IF}};
+        \node[bit, left=-\pgflinewidth of b9]  (b10) {\texttt{DF}};
+        \node[bit, BitColorError, left=-\pgflinewidth of b10] (b11) {\texttt{OF}};
+        \node[bit, left=-\pgflinewidth of b11] (b12) {};
+        \node[bit, left=-\pgflinewidth of b12] (b13) {};
+        \node[fill=Yellow500,draw=Yellow900] at (b13.east) {\texttt{IOPL}};
+        \node[bit, left=-\pgflinewidth of b13] (b14) {\texttt{NT}};
+        \node[bit, BitColorHide, left=-\pgflinewidth of b14] (b15) {\texttt{0}};
+        \foreach \i in {0,...,15}
+          \node[above=0cm of b\i] {\texttt{\scriptsize \i}};
+      \end{tikzpicture}
+    \end{center}
+  \end{block}
+  \begin{block}{}
+    \begin{itemize}
+      \item CF (Carry Flag) --- Флаг переноса
+      \item OF (Overflow Flag) --- Флаг переполнения
+    \end{itemize}
+  \end{block}
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{Результат удвоеной точности}
+\begin{frame}[fragile]\frametitle{Результат двойного размера}
+  \begin{exampleblock}{Ok}
+    \begin{center}
+      \begin{tikzpicture}
+        \node[] (h1) at (0,0) {\texttt{0x0001E240\textsubscript{16}}};
+        \node[below left=0cm and 0cm of h1.south east] (h2) {\texttt{0x000C0A14\textsubscript{16}}};
+        \node[below left=0cm and 0cm of h2.south east] (hr) {\texttt{  0x00000016 0xADFC2D00\textsubscript{16}}};
+        \node[right=0cm of h1, text=Blue700] (d1) {\texttt{(123456\textsubscript{10})}};
+        \node[right=0cm of h2, text=Blue700] (d2) {\texttt{(789012\textsubscript{10})}};
+        \node[right=0cm of hr, text=Green700] (dr) {\texttt{(97408265472\textsubscript{10})}};
+        \node[anchor=east] at (h1.south west) {$\times$};
+        \draw[] (hr.north east) -- (hr.north west);
+        \node[bit, BitColorError,right=5mm of dr] (of) {\texttt{1}};
+        \node[bit, BitColorError,right=1mm of of] (cf) {\texttt{1}};
+        \node[above=0cm of of] {\texttt{\scriptsize of}};
+        \node[above=0cm of cf] {\texttt{\scriptsize cf}};
+      \end{tikzpicture}
+    \end{center}
+  \end{exampleblock}
+  \begin{exampleblock}{}
+    \begin{minted}{nasm}
+        mov     eax, 0x0001E240
+        mov     ecx, 0x000C0A14
+        mul     ecx
+; edx == 0x00000016 , eax == 0xADFC2D00
+; edx:eax == 0x00000016ADFC2D00
+    \end{minted}
+  \end{exampleblock}
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{Применение: длинная арифметика}
