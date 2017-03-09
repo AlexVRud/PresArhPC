@@ -1,0 +1,90 @@
+\documentclass[pdf,9pt,aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+
+\usepackage{DejaVuSans}
+\usepackage{DejaVuSerif}
+\usepackage{DejaVuSansMono}
+\usepackage[T2A]{fontenc}
+
+\usepackage[russian]{babel}
+
+\usepackage{hyperref}
+\hypersetup{unicode=true,colorlinks=true}
+
+
+\usetheme{Madrid}
+\usefonttheme[stillsansserifsmall]{serif}
+%\usefonttheme[onlylarge]{structurebold}
+\usefonttheme[onlylarge]{structureitalicserif}
+
+\title[Архитектура компьютера: Условный оператор]{Архитектура компьютера}
+\subtitle{Условный оператор}
+\author[А.В. Рудалёв]{Александр Васильевич Рудалёв}
+\institute[ВШИТАС САФУ]{ВШИТАС САФУ}
+\date[г. Архангельск, 2017 г.]{г. Архангельск, 2017 г.}
+
+\usepackage{wrapfig}
+
+\usepackage{NarfuLectures}
+
+\usepackage{minted}
+\usemintedstyle{default} 
+\newcommand{\miln}[1]{\mintinline{nasm}{#1}}
+\newcommand{\milt}[1]{\mintinline{text}{#1}}
+\newcommand{\cl}[1]{\texttt{\bf #1}}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Условный переход}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%
+%%
+\begin{frame}[fragile]\frametitle{Регистр флагов: флаги состояния}
+  \begin{block}{\texttt{FLAGS}}
+    \begin{center}
+      \begin{tikzpicture}
+        \node[bit, BitColorChange] (b0) at (0,0)                     {\texttt{CF}};
+        \node[bit, BitColorHide, left=-\pgflinewidth of b0]  (b1)  {\texttt{1}};
+        \node[bit, BitColorError, left=-\pgflinewidth of b1]  (b2)  {\texttt{PF}};
+        \node[bit, BitColorHide, left=-\pgflinewidth of b2]  (b3)  {\texttt{0}};
+        \node[bit, BitColorError, left=-\pgflinewidth of b3]  (b4)  {\texttt{AF}};
+        \node[bit, BitColorHide, left=-\pgflinewidth of b4]  (b5)  {\texttt{0}};
+        \node[bit, BitColorChange, left=-\pgflinewidth of b5]  (b6)  {\texttt{ZF}};
+        \node[bit, BitColorChange, left=-\pgflinewidth of b6]  (b7)  {\texttt{SF}};
+        \node[bit, left=0.5mm of b7]  (b8)  {\texttt{TF}};
+        \node[bit, left=-\pgflinewidth of b8]  (b9)  {\texttt{IF}};
+        \node[bit, left=-\pgflinewidth of b9]  (b10) {\texttt{DF}};
+        \node[bit, BitColorChange, left=-\pgflinewidth of b10] (b11) {\texttt{OF}};
+        \node[bit, left=-\pgflinewidth of b11] (b12) {};
+        \node[bit, left=-\pgflinewidth of b12] (b13) {};
+        \node[fill=Yellow500,draw=Yellow900] at (b13.east) {\texttt{IOPL}};
+        \node[bit, left=-\pgflinewidth of b13] (b14) {\texttt{NT}};
+        \node[bit, BitColorHide, left=-\pgflinewidth of b14] (b15) {\texttt{0}};
+        \foreach \i in {0,...,15}
+          \node[above=0cm of b\i] {\texttt{\scriptsize \i}};
+      \end{tikzpicture}
+    \end{center}
+  \end{block}
+  \begin{block}{}
+    \begin{itemize}
+      \item \textbf{CF} (Carry Flag) --- Флаг переноса
+      \item PF (Parity Flag) --- Флаг чётности
+      \item AF (Auxiliary Carry Flag) --- Вспомогательный флаг переноса
+      \item \textbf{ZF} (Zero Flag) --- Флаг нуля
+      \item \textbf{SF} (Sign Flag) --- Флаг знака
+      \item \textbf{OF} (Overflow Flag) --- Флаг переполнения
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Регистр флагов и команда SUB}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Условный переход}
+\end{frame}
+
+\end{document}

@@ -1,7 +1,8 @@
 FILES_TEX = \
   ArchComp_Lecture00.tex\
   ArchComp_Lecture01.tex\
-  ArchComp_Lecture02.tex
+  ArchComp_Lecture02.tex\
+  ArchComp_Lecture03.tex
 
 FILES_PDF_FROM_TEX = $(FILES_TEX:.tex=.pdf)
 
