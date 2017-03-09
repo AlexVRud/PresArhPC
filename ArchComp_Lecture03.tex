@@ -82,6 +82,49 @@
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{Регистр флагов и команда SUB}
+  \begin{block}{\texttt{FLAGS}}
+    \begin{center}
+      \begin{tikzpicture}
+        \begin{scope}[scale=0.6, every node/.style={scale=0.6}]
+          \node[bit] (CF) at (0,0)                   {\texttt{?}};
+          \node[above=0cm of CF] (labelCF) {\texttt{CF}};
+          \node[bit, left=-\pgflinewidth of CF] (ZF) {\texttt{?}};
+          \node[above=0cm of ZF] (labelZF) {\texttt{ZF}};
+          \node[bit, left=-\pgflinewidth of ZF] (SF) {\texttt{?}};
+          \node[above=0cm of SF] (labelSF) {\texttt{SF}};
+          \node[bit, left=-\pgflinewidth of SF] (OF) {\texttt{?}};
+          \node[above=0cm of OF] (labelOF) {\texttt{OF}};
+        \end{scope}
+        \node[above left=0 of OF.south west] (labelFLAGS) {\texttt{FLAGS}};
+        \node[below left=0.2cm and 0cm of labelFLAGS.south east] (labelEAX) {\texttt{EAX}};
+        \node[databox=1, minimum width=2*\ByteWidth, text=brown, right=0cm of labelEAX] (EAX) {723};
+        \node[below left=0.2cm and 0cm of labelEAX.south east] (labelEBX) {\texttt{EBX}};
+        \node[databox=1, minimum width=2*\ByteWidth, text=brown, right=0cm of labelEBX] (EBX) {1024};
+        \node[state, fit=(CF) (labelOF) (labelFLAGS) (EBX)] (State1) {};
+%
+        \begin{scope}[scale=0.6, every node/.style={scale=0.6}]
+          \node[bit, BitColorError] (CF) at (15cm,0)                   {\texttt{1}};
+          \node[above=0cm of CF] (labelCF) {\texttt{CF}};
+          \node[bit, left=-\pgflinewidth of CF] (ZF) {\texttt{0}};
+          \node[above=0cm of ZF] (labelZF) {\texttt{ZF}};
+          \node[bit, BitColorError, left=-\pgflinewidth of ZF] (SF) {\texttt{1}};
+          \node[above=0cm of SF] (labelSF) {\texttt{SF}};
+          \node[bit, BitColorError, left=-\pgflinewidth of SF] (OF) {\texttt{1}};
+          \node[above=0cm of OF] (labelOF) {\texttt{OF}};
+        \end{scope}
+        \node[above left=0 of OF.south west] (labelFLAGS) {\texttt{FLAGS}};
+        \node[below left=0.2cm and 0cm of labelFLAGS.south east] (labelEAX) {\texttt{EAX}};
+        \node[databox=1, minimum width=2*\ByteWidth, text=brown, right=0cm of labelEAX] (EAX) {-301};
+        \node[below left=0.2cm and 0cm of labelEAX.south east] (labelEBX) {\texttt{EBX}};
+        \node[databox=1, minimum width=2*\ByteWidth, text=brown, right=0cm of labelEBX] (EBX) {1024};
+        \node[state, fit=(CF) (labelOF) (labelFLAGS) (EBX)] (State2) {};
+%
+        \node[command] (cmd) at($(State1)!0.5!(State2)$) {\cl{sub eax, ebx}};
+        \draw[->,myArrow] (State1) -- (cmd);
+        \draw[->,myArrow] (cmd) -- (State2);
+      \end{tikzpicture}
+    \end{center}
+  \end{block}
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{Условный переход}

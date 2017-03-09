@@ -21,6 +21,10 @@
 \usetikzlibrary{patterns}
 \usetikzlibrary{shadows.blur}
 
+\newcommand*{\ByteWidth}{0.9cm}
+\newcommand*{\ByteHeight}{0.6cm}
+\newcommand*{\DeltaWidth}{0.05cm}
+
 \tikzset{
 %
 % Colors (fill)
@@ -79,7 +83,7 @@
     bottom color=Gray200,
   },
 %
-% Style for char
+% Style for bit
 %
   bit/.style={
     draw=Gray700,
@@ -88,6 +92,17 @@
     minimum width=0.6cm,
     rounded corners=0.05cm,
   },
+%
+% Style for butes
+%
+  databox/.style={draw,fill=white,minimum width=#1*\ByteWidth, minimum height=\ByteHeight, path picture={%
+    \ifnum#1>1
+      \foreach \x in {1,...,#1}%
+        \draw (path picture bounding box.south west) ++(\x*\ByteWidth,0) -- ++(0,0.15*\ByteHeight);%
+    \fi
+    }
+  },
+  databox/.default=4,
 %
 % Flowchart
 %
@@ -144,6 +159,23 @@
     ellipse,
     draw=black,
     bluecolor,
+  },
+  state/.style={
+    rectangle,
+    draw=gray,
+    very thick,
+    rounded corners,
+  },
+  command/.style={
+    ellipse,
+    draw=gray,
+    very thick,
+    fill=blue!20!white
+  },
+  myArrow/.style={
+    draw=gray,
+    very thick,
+    >=angle 90,
   },
 }
 
