@@ -33,6 +33,13 @@
 \newcommand{\milt}[1]{\mintinline{text}{#1}}
 \newcommand{\cl}[1]{\texttt{\bf #1}}
 
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{tcolorbox}
+%\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily, colback=yellow!10!white,colframe=red!50!black,colbacktitle=Salmon!30!white, coltitle=black,center title}
+
 \begin{document}
 
 \frame{\titlepage}
@@ -97,27 +104,31 @@
         \end{scope}
         \node[above left=0 of OF.south west] (labelFLAGS) {\texttt{FLAGS}};
         \node[below left=0.2cm and 0cm of labelFLAGS.south east] (labelEAX) {\texttt{EAX}};
-        \node[databox=1, minimum width=2*\ByteWidth, text=brown, right=0cm of labelEAX] (EAX) {723};
+        \node[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelEAX] (EAX) {\only<1>{723}\only<2>{2000}\only<3>{1234}\only<4>{-2000000000}};
         \node[below left=0.2cm and 0cm of labelEAX.south east] (labelEBX) {\texttt{EBX}};
-        \node[databox=1, minimum width=2*\ByteWidth, text=brown, right=0cm of labelEBX] (EBX) {1024};
-        \node[state, fit=(CF) (labelOF) (labelFLAGS) (EBX)] (State1) {};
+        \node[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelEBX] (EBX) {\only<1>{1024}\only<2>{1200}\only<3>{1234}\only<4>{2000000000}};
+        \node[state, fit=(CF) (labelOF) (labelFLAGS) (EAX) (EBX)] (State1) {};
 %
         \begin{scope}[scale=0.6, every node/.style={scale=0.6}]
-          \node[bit, BitColorError] (CF) at (15cm,0)                   {\texttt{1}};
+          \node<1>[bit, BitColorError] (CF) at (15cm,0) {\texttt{1}};
+          \node<2,3,4>[bit] (CF) at (15cm,0) {\texttt{0}};
           \node[above=0cm of CF] (labelCF) {\texttt{CF}};
-          \node[bit, left=-\pgflinewidth of CF] (ZF) {\texttt{0}};
+          \node<3>[bit, BitColorError, left=-\pgflinewidth of CF] (ZF) {\texttt{1}};
+          \node<1,2,4>[bit, left=-\pgflinewidth of CF] (ZF) {\texttt{0}};
           \node[above=0cm of ZF] (labelZF) {\texttt{ZF}};
-          \node[bit, BitColorError, left=-\pgflinewidth of ZF] (SF) {\texttt{1}};
+          \node<1>[bit, BitColorError, left=-\pgflinewidth of ZF] (SF) {\texttt{1}};
+          \node<2,3,4>[bit, left=-\pgflinewidth of ZF] (SF) {\texttt{0}};
           \node[above=0cm of SF] (labelSF) {\texttt{SF}};
-          \node[bit, BitColorError, left=-\pgflinewidth of SF] (OF) {\texttt{1}};
+          \node<4>[bit, BitColorError, left=-\pgflinewidth of SF] (OF) {\texttt{1}};
+          \node<1,2,3>[bit, left=-\pgflinewidth of SF] (OF) {\texttt{0}};
           \node[above=0cm of OF] (labelOF) {\texttt{OF}};
         \end{scope}
         \node[above left=0 of OF.south west] (labelFLAGS) {\texttt{FLAGS}};
         \node[below left=0.2cm and 0cm of labelFLAGS.south east] (labelEAX) {\texttt{EAX}};
-        \node[databox=1, minimum width=2*\ByteWidth, text=brown, right=0cm of labelEAX] (EAX) {-301};
+        \node[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelEAX] (EAX) {\only<1>{-301}\only<2>{800}\only<3>{0}\only<4>{294967296}};
         \node[below left=0.2cm and 0cm of labelEAX.south east] (labelEBX) {\texttt{EBX}};
-        \node[databox=1, minimum width=2*\ByteWidth, text=brown, right=0cm of labelEBX] (EBX) {1024};
-        \node[state, fit=(CF) (labelOF) (labelFLAGS) (EBX)] (State2) {};
+        \node[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelEBX] (EBX) {\only<1>{1024}\only<2>{1200}\only<3>{1234}\only<4>{2000000000}};
+        \node[state, fit=(CF) (labelOF) (labelFLAGS) (EAX) (EBX)] (State2) {};
 %
         \node[command] (cmd) at($(State1)!0.5!(State2)$) {\cl{sub eax, ebx}};
         \draw[->,myArrow] (State1) -- (cmd);
@@ -127,7 +138,74 @@
   \end{block}
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{Условный переход}
+\begin{frame}[fragile]\frametitle{Условный переход (1/2)}
+  \begin{block}{Команды перехода}
+    \begin{minted}{nasm}
+        JMP     метка ; безусловный переход на метку
+        Jcc     метка ; переход на метку при выполнении условия сс
+    \end{minted}
+  \end{block}
+  \begin{block}{}
+    \begin{itemize}
+      \item Команды переходов не изменяют значения флагов, но все, кроме одной, срабатывают исходя только из значение флагов.
+      \item Как правило, команда условного перехода выполняется после арифметической или логической команды, или после специальной команды сравнения \cl{CMP}, \cl{TEST}.
+      \item Условие перехода \cl{сс} можно представить как: \cl{[N]\{\{[G|L|A|B][E]\}|\{Z|S|C|O|P\}\}}, в соответствии со следующей таблицей:
+    \end{itemize}
+  \end{block}
 \end{frame}
+
+\begin{frame}\frametitle{Условный переход (2/2)}
+  \begin{block}{}
+    \begin{tcolorbox}[tabularx*={\arrayrulewidth0.5mm}{c|l|c|X},title={}]
+Код & Name & Флаг & Название\\\hline\hline
+N & Not & - & Отрицание условия (может комбинироваться со всеми)\\\hline
+E & Equal & ZF=1 & Равно (может комбинироваться с G, L, A, B)\\\hline
+G & Greater & ZF=0 и SF=OF & Больше (с учётом знака)\\\hline
+L & Less & SF$\ne$OF & Меньше (с учётом знака)\\\hline
+A & Above & CF=0 и ZF=0 & Выше\\\hline
+B & Below & CF=1 & Ниже\\\hline
+Z & Zero & ZF=1 & Ноль\\\hline
+S & Sign & SF=1 & Отрицательное\\\hline
+C & Carry & СF=1 & Перенос\\\hline
+O & Overflow & OF=1 & Переполнение\\\hline
+P & Parity & PF=1 & Паритет
+    \end{tcolorbox}
+  \end{block}
+\end{frame}
+
+\begin{frame}\frametitle{Оператор CMP}
+  \begin{alertblock}{TODO}
+    TODO
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}\frametitle{Условный переход и CMP}
+  \begin{block}{}
+    \begin{tcolorbox}[tabularx*={\arrayrulewidth0.5mm}{c|X|c|c},title={}]
+Мнемокод & Название & Условие & Значения флагов\\\hline\hline
+\multicolumn{4}{c}{\textbf{Для всех чисел}}\\\hline
+JE & Переход если равно & op1 = op2 & ZF = 1\\\hline
+JNE & Переход если не равно & op1 $\ne$ op2 & ZF = 0\\\hline
+\multicolumn{4}{c}{\textbf{Для чисел со знаком}}\\\hline
+JL/JNGE & Переход если меньше & op1 $<$ op2 & SF $\ne$ OF\\\hline
+JLE/JNG & Переход если меньше или равно & op1 $\le$ op2 & SF $\ne$ OF или ZF = 1\\\hline
+JG/JNLE & Переход если больше & op1 $>$ op2 & SF = OF и ZF = 0\\\hline
+JGE/JNL & Переход если больше или равно & op1 $\ge$ op2 & SF = OF\\\hline
+\multicolumn{4}{c}{\textbf{Для чисел без знака}}\\\hline
+JB/JNAE & Переход если ниже & op1 < op2 & CF = 1\\\hline
+JBE/JNA & Переход если ниже или равно & op1 $\le$ op2 & CF = 1 или ZF = 1\\\hline
+JA/JNBE & Переход если выше & op1 > op2 & CF = 0 и ZF = 0\\\hline
+JAE/JNB & Переход если выше или равно & op1 $\ge$ op2 & CF = 0
+    \end{tcolorbox}
+  \end{block}
+\end{frame}
+
+\begin{frame}\frametitle{Пример}
+  \begin{alertblock}{TODO}
+    TODO
+  \end{alertblock}
+\end{frame}
+
+\section{Циклы}
 
 \end{document}
