@@ -31,7 +31,7 @@
 \usemintedstyle{default} 
 \newcommand{\miln}[1]{\mintinline{nasm}{#1}}
 \newcommand{\milt}[1]{\mintinline{text}{#1}}
-\newcommand{\cl}[1]{\texttt{\bf #1}}
+\newcommand{\cl}[1]{\texttt{#1}}
 
 \usepackage{array}
 \usepackage{makecell}
@@ -88,7 +88,7 @@
   \end{block}
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{Регистр флагов и команда SUB}
+\begin{frame}[fragile]\frametitle{Регистр флагов и оператор SUB}
   \begin{block}{\texttt{FLAGS}}
     \begin{center}
       \begin{tikzpicture}
@@ -139,7 +139,7 @@
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{Условный переход (1/2)}
-  \begin{block}{Команды перехода}
+  \begin{block}{Операторы перехода}
     \begin{minted}{nasm}
         JMP     метка ; безусловный переход на метку
         Jcc     метка ; переход на метку при выполнении условия сс
@@ -147,8 +147,8 @@
   \end{block}
   \begin{block}{}
     \begin{itemize}
-      \item Команды переходов не изменяют значения флагов, но все, кроме одной, срабатывают исходя только из значение флагов.
-      \item Как правило, команда условного перехода выполняется после арифметической или логической команды, или после специальной команды сравнения \cl{CMP}, \cl{TEST}.
+      \item Операторы переходов не изменяют значения флагов, но все, кроме одной, срабатывают исходя только из значение флагов.
+      \item Как правило, операторы условного перехода выполняется после арифметической или логической команды, или после специальной команды сравнения \cl{CMP}, \cl{TEST}.
       \item Условие перехода \cl{сс} можно представить как: \cl{[N]\{\{[G|L|A|B][E]\}|\{Z|S|C|O|P\}\}}, в соответствии со следующей таблицей:
     \end{itemize}
   \end{block}
@@ -173,10 +173,20 @@ P & Parity & PF=1 & Паритет
   \end{block}
 \end{frame}
 
-\begin{frame}\frametitle{Оператор CMP}
-  \begin{alertblock}{TODO}
-    TODO
-  \end{alertblock}
+\begin{frame}[fragile]\frametitle{Операторы CMP и TEST}
+  \begin{block}{Операторый сравнения}
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{n+nf}{CMP}     \PYG{err}{Число1}\PYG{p}{,} \PYG{err}{Число2}
+        \PYG{n+nf}{TEST}    \PYG{err}{Число1}\PYG{p}{,} \PYG{err}{Число2}
+\end{Verbatim}
+  \end{block}
+  \begin{block}{}
+    \begin{itemize}
+      \item Команды \cl{CMP} и \cl{TEST}, как правило, используются перед командами условного перехода.
+      \item Команда \cl{CMP} аналогична команде \cl{SUB}, но не сохраняет результат. Она удобна для сравнения чисел.
+      \item Команда \cl{TEST} аналогична команде \cl{AND}, но не сохраняет результат. Она удобна для проверки битов.
+    \end{itemize}
+  \end{block}
 \end{frame}
 
 \begin{frame}\frametitle{Условный переход и CMP}
@@ -184,26 +194,41 @@ P & Parity & PF=1 & Паритет
     \begin{tcolorbox}[tabularx*={\arrayrulewidth0.5mm}{c|X|c|c},title={}]
 Мнемокод & Название & Условие & Значения флагов\\\hline\hline
 \multicolumn{4}{c}{\textbf{Для всех чисел}}\\\hline
-JE & Переход если равно & op1 = op2 & ZF = 1\\\hline
-JNE & Переход если не равно & op1 $\ne$ op2 & ZF = 0\\\hline
+JE & Переход если равно & op1 $=$ op2 & ZF $=$ 1\\\hline
+JNE & Переход если не равно & op1 $\ne$ op2 & ZF $=$ 0\\\hline
 \multicolumn{4}{c}{\textbf{Для чисел со знаком}}\\\hline
 JL/JNGE & Переход если меньше & op1 $<$ op2 & SF $\ne$ OF\\\hline
-JLE/JNG & Переход если меньше или равно & op1 $\le$ op2 & SF $\ne$ OF или ZF = 1\\\hline
-JG/JNLE & Переход если больше & op1 $>$ op2 & SF = OF и ZF = 0\\\hline
-JGE/JNL & Переход если больше или равно & op1 $\ge$ op2 & SF = OF\\\hline
+JLE/JNG & Переход если меньше или равно & op1 $\le$ op2 & SF $\ne$ OF или ZF $=$ 1\\\hline
+JG/JNLE & Переход если больше & op1 $>$ op2 & SF $=$ OF и ZF $=$ 0\\\hline
+JGE/JNL & Переход если больше или равно & op1 $\ge$ op2 & SF $=$ OF\\\hline
 \multicolumn{4}{c}{\textbf{Для чисел без знака}}\\\hline
-JB/JNAE & Переход если ниже & op1 < op2 & CF = 1\\\hline
-JBE/JNA & Переход если ниже или равно & op1 $\le$ op2 & CF = 1 или ZF = 1\\\hline
-JA/JNBE & Переход если выше & op1 > op2 & CF = 0 и ZF = 0\\\hline
-JAE/JNB & Переход если выше или равно & op1 $\ge$ op2 & CF = 0
+JB/JNAE & Переход если ниже & op1 $<$ op2 & CF $=$ 1\\\hline
+JBE/JNA & Переход если ниже или равно & op1 $\le$ op2 & CF $=$ 1 или ZF $=$ 1\\\hline
+JA/JNBE & Переход если выше & op1 $>$ op2 & CF $=$ 0 и ZF $=$ 0\\\hline
+JAE/JNB & Переход если выше или равно & op1 $\ge$ op2 & CF $=$ 0
     \end{tcolorbox}
   \end{block}
 \end{frame}
 
-\begin{frame}\frametitle{Пример}
-  \begin{alertblock}{TODO}
-    TODO
-  \end{alertblock}
+\begin{frame}[fragile]\frametitle{Пример}
+  \begin{block}{Что делает этот код?}
+    \begin{minted}{nasm}
+; ...
+        mov     ebx, 0
+        push    dword 1
+        push    str0
+main_loop:
+        call    printf
+        mov     eax, ebx
+        mov     ecx, [esp+4]
+        add     eax, ecx
+        mov     [esp+4], eax
+        mov     ebx, ecx
+        cmp     eax, [N]
+        jb      main_loop
+; ...
+    \end{minted}
+  \end{block}
 \end{frame}
 
 \section{Циклы}
