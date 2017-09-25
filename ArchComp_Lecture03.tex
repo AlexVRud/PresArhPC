@@ -210,6 +210,194 @@ JAE/JNB & Переход если выше или равно & op1 $\ge$ op2 & C
   \end{block}
 \end{frame}
 
+\begin{frame}[fragile]\frametitle{Пример <<Условный переход>>}
+  \begin{block}{Что делает этот код?}
+    \begin{minted}{nasm}
+; ...
+       mov     eax, [A]
+       mov     ebx, [B]
+       cmp     eax, ebx
+       jge     m0
+       mov     ecx, ebx
+       jmp     m1
+m0:
+       mov     ecx, eax
+m1:
+;...
+A:     dd      100
+B:     dd      50
+; ...
+    \end{minted}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Пример <<Условный переход>>}
+  \begin{columns}
+    \begin{column}[]{0.35\textwidth}
+      \begin{block}{Что делает этот код?}
+        \begin{minted}{nasm}
+; ...
+C0:        mov     eax, [A]
+C1:        mov     ebx, [B]
+C2:        cmp     eax, ebx
+C3:        jge     m0
+C4:        mov     ecx, ebx
+C5:        jmp     m1
+    m0:
+C6:        mov     ecx, eax
+    m1:
+; ...
+    A:     dd      100
+    B:     dd      50
+; ...
+        \end{minted}
+      \end{block}
+    \end{column}
+    \begin{column}[]{0.55\textwidth}
+      \begin{block}{}
+        \begin{center}
+          \begin{tikzpicture}
+        \begin{scope}[scale=0.6, every node/.style={scale=0.6}]
+          \node[bit] (CF1) at (0,0) {%
+\only<1-2>{\texttt{?}}%
+\only<3-4>{\texttt{0}}%
+};
+          \node[above=0cm of CF1] (labelCF1) {\texttt{CF}};
+          \node[bit, left=-\pgflinewidth of CF1] (ZF1) {%
+\only<1-2>{\texttt{?}}%
+\only<3-4>{\texttt{0}}%
+};
+          \node[above=0cm of ZF1] (labelZF1) {\texttt{ZF}};
+          \node[bit, left=-\pgflinewidth of ZF1] (SF1) {%
+\only<1-2>{\texttt{?}}%
+\only<3-4>{\texttt{0}}%
+};
+          \node[above=0cm of SF1] (labelSF1) {\texttt{SF}};
+          \node[bit, left=-\pgflinewidth of SF1] (OF1) {%
+\only<1-2>{\texttt{?}}%
+\only<3-4>{\texttt{0}}%
+};
+          \node[above=0cm of OF1] (labelOF1) {\texttt{OF}};
+        \end{scope}
+        \node[above left=0 of OF1.south west] (labelFLAGS1) {\texttt{FLAGS}};
+        \node[below left=0.2cm and 0cm of labelFLAGS1.south east] (labelECX1) {\texttt{ECX}};
+        \node[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelECX1] (ECX1) {%
+\only<1-4>{?}%
+};
+        \node[databox=1, minimum width=3*\ByteWidth, text=brown, left=0cm of labelFLAGS1] (EAX1) {%
+\only<1>{?}%
+\only<2-4>{100}%
+};
+        \node[left=0cm of EAX1] (labelEAX1) {\texttt{EAX}};
+        \node[below left=0.2cm and 0cm of labelEAX1.south east] (labelEBX1) {\texttt{EBX}};
+        \node[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelEBX1] (EBX1) {%
+\only<1>{?}%
+\only<2-4>{50}%
+};
+        \node[below left=0.2cm and 0cm of labelEBX1.south east] (labelEIP1) {\texttt{EIP}};
+        \node[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelEIP1] (EIP1) {%
+\only<1>{C0}%
+\only<2>{C2}%
+\only<3>{C3}%
+\only<4>{C6 (m0)}%
+};
+        \node[state, fit=(CF1) (labelOF1) (labelEAX1) (ECX1) (EIP1)] (State1) {};
+%
+        \begin{scope}[scale=0.6, every node/.style={scale=0.6}]
+          \node<1>[bit] (CF2) at (0,-7cm) {\texttt{?}};
+          \node<2>[bit, BitColorChange] (CF2) at (0,-7cm) {\texttt{0}};
+          \node<3-4>[bit] (CF2) at (0,-7cm) {\texttt{0}};
+          \node[above=0cm of CF2] (labelCF2) {\texttt{CF}};
+          \node<1>[bit, left=-\pgflinewidth of CF2] (ZF2) {\texttt{?}};
+          \node<2>[bit, left=-\pgflinewidth of CF2, BitColorChange] (ZF2) {\texttt{0}};
+          \node<3-4>[bit, left=-\pgflinewidth of CF2] (ZF2) {\texttt{0}};
+          \node[above=0cm of ZF2] (labelZF2) {\texttt{ZF}};
+          \node<1>[bit, left=-\pgflinewidth of ZF2] (SF2) {\texttt{?}};
+          \node<2>[bit, left=-\pgflinewidth of ZF2, BitColorChange] (SF2) {\texttt{0}};
+          \node<3-4>[bit, left=-\pgflinewidth of ZF2] (SF2) {\texttt{0}};
+          \node[above=0cm of SF2] (labelSF2) {\texttt{SF}};
+          \node<1>[bit, left=-\pgflinewidth of SF2] (OF2) {\texttt{?}};
+          \node<2>[bit, left=-\pgflinewidth of SF2, BitColorChange] (OF2) {\texttt{0}};
+          \node<3-4>[bit, left=-\pgflinewidth of SF2] (OF2) {\texttt{0}};
+          \node[above=0cm of OF2] (labelOF2) {\texttt{OF}};
+        \end{scope}
+        \node[above left=0 of OF2.south west] (labelFLAGS2) {\texttt{FLAGS}};
+        \node[below left=0.2cm and 0cm of labelFLAGS2.south east] (labelECX2) {\texttt{ECX}};
+        \node<1-3>[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelECX2] (ECX2) {?};
+        \node<4>[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelECX2, BitColorChange] (ECX2) {100};
+        \node<1>[databox=1, minimum width=3*\ByteWidth, text=brown, left=0cm of labelFLAGS2, BitColorChange] (EAX2) {100};
+        \node<2-4>[databox=1, minimum width=3*\ByteWidth, text=brown, left=0cm of labelFLAGS2] (EAX2) {100};
+        \node[left=0cm of EAX2] (labelEAX2) {\texttt{EAX}};
+        \node[below left=0.2cm and 0cm of labelEAX2.south east] (labelEBX2) {\texttt{EBX}};
+        \node<1>[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelEBX2, BitColorChange] (EBX2) {50};
+        \node<2-4>[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelEBX2] (EBX2) {50};
+        \node[below left=0.2cm and 0cm of labelEBX2.south east] (labelEIP2) {\texttt{EIP}};
+        \node[databox=1, minimum width=3*\ByteWidth, text=brown, right=0cm of labelEIP2, BitColorChange] (EIP2) {%
+\only<1>{C2}%
+\only<2>{C3}%
+\only<3>{C6 (m0)}%
+\only<4>{C7 (m1)}%
+};
+        \node[state, fit=(CF2) (labelOF2) (labelEAX2) (ECX2) (EIP2)] (State2) {};
+%
+        \node[command, text width=2.5cm] (cmd) at($(State1.south)!0.5!(State2.north)$) {%
+\only<1>{\cl{mov eax, [A]}\newline \cl{mov ebx, [B]}}%
+\only<2>{\cl{cmp eax, ebx}}%
+\only<3>{\cl{jge m0}}%
+\only<4>{\cl{mov ecx, eax}}%
+};
+        \draw[->,myArrow] (State1) -- (cmd);
+        \draw[->,myArrow] (cmd) -- (State2);
+          \end{tikzpicture}
+        \end{center}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Пример <<Условный переход>>}
+  \begin{columns}
+    \begin{column}[]{0.45\textwidth}
+      \begin{block}{Код}
+        \begin{minted}{nasm}
+; Старт
+; Проверка условия
+       cmp     eax, ebx
+       jge     m0
+; Список операций 2
+       mov     ecx, ebx
+       jmp     m1
+m0:
+; Список операций 1
+       mov     ecx, eax
+m1:
+; Стоп
+        \end{minted}
+      \end{block}
+    \end{column}
+    \begin{column}[]{0.45\textwidth}
+      \begin{block}{Блок-схема}
+        \begin{center}
+\begin{tikzpicture}[node distance=2cm, scale=0.8, every node/.style={scale=0.8}]
+  \node (start) [startstop] {Старт};
+  \node (dec1) [decision, below of=start] {Условие};
+  \node (pro1) [process, below of=dec1, xshift=-2cm] {Список операций 1};
+  \node (pro2) [process, below of=dec1, xshift=2cm] {Список операций 2};
+  \node (stop) [startstop, below of=pro1, xshift=2cm] {Стоп};
+  \draw [->,arrow] (start) -- (dec1);
+  \draw [->,arrow] (dec1) -| node[anchor=south] {Да} (pro1);
+  \draw [->,arrow] (dec1) -| node[anchor=south] {Нет} (pro2);
+  \draw [->,arrow] (pro1) |- (stop);
+  \draw [->,arrow] (pro2) |- (stop);
+\end{tikzpicture}
+        \end{center}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Циклы}
+
 \begin{frame}[fragile]\frametitle{Пример}
   \begin{block}{Что делает этот код?}
     \begin{minted}{nasm}
@@ -230,7 +418,5 @@ main_loop:
     \end{minted}
   \end{block}
 \end{frame}
-
-\section{Циклы}
 
 \end{document}
